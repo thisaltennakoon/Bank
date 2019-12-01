@@ -90,8 +90,8 @@ CREATE TABLE Account(
     Date_Created DATETIME,
     PRIMARY KEY(Account_No)
 );
-CREATE TABLE Account_Branch(    --customer can add many branches to a single account(mentioned in the SRS) apart from the account creating branch
-    Account_No INT,
+CREATE TABLE Account_Branch(    --customer can add many branches to a single account(mentioned in the SRS) 
+    Account_No INT,             --apart from the account creating branch
     Branch_ID INT,
     FOREIGN KEY (Account_No) REFERENCES Account(Account_No) ON DELETE SET NULL,
     FOREIGN KEY (Branch_ID) REFERENCES Branch(Branch_ID) ON DELETE SET NULL
@@ -157,14 +157,14 @@ CREATE TABLE Online_Transaction(
     FOREIGN KEY (Transaction_ID) REFERENCES Transaction_Details(Transaction_ID) ON DELETE SET NULL,
     FOREIGN KEY (Recepient_ACC_No) REFERENCES Account(Account_No) ON DELETE SET NULL
 );
-CREATE TABLE Loan_Type( --there are basically two loan types are given in the description but it has not mentioned in the ERD.Please have a look
-    Type_ID INT,
+CREATE TABLE Loan_Type( --there are basically two loan types are given in the description but it has not mentioned in the ERD.
+    Type_ID INT,        --Please have a look
     Type_Nmae VARCHAR(15),
     Interest_Rate FLOAT,
     PRIMARY KEY (Type_ID)
 );
-CREATE TABLE Requested_Loan(--this is also not in the ERD. in my opinion this should be there because there can be many loans which cannot approve at all and if we add all those things to the loan table,it would become a dustbin
-    Request_ID INT,
+CREATE TABLE Requested_Loan(--this is also not in the ERD. in my opinion this should be there because there can be many 
+    Request_ID INT,         --loans which cannot approve at all and if we add all those things to the loan table,it would become a dustbin
     Account_No INT,
     Loan_Type INT,
     Amount FLOAT,
@@ -181,8 +181,8 @@ CREATE TABLE Requested_Loan(--this is also not in the ERD. in my opinion this sh
     PRIMARY KEY (Request_ID)
 );
 CREATE TABLE Loan(--this is also not mentioned as a inheritence in the ERD. Please have a look (parent)
-    Loan_ID INT,    --another problem. why have you made a has reletionship from 'Loan_BankVist' to 'Customer'?I have removed it. we have to discuss it
-    Account_No INT,
+    Loan_ID INT,    --another problem. why have you made a has reletionship from 'Loan_BankVist' to 'Customer'?
+    Account_No INT,     --I have removed it. we have to discuss it
     Loan_Type INT,
     Amount FLOAT,
     Branch_ID INT,
