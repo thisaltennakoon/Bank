@@ -79,7 +79,14 @@ CREATE TABLE Account(
     Currency VARCHAR(3),
     Balance FLOAT,
     Account_Status VARCHAR(10),
+    Date_Created DATETIME,
     PRIMARY KEY(Account_No)
+);
+CREATE TABLE Account_Branch(
+    Account_No INT,
+    Branch_ID INT,
+    FOREIGN KEY (Account_No) REFERENCES Account(Account_No) ON DELETE SET NULL,
+    FOREIGN KEY (Branch_ID) REFERENCES Branch(Branch_ID) ON DELETE SET NULL
 );
 CREATE TABLE Customer_Account(
     Customer_ID INT,
@@ -117,4 +124,28 @@ CREATE TABLE Child_Savings_Account(
     FOREIGN KEY (Account_No) REFERENCES Savings_Account(Account_No) ON DELETE SET NULL,
     PRIMARY KEY(Account_No)
 );
-
+CREATE TABLE Transaction_Details(
+    Transaction_ID INT,
+    Account_No INT,
+    Amount FLOAT,
+    Date_Time DATETIME,
+    FOREIGN KEY (Account_No) REFERENCES Account(Account_No) ON DELETE SET NULL,
+    PRIMARY KEY(Transaction_ID)
+);
+CREATE TABLE Bank_Transaction(
+    Transaction_ID INT,
+    Type VARCHAR(8),
+    FOREIGN KEY (Transaction_ID) REFERENCES Transaction_Details(Transaction_ID) ON DELETE SET NULL
+);
+CREATE TABLE ATM_Withdrawal(
+    Transaction_ID INT,
+    ATM_ID INT,
+    Location VARCHAR(20),
+    FOREIGN KEY (Transaction_ID) REFERENCES Transaction_Details(Transaction_ID) ON DELETE SET NULL
+);
+CREATE TABLE Online_Transaction(
+    Transaction_ID INT,
+    Recepient_ACC_No INT,
+    FOREIGN KEY (Transaction_ID) REFERENCES Transaction_Details(Transaction_ID) ON DELETE SET NULL,
+    FOREIGN KEY (Recepient_ACC_No) REFERENCES Account(Account_No) ON DELETE SET NULL
+);
