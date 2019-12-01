@@ -163,7 +163,7 @@ CREATE TABLE Loan_Type( --there are basically two loan types are given in the de
     Interest_Rate FLOAT,
     PRIMARY KEY (Type_ID)
 );
-CREATE TABLE Requested_Loan(
+CREATE TABLE Requested_Loan(--this is also not in the ERD. in my opinion this should be there because there can be many loans which cannot approve at all and if we add all those things to the loan table,it would become a dustbin
     Request_ID INT,
     Account_No INT,
     Loan_Type INT,
@@ -180,7 +180,7 @@ CREATE TABLE Requested_Loan(
     FOREIGN KEY (Loan_Type) REFERENCES Loan_Type(Type_ID) ON DELETE SET NULL,
     PRIMARY KEY (Request_ID)
 );
-CREATE TABLE Loan(
+CREATE TABLE Loan(--this is also not mentioned as a inheritence in the ERD. Please have a look
     Loan_ID INT,
     Account_No INT,
     Loan_Type INT,
