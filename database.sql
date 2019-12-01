@@ -111,7 +111,7 @@ CREATE TABLE Savings_Account_Plan(
     Plan_ID INT,
     Account_Type VARCHAR(10),
     Minimum_Balance FLOAT,
-    Interest FLOAT
+    Interest FLOAT,
     PRIMARY KEY (Plan_ID)
 );
 CREATE TABLE Savings_Account(
@@ -200,13 +200,13 @@ CREATE TABLE Bank_Visit_Loan(
     Requested_By INT,
     FOREIGN KEY (Loan_ID) REFERENCES Loan(Loan_ID) ON DELETE SET NULL,
     FOREIGN KEY (Approved_By) REFERENCES Maneger(Employee_ID) ON DELETE SET NULL,
-    FOREIGN KEY (Requested_By) REFERENCES Clerk(Employee_ID) ON DELETE SET NULL,
+    FOREIGN KEY (Requested_By) REFERENCES Clerk(Employee_ID) ON DELETE SET NULL
 );
 CREATE TABLE Online_Loan(
     Loan_ID INT,
     FD_No INT NOT NULL,
     FOREIGN KEY (Loan_ID) REFERENCES Loan(Loan_ID) ON DELETE SET NULL,
-    FOREIGN KEY (FD_No) REFERENCES Fixed_Deposit(FD_No) ON DELETE SET NULL,
+    FOREIGN KEY (FD_No) REFERENCES Fixed_Deposit(FD_No) ON DELETE SET NULL
 );
 CREATE TABLE Loan_Installment_Bank(
     Installment_ID INT,
