@@ -74,6 +74,14 @@ CREATE TABLE Employee_Login(
     Recovery_Email VARCHAR(50),
     FOREIGN KEY (Employee_ID) REFERENCES Employee(Employee_ID) ON DELETE SET NULL
 );
+CREATE TABLE Maneger(
+    Employee_ID INT,
+    FOREIGN KEY (Employee_ID) REFERENCES Employee(Employee_ID) ON DELETE SET NULL
+);
+CREATE TABLE Clerk(
+    Employee_ID INT,
+    FOREIGN KEY (Employee_ID) REFERENCES Employee(Employee_ID) ON DELETE SET NULL
+);
 CREATE TABLE Account(
     Account_No INT,
     Currency VARCHAR(3),
@@ -148,4 +156,20 @@ CREATE TABLE Online_Transaction(
     Recepient_ACC_No INT,
     FOREIGN KEY (Transaction_ID) REFERENCES Transaction_Details(Transaction_ID) ON DELETE SET NULL,
     FOREIGN KEY (Recepient_ACC_No) REFERENCES Account(Account_No) ON DELETE SET NULL
+);
+CREATE TABLE Loan_Bank_Visit(
+    Loan_ID INT,
+    Account_No INT,
+    Amount FLOAT,
+    Branch_ID INT,
+    Time_Period INT,
+    Installment FLOAT,
+    Approved_Date DATE,
+    Approved_By INT,
+    Requested_By INT,
+    FOREIGN KEY (Approved_By) REFERENCES Maneger(Employee_ID) ON DELETE SET NULL,
+    FOREIGN KEY (Requested_By) REFERENCES Clerk(Employee_ID) ON DELETE SET NULL,
+    FOREIGN KEY (Account_No) REFERENCES Account(Account_No) ON DELETE SET NULL,
+    FOREIGN KEY (Branch_ID) REFERENCES Branch(Branch_ID) ON DELETE SET NULL,
+    PRIMARY KEY (Loan_ID)
 );
