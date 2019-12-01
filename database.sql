@@ -96,13 +96,13 @@ CREATE TABLE Account_Branch(    --customer can add many branches to a single acc
     FOREIGN KEY (Account_No) REFERENCES Account(Account_No) ON DELETE SET NULL,
     FOREIGN KEY (Branch_ID) REFERENCES Branch(Branch_ID) ON DELETE SET NULL
 );
-CREATE TABLE Customer_Account(
+CREATE TABLE Customer_Account(  --one customer can have many accounts and one account can belongs to many people(ex:joint accounts)
     Customer_ID INT,
     Account_No INT,
     FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID) ON DELETE SET NULL,
     FOREIGN KEY (Account_No) REFERENCES Account(Account_No) ON DELETE SET NULL
 );
-CREATE TABLE Current_Account(
+CREATE TABLE Checking_Account(  --'Checking account' is the term given in the discription not 'current account'
     Account_No INT,
     FOREIGN KEY (Account_No) REFERENCES Account(Account_No) ON DELETE SET NULL,
     PRIMARY KEY(Account_No)
@@ -157,7 +157,7 @@ CREATE TABLE Online_Transaction(
     FOREIGN KEY (Transaction_ID) REFERENCES Transaction_Details(Transaction_ID) ON DELETE SET NULL,
     FOREIGN KEY (Recepient_ACC_No) REFERENCES Account(Account_No) ON DELETE SET NULL
 );
-CREATE TABLE Loan_Type(
+CREATE TABLE Loan_Type( --there are basically two loan types are given in the description but it has not mentioned in the ERD.Please have a look
     Type_ID INT,
     Type_Nmae VARCHAR(15),
     Interest_Rate FLOAT,
