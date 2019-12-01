@@ -5,12 +5,12 @@ CREATE TABLE Customer(
     Address VARCHAR(80),
     PRIMARY KEY(Customer_ID)
 );
-CREATE TABLE Email(
+CREATE TABLE Customer_Email(    --{Email} multi valued attribute
     Customer_ID INT,
     Email VARCHAR(50),
     FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID) ON DELETE SET NULL
 );
-CREATE TABLE Customer_Contact_No(
+CREATE TABLE Customer_Contact_No(   --{Contact_No} multi valued attribute
     Customer_ID INT,
     Contact_No VARCHAR(10),
     FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID) ON DELETE SET NULL
@@ -61,7 +61,7 @@ CREATE TABLE Employee(
     PRIMARY KEY(Employee_ID),
     FOREIGN KEY (Branch_ID) REFERENCES Branch(Branch_ID) ON DELETE SET NULL
 );
-CREATE TABLE Employee_Contact_No(
+CREATE TABLE Employee_Contact_No(   --{Contact_No} multi valued attribute
     Employee_ID INT,
     Contact_No VARCHAR(10),
     FOREIGN KEY (Employee_ID) REFERENCES Employee(Employee_ID) ON DELETE SET NULL
@@ -90,7 +90,7 @@ CREATE TABLE Account(
     Date_Created DATETIME,
     PRIMARY KEY(Account_No)
 );
-CREATE TABLE Account_Branch(
+CREATE TABLE Account_Branch(    --customer can add many branches to a single account(mentioned in the SRS) apart from the account creating branch
     Account_No INT,
     Branch_ID INT,
     FOREIGN KEY (Account_No) REFERENCES Account(Account_No) ON DELETE SET NULL,
@@ -100,25 +100,25 @@ CREATE TABLE Customer_Account(
     Customer_ID INT,
     Account_No INT,
     FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID) ON DELETE SET NULL,
-    FOREIGN KEY (Account_No) REFERENCES Accoun(Account_No) ON DELETE SET NULL
+    FOREIGN KEY (Account_No) REFERENCES Account(Account_No) ON DELETE SET NULL
 );
 CREATE TABLE Current_Account(
     Account_No INT,
-    FOREIGN KEY (Account_No) REFERENCES Accoun(Account_No) ON DELETE SET NULL,
+    FOREIGN KEY (Account_No) REFERENCES Account(Account_No) ON DELETE SET NULL,
     PRIMARY KEY(Account_No)
 );
-CREATE TABLE Savings_Account_Plan(
-    Plan_ID INT,
+CREATE TABLE Savings_Account_Type(
+    Type_ID INT,
     Account_Type VARCHAR(10),
     Minimum_Balance FLOAT,
     Interest FLOAT,
-    PRIMARY KEY (Plan_ID)
+    PRIMARY KEY (Type_ID)
 );
 CREATE TABLE Savings_Account(
     Account_No INT,
     Number_of_Withdrawals INT,
-    Account_Plan_ID INT,
-    FOREIGN KEY (Account_Plan_ID) REFERENCES Savings_Account_Plan(Plan_ID) ON DELETE SET NULL,
+    Account_Type_ID INT,
+    FOREIGN KEY (Account_Type_ID) REFERENCES Savings_Account_Type(Type_ID) ON DELETE SET NULL,
     FOREIGN KEY (Account_No) REFERENCES Account(Account_No) ON DELETE SET NULL,
     PRIMARY KEY(Account_No)
 );
