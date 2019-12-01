@@ -180,8 +180,8 @@ CREATE TABLE Requested_Loan(--this is also not in the ERD. in my opinion this sh
     FOREIGN KEY (Loan_Type) REFERENCES Loan_Type(Type_ID) ON DELETE SET NULL,
     PRIMARY KEY (Request_ID)
 );
-CREATE TABLE Loan(--this is also not mentioned as a inheritence in the ERD. Please have a look
-    Loan_ID INT,
+CREATE TABLE Loan(--this is also not mentioned as a inheritence in the ERD. Please have a look (parent)
+    Loan_ID INT,    --another problem. why have you made a has reletionship from 'Loan_BankVist' to 'Customer'?I have removed it. we have to discuss it
     Account_No INT,
     Loan_Type INT,
     Amount FLOAT,
@@ -193,7 +193,7 @@ CREATE TABLE Loan(--this is also not mentioned as a inheritence in the ERD. Plea
     FOREIGN KEY (Loan_Type) REFERENCES Loan_Type(Type_ID) ON DELETE SET NULL,
     PRIMARY KEY (Loan_ID)
 );
-CREATE TABLE Bank_Visit_Loan(
+CREATE TABLE Bank_Visit_Loan( --(child)
     Loan_ID INT,
     Approved_Date DATE,
     Approved_By INT,
@@ -202,7 +202,7 @@ CREATE TABLE Bank_Visit_Loan(
     FOREIGN KEY (Approved_By) REFERENCES Maneger(Employee_ID) ON DELETE SET NULL,
     FOREIGN KEY (Requested_By) REFERENCES Clerk(Employee_ID) ON DELETE SET NULL
 );
-CREATE TABLE Online_Loan(
+CREATE TABLE Online_Loan( --(child)
     Loan_ID INT,
     FD_No INT NOT NULL,
     FOREIGN KEY (Loan_ID) REFERENCES Loan(Loan_ID) ON DELETE SET NULL,
