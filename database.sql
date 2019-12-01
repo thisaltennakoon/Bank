@@ -157,19 +157,78 @@ CREATE TABLE Online_Transaction(
     FOREIGN KEY (Transaction_ID) REFERENCES Transaction_Details(Transaction_ID) ON DELETE SET NULL,
     FOREIGN KEY (Recepient_ACC_No) REFERENCES Account(Account_No) ON DELETE SET NULL
 );
-CREATE TABLE Loan_Bank_Visit(
-    Loan_ID INT,
+CREATE TABLE Loan_Type(
+    Type_ID INT,
+    Type_Nmae VARCHAR(15),
+    Interest_Rate FLOAT,
+    PRIMARY KEY (Type_ID)
+);
+CREATE TABLE Requested_Loan(
+    Request_ID INT,
     Account_No INT,
+    Loan_Type INT,
     Amount FLOAT,
     Branch_ID INT,
     Time_Period INT,
     Installment FLOAT,
-    Approved_Date DATE,
-    Approved_By INT,
+    Requested_Date DATE,
     Requested_By INT,
-    FOREIGN KEY (Approved_By) REFERENCES Maneger(Employee_ID) ON DELETE SET NULL,
+    Request_Status VARCHAR(10),
     FOREIGN KEY (Requested_By) REFERENCES Clerk(Employee_ID) ON DELETE SET NULL,
     FOREIGN KEY (Account_No) REFERENCES Account(Account_No) ON DELETE SET NULL,
     FOREIGN KEY (Branch_ID) REFERENCES Branch(Branch_ID) ON DELETE SET NULL,
+    FOREIGN KEY (Loan_Type) REFERENCES Loan_Type(Type_ID) ON DELETE SET NULL,
+    PRIMARY KEY (Request_ID)
+);
+CREATE TABLE Loan(
+    Loan_ID INT,
+    Account_No INT,
+    Loan_Type INT,
+    Amount FLOAT,
+    Branch_ID INT,
+    Time_Period INT,
+    Installment FLOAT,
+    FOREIGN KEY (Account_No) REFERENCES Account(Account_No) ON DELETE SET NULL,
+    FOREIGN KEY (Branch_ID) REFERENCES Branch(Branch_ID) ON DELETE SET NULL,
+    FOREIGN KEY (Loan_Type) REFERENCES Loan_Type(Type_ID) ON DELETE SET NULL,
     PRIMARY KEY (Loan_ID)
+);
+CREATE TABLE Bank_Visit_Loan(
+    Loan_ID INT,
+    Approved_Date DATE,
+    Approved_By INT,
+    Requested_By INT,
+    FOREIGN KEY (Loan_ID) REFERENCES Loan(Loan_ID) ON DELETE SET NULL,
+    FOREIGN KEY (Approved_By) REFERENCES Maneger(Employee_ID) ON DELETE SET NULL,
+    FOREIGN KEY (Requested_By) REFERENCES Clerk(Employee_ID) ON DELETE SET NULL,
+);
+CREATE TABLE Online_Loan(
+    Loan_ID INT,
+    FD_No INT NOT NULL,
+    FOREIGN KEY (Loan_ID) REFERENCES Loan(Loan_ID) ON DELETE SET NULL,
+    FOREIGN KEY (FD_No) REFERENCES Fixed_Deposit(FD_No) ON DELETE SET NULL,
+);
+CREATE TABLE Loan_Installment_Bank(
+    Installment_ID INT,
+    Loan_ID INT,
+    Amount FLOAT,
+    Due_Date DATE,
+    Paid_Date DATE,
+    FOREIGN KEY (Loan_ID) REFERENCES Loan(Loan_ID) ON DELETE SET NULL,
+    PRIMARY KEY (Installment_ID)
+);
+CREATE TABLE Fixed_Deposit_Type(
+    Type_ID INT,
+    Time_Period INT,
+    Interest FLOAT
+);
+CREATE TABLE Fixed_Deposit(
+    FD_No INT,
+    Account_No INT,
+    Amount FLOAT,
+    Date DATE,
+    Type_ID INT,
+    FOREIGN KEY (Type_ID) REFERENCES Fixed_Deposit_Type(Type_ID) ON DELETE SET NULL,
+    FOREIGN KEY (Account_No) REFERENCES Savings_Account(Account_No) ON DELETE SET NULL,
+    PRIMARY KEY (FD_No)
 );
