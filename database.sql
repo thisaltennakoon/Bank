@@ -18,7 +18,7 @@ CREATE TABLE Customer_Contact_No(    /*--{Contact_No} multi valued attribute*/
 CREATE TABLE Customer_Login(
     Customer_ID INT,
     Username VARCHAR(50),
-    Password VARCHAR(30),
+    Password VARCHAR(100),
     Recovery_Contact_No VARCHAR(10),
     Recovery_Email VARCHAR(50),
     PRIMARY KEY(Username),
@@ -69,7 +69,7 @@ CREATE TABLE Employee_Contact_No(    /*--{Contact_No} multi valued attribute*/
 CREATE TABLE Employee_Login(
     Employee_ID INT,
     Username VARCHAR(50),
-    Password VARCHAR(30),
+    Password VARCHAR(100),
     Recovery_Contact_No VARCHAR(10),
     Recovery_Email VARCHAR(50),
     FOREIGN KEY (Employee_ID) REFERENCES Employee(Employee_ID) ON DELETE SET NULL
@@ -234,13 +234,5 @@ CREATE TABLE Fixed_Deposit(
 );
 INSERT INTO Savings_Account_Plan(Plan_ID,Account_Plan,Minimum_Balance,Interest) VALUES (1,'Children',0,12),(2,'Teen',500,11),(3,'Adult(18+)',1000,10),(4,'Senior',1000,13);
 INSERT INTO Fixed_Deposit_Plan(Plan_ID,Time_Period,Interest) VALUES (1,'6 months',13),(2,'1 year',14),(3,'3 years',15);
-INSERT INTO Employee_Login(Employee_ID,Username,Password,Recovery_Contact_No,Recovery_Email) VALUES (973611178,'thisal','12345','0766220249','thisal@mail.com');
+INSERT INTO Employee_Login(Employee_ID,Username,Password,Recovery_Contact_No,Recovery_Email) VALUES (973611178,'thisal','8cb2237d0679ca88db6464eac60da96345513964','0766220249','thisal@mail.com'); /*password=12345*/
 
-CREATE TABLE Employee_Login(
-    Employee_ID INT,
-    Username VARCHAR(50),
-    Password VARCHAR(30),
-    Recovery_Contact_No VARCHAR(10),
-    Recovery_Email VARCHAR(50),
-    FOREIGN KEY (Employee_ID) REFERENCES Employee(Employee_ID) ON DELETE SET NULL
-);

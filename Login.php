@@ -17,7 +17,8 @@ session_start();
 if(isset($_POST) & !empty($_POST)){
   $user = $_POST['User'];
   $pass =  $_POST['password'];
-  //$pass=sha1($pass);    //little password encryption
+  $pass=sha1($pass);    //little password encryption
+  //echo $pass;
   $servername = "localhost";
   $username = "root";
   $password = "";
