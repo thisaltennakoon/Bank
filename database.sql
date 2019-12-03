@@ -3,18 +3,20 @@ USE Bank;
 CREATE TABLE Customer(
     Customer_ID INT,
     Address VARCHAR(80),
+    Email VARCHAR(50),
+    Contact_No VARCHAR(10), 
     PRIMARY KEY(Customer_ID)
 );
-CREATE TABLE Customer_Email(    /*{Email} multi valued attribute*/ /**/
+/*CREATE TABLE Customer_Email(   
     Customer_ID INT,
     Email VARCHAR(50),
     FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID) ON DELETE SET NULL
-);
-CREATE TABLE Customer_Contact_No(    /*--{Contact_No} multi valued attribute*/
+);*/  /*{Email} multi valued attribute*/ /**/
+/*CREATE TABLE Customer_Contact_No(    
     Customer_ID INT,
     Contact_No VARCHAR(10),
     FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID) ON DELETE SET NULL
-);
+);*/ /*--{Contact_No} multi valued attribute*/
 CREATE TABLE Customer_Login(
     Customer_ID INT,
     Username VARCHAR(50),

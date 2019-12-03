@@ -7,6 +7,6 @@ echo "This is home page<br>";
 echo 'Username : '.$_SESSION['User'];
 echo '<br>Employee_ID : '.$_SESSION['Employee_ID'];
 
-echo '<br><a href="LogOut.php">Log Out</a>';
+echo '<br><a href="CreateaAccount.php">Create a Account</a>';
 echo '<br><a href="LogOut.php">Log Out</a>';
 ?>
