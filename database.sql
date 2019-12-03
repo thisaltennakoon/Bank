@@ -107,18 +107,18 @@ CREATE TABLE Checking_Account(  --'Checking account' is the term given in the di
     FOREIGN KEY (Account_No) REFERENCES Account(Account_No) ON DELETE SET NULL,
     PRIMARY KEY(Account_No)
 );
-CREATE TABLE Savings_Account_Type(
-    Type_ID INT,
-    Account_Type VARCHAR(10),
+CREATE TABLE Savings_Account_Plan(
+    Plan_ID INT,
+    Account_Plan VARCHAR(10),
     Minimum_Balance FLOAT,
     Interest FLOAT,
-    PRIMARY KEY (Type_ID)
+    PRIMARY KEY (Plan_ID)
 );
 CREATE TABLE Savings_Account(
     Account_No INT,
     Number_of_Withdrawals INT,
-    Account_Type_ID INT,
-    FOREIGN KEY (Account_Type_ID) REFERENCES Savings_Account_Type(Type_ID) ON DELETE SET NULL,
+    Account_Plan_ID INT,
+    FOREIGN KEY (Account_Plan_ID) REFERENCES Savings_Account_Plan(Plan_ID) ON DELETE SET NULL,
     FOREIGN KEY (Account_No) REFERENCES Account(Account_No) ON DELETE SET NULL,
     PRIMARY KEY(Account_No)
 );
@@ -217,9 +217,9 @@ CREATE TABLE Loan_Installment_Bank(
     FOREIGN KEY (Loan_ID) REFERENCES Loan(Loan_ID) ON DELETE SET NULL,
     PRIMARY KEY (Installment_ID)
 );
-CREATE TABLE Fixed_Deposit_Type(
-    Type_ID INT,
-    Time_Period INT,
+CREATE TABLE Fixed_Deposit_Plan(
+    Plan_ID INT,
+    Time_Period VARCHAR(10),
     Interest FLOAT
 );
 CREATE TABLE Fixed_Deposit(
@@ -227,8 +227,10 @@ CREATE TABLE Fixed_Deposit(
     Account_No INT,
     Amount FLOAT,
     Date DATE,
-    Type_ID INT,
-    FOREIGN KEY (Type_ID) REFERENCES Fixed_Deposit_Type(Type_ID) ON DELETE SET NULL,
+    Plan_ID INT,
+    FOREIGN KEY (Plan_ID) REFERENCES Fixed_Deposit_Plan(Plan_ID) ON DELETE SET NULL,
     FOREIGN KEY (Account_No) REFERENCES Savings_Account(Account_No) ON DELETE SET NULL,
     PRIMARY KEY (FD_No)
 );
+INSERT INTO Savings_Account_Plan(Plan_ID,Account_Plan,Minimum_Balance,Interest) VALUES (1,'Children',0,12),(2,'Teen',500,11),(3,'Adult(18+)',1000,10),(4,'Senior',1000,13);
+INSERT INTO Fixed_Deposit_Plan(Plan_ID,Time_Period,Interest) VALUES (1,'6 months',13),(2,'1 year',14),(3,'3 years',15);
