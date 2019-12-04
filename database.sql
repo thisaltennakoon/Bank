@@ -89,7 +89,8 @@ CREATE TABLE Account(
     Account_No INT,
     Currency VARCHAR(3),
     Balance FLOAT,
-    Account_Status VARCHAR(10),
+    Primary_Branch_ID INT, /*account has a branch. but customer can add many branches.This attribute makes redundence data.*/
+    Account_Status VARCHAR(10),         /*but in most cases customers tend to use the branch where the account is created*/
     Date_Created DATETIME,
     PRIMARY KEY(Account_No)
 );
