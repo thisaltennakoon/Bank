@@ -129,13 +129,13 @@ CREATE TABLE Checkbook(
 CREATE TABLE Savings_Account_Plan(
     Plan_ID INT,
     Account_Plan VARCHAR(10),
-    Minimum_Balance FLOAT NOT NULL,
-    Interest FLOAT NOT NULL,
+    Minimum_Balance FLOAT,
+    Interest FLOAT,
     PRIMARY KEY (Plan_ID)
 );
 CREATE TABLE Savings_Account(
     Account_No INT,
-    Number_of_Withdrawals INT  CHECK (Number_of_Withdrawals <= 5),
+    Number_of_Withdrawals INT CHECK (Number_of_Withdrawals <= 5),
     Account_Plan_ID INT,
     FOREIGN KEY (Account_Plan_ID) REFERENCES Savings_Account_Plan(Plan_ID) /*ON DELETE SET NULL*/,
     FOREIGN KEY (Account_No) REFERENCES Account(Account_No) /*ON DELETE SET NULL*/,
@@ -151,10 +151,10 @@ CREATE TABLE Child_Savings_Account(
     FOREIGN KEY (Account_No) REFERENCES Savings_Account(Account_No) /*ON DELETE SET NULL*/,
     PRIMARY KEY(Account_No)
 );
-CREATE TABLE Transaction_Details(
+CREATE TABLE Transaction_Detail(
     Transaction_ID INT,
-    Account_No INT,
-    Amount FLOAT,
+    Account_No INT NOT NULL,
+    Amount FLOAT NOT NULL,
     Date_Time DATETIME,
     FOREIGN KEY (Account_No) REFERENCES Account(Account_No) /*ON DELETE SET NULL*/,
     PRIMARY KEY(Transaction_ID)
@@ -167,7 +167,6 @@ CREATE TABLE Bank_Transaction(
 CREATE TABLE ATM_Withdrawal(
     Transaction_ID INT,
     ATM_ID INT,
-    Location VARCHAR(20),
     FOREIGN KEY (Transaction_ID) REFERENCES Transaction_Details(Transaction_ID) /*ON DELETE SET NULL*/
 );
 CREATE TABLE Online_Transaction(
@@ -179,12 +178,12 @@ CREATE TABLE Online_Transaction(
 CREATE TABLE Loan_Type(  /*--there are basically two loan types are given in the description but it has not mentioned in the ERD.*/
     Type_ID INT,         /*--Please have a look*/
     Type_Nmae VARCHAR(15),
-    Interest_Rate FLOAT,
+    Interest_Rate FLOAT NOT NULL,
     PRIMARY KEY (Type_ID)
 );
 CREATE TABLE Requested_Loan( /*--this is also not in the ERD. in my opinion this should be there because there can be many*/
-    Request_ID INT,          /*--loans which cannot approve at all and if we add all those things to the loan table,it would become a dustbin*/
-    Account_No INT,
+    Request_ID INT UNSIGNED AUTO_INCREMENT,          /*--loans which cannot approve at all and if we add all those things to the loan table,it would become a dustbin*/
+    Account_No INT NOT NULL,
     Loan_Type INT,
     Amount FLOAT,
     Branch_ID INT,
