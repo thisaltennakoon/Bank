@@ -1,7 +1,7 @@
 CREATE DATABASE Bank;
 USE Bank;
 CREATE TABLE Customer(
-    Customer_ID INT,
+    Customer_ID INT UNSIGNED AUTO_INCREMENT,
     Address VARCHAR(80),
     Email VARCHAR(50),
     Contact_No VARCHAR(10), 
