@@ -59,6 +59,7 @@ CREATE TABLE Employee(
     NIC VARCHAR(10),
     DOB DATE,
     Gender VARCHAR(6),
+    Primary_Contact_No VARCHAR(10),
     Branch_ID INT,
     PRIMARY KEY(Employee_ID),
     FOREIGN KEY (Branch_ID) REFERENCES Branch(Branch_ID) ON DELETE SET NULL
