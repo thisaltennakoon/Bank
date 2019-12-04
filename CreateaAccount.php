@@ -40,6 +40,15 @@ if(isset($_POST) & !empty($_POST)){
     die("Connection failed: " . $conn->connect_error);
   }
   $sql = "SELECT * FROM Employee_Login WHERE Username='$user' AND Password='$pass'";
+  $sql = "INSERT INTO Customer(Address,Email,Contact_No) VALUES ()";
+  CREATE TABLE Customer(
+    Customer_ID INT UNSIGNED AUTO_INCREMENT,
+    Address VARCHAR(80),
+    Email VARCHAR(50),
+    Contact_No VARCHAR(10), 
+    PRIMARY KEY(Customer_ID)
+);
+
 
   $result = $conn->query($sql);
   if ($result->num_rows > 0) {
