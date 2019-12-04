@@ -101,14 +101,14 @@ CREATE TABLE Account(
     PRIMARY KEY(Account_No)
 );
 CREATE TABLE Account_Branch(     /*--customer can add many branches to a single account(mentioned in the SRS)*/
-    Account_No INT,              /*--apart from the account creating branch*/
-    Branch_ID INT,
+    Account_No INT NOT NULL,              /*--apart from the account creating branch*/
+    Branch_ID INT NOT NULL,
     FOREIGN KEY (Account_No) REFERENCES Account(Account_No) /*ON DELETE SET NULL*/,
     FOREIGN KEY (Branch_ID) REFERENCES Branch(Branch_ID) /*ON DELETE SET NULL*/
 );
 CREATE TABLE Customer_Account(   /*--one customer can have many accounts and one account can belongs to many people(ex:joint accounts)*/
-    Customer_ID INT,
-    Account_No INT,
+    Customer_ID INT NOT NULL,
+    Account_No INT NOT NULL,
     FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID) /*ON DELETE SET NULL*/,
     FOREIGN KEY (Account_No) REFERENCES Account(Account_No) /*ON DELETE SET NULL*/
 );
@@ -119,18 +119,18 @@ CREATE TABLE Checking_Account(   /*--'Checking account' is the term given in the
 );
 CREATE TABLE Checkbook(
     Checkbook_Number INT UNSIGNED AUTO_INCREMENT,
-    Account_No INT,
-    Issued_Date DATE,
-    Number_of_Pages INT,
-    Starting_Check_Number INT,
+    Account_No INT NOT NULL,
+    Issued_Date DATE NOT NULL,
+    Number_of_Pages INT NOT NULL,
+    Starting_Check_Number INT NOT NULL,
     FOREIGN KEY (Account_No) REFERENCES Checking_Account(Account_No) /*ON DELETE SET NULL*/,
     PRIMARY KEY(Checkbook_Number)
 );
 CREATE TABLE Savings_Account_Plan(
     Plan_ID INT,
     Account_Plan VARCHAR(10),
-    Minimum_Balance FLOAT,
-    Interest FLOAT,
+    Minimum_Balance FLOAT NOT NULL,
+    Interest FLOAT NOT NULL,
     PRIMARY KEY (Plan_ID)
 );
 CREATE TABLE Savings_Account(
