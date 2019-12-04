@@ -92,6 +92,7 @@ CREATE TABLE Account(
     Primary_Branch_ID INT, /*account has a branch. but customer can add many branches.This attribute makes redundence data.*/
     Account_Status VARCHAR(10),         /*but in most cases customers tend to use the branch where the account is created*/
     Date_Created DATETIME,
+    FOREIGN KEY (Primary_Branch_ID) REFERENCES Branch(Branch_ID) ON DELETE SET NULL,
     PRIMARY KEY(Account_No)
 );
 CREATE TABLE Account_Branch(     /*--customer can add many branches to a single account(mentioned in the SRS)*/
