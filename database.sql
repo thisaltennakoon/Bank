@@ -8,21 +8,21 @@ CREATE TABLE Customer(
     PRIMARY KEY(Customer_ID)
 );
 CREATE TABLE Customer_Email(   
-    Customer_ID INT,
-    Email VARCHAR(50),
-    FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID) ON DELETE SET NULL
+    Customer_ID INT NOT NULL,
+    Email VARCHAR(50) NOT NULL,
+    FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID) /*ON DELETE SET NULL*/
 ); /*{Email} multi valued attribute*/ /**/
 CREATE TABLE Customer_Contact_No(    
     Customer_ID INT,
     Contact_No VARCHAR(10),
-    FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID) ON DELETE SET NULL
+    FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID) /*ON DELETE SET NULL*/
 );/*--{Contact_No} multi valued attribute*/
 CREATE TABLE Organization(
     Customer_ID INT,
     Name VARCHAR(50),
     Bussiness_Registration_Number VARCHAR(20),
     PRIMARY KEY(Customer_ID),
-    FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID) ON DELETE SET NULL
+    FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID) /*ON DELETE SET NULL*/
 );
 CREATE TABLE Individual(
     Customer_ID INT,
@@ -33,7 +33,7 @@ CREATE TABLE Individual(
     DOB DATE,
     Gender VARCHAR(6),
     PRIMARY KEY(Customer_ID),
-    FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID) ON DELETE SET NULL
+    FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID) /*ON DELETE SET NULL*/
 );
 CREATE TABLE Customer_Login(
     Customer_ID INT,
@@ -42,7 +42,7 @@ CREATE TABLE Customer_Login(
     Recovery_Contact_No VARCHAR(10),
     Recovery_Email VARCHAR(50),
     PRIMARY KEY(Username),
-    FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID) ON DELETE SET NULL
+    FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID) /*ON DELETE SET NULL*/
 );
 CREATE TABLE Branch(
     Branch_ID INT,
@@ -62,12 +62,12 @@ CREATE TABLE Employee(
     Primary_Contact_No VARCHAR(10),
     Branch_ID INT,
     PRIMARY KEY(Employee_ID),
-    FOREIGN KEY (Branch_ID) REFERENCES Branch(Branch_ID) ON DELETE SET NULL
+    FOREIGN KEY (Branch_ID) REFERENCES Branch(Branch_ID) /*ON DELETE SET NULL*/
 );
 CREATE TABLE Employee_Contact_No(    /*--{Contact_No} multi valued attribute*/
     Employee_ID INT,
     Contact_No VARCHAR(10),
-    FOREIGN KEY (Employee_ID) REFERENCES Employee(Employee_ID) ON DELETE SET NULL
+    FOREIGN KEY (Employee_ID) REFERENCES Employee(Employee_ID) /*ON DELETE SET NULL*/
 );
 CREATE TABLE Employee_Login(
     Employee_ID INT,
@@ -75,15 +75,15 @@ CREATE TABLE Employee_Login(
     Password VARCHAR(100),
     Recovery_Contact_No VARCHAR(10),
     Recovery_Email VARCHAR(50),
-    FOREIGN KEY (Employee_ID) REFERENCES Employee(Employee_ID) ON DELETE SET NULL
+    FOREIGN KEY (Employee_ID) REFERENCES Employee(Employee_ID) /*ON DELETE SET NULL*/
 );
 CREATE TABLE Maneger(
     Employee_ID INT,
-    FOREIGN KEY (Employee_ID) REFERENCES Employee(Employee_ID) ON DELETE SET NULL
+    FOREIGN KEY (Employee_ID) REFERENCES Employee(Employee_ID) /*ON DELETE SET NULL*/
 );
 CREATE TABLE Clerk(
     Employee_ID INT,
-    FOREIGN KEY (Employee_ID) REFERENCES Employee(Employee_ID) ON DELETE SET NULL
+    FOREIGN KEY (Employee_ID) REFERENCES Employee(Employee_ID) /*ON DELETE SET NULL*/
 );
 CREATE TABLE Account(
     Account_No INT,
@@ -93,25 +93,25 @@ CREATE TABLE Account(
     Primary_Branch_ID INT, /*account has a branch. but customer can add many branches.This attribute makes redundence data.*/
     Account_Status VARCHAR(10),         /*but in most cases customers tend to use the branch where the account is created*/
     Date_Created DATETIME,
-    FOREIGN KEY (Primary_Branch_ID) REFERENCES Branch(Branch_ID) ON DELETE SET NULL,
-    FOREIGN KEY (Primary_Customer_ID) REFERENCES Customer(Customer_ID) ON DELETE SET NULL,
+    FOREIGN KEY (Primary_Branch_ID) REFERENCES Branch(Branch_ID) /*ON DELETE SET NULL*/,
+    FOREIGN KEY (Primary_Customer_ID) REFERENCES Customer(Customer_ID) /*ON DELETE SET NULL*/,
     PRIMARY KEY(Account_No)
 );
 CREATE TABLE Account_Branch(     /*--customer can add many branches to a single account(mentioned in the SRS)*/
     Account_No INT,              /*--apart from the account creating branch*/
     Branch_ID INT,
-    FOREIGN KEY (Account_No) REFERENCES Account(Account_No) ON DELETE SET NULL,
-    FOREIGN KEY (Branch_ID) REFERENCES Branch(Branch_ID) ON DELETE SET NULL
+    FOREIGN KEY (Account_No) REFERENCES Account(Account_No) /*ON DELETE SET NULL*/,
+    FOREIGN KEY (Branch_ID) REFERENCES Branch(Branch_ID) /*ON DELETE SET NULL*/
 );
 CREATE TABLE Customer_Account(   /*--one customer can have many accounts and one account can belongs to many people(ex:joint accounts)*/
     Customer_ID INT,
     Account_No INT,
-    FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID) ON DELETE SET NULL,
-    FOREIGN KEY (Account_No) REFERENCES Account(Account_No) ON DELETE SET NULL
+    FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID) /*ON DELETE SET NULL*/,
+    FOREIGN KEY (Account_No) REFERENCES Account(Account_No) /*ON DELETE SET NULL*/
 );
 CREATE TABLE Checking_Account(   /*--'Checking account' is the term given in the discription not 'current account'*/
     Account_No INT,
-    FOREIGN KEY (Account_No) REFERENCES Account(Account_No) ON DELETE SET NULL,
+    FOREIGN KEY (Account_No) REFERENCES Account(Account_No) /*ON DELETE SET NULL*/,
     PRIMARY KEY(Account_No)
 );
 CREATE TABLE Checkbook(
@@ -120,7 +120,7 @@ CREATE TABLE Checkbook(
     Issued_Date DATE,
     Number_of_Pages INT,
     Starting_Check_Number INT,
-    FOREIGN KEY (Account_No) REFERENCES Checking_Account(Account_No) ON DELETE SET NULL,
+    FOREIGN KEY (Account_No) REFERENCES Checking_Account(Account_No) /*ON DELETE SET NULL*/,
     PRIMARY KEY(Checkbook_Number)
 );
 CREATE TABLE Savings_Account_Plan(
@@ -132,10 +132,10 @@ CREATE TABLE Savings_Account_Plan(
 );
 CREATE TABLE Savings_Account(
     Account_No INT,
-    Number_of_Withdrawals INT,
+    Number_of_Withdrawals INT  CHECK (Number_of_Withdrawals <= 5),
     Account_Plan_ID INT,
-    FOREIGN KEY (Account_Plan_ID) REFERENCES Savings_Account_Plan(Plan_ID) ON DELETE SET NULL,
-    FOREIGN KEY (Account_No) REFERENCES Account(Account_No) ON DELETE SET NULL,
+    FOREIGN KEY (Account_Plan_ID) REFERENCES Savings_Account_Plan(Plan_ID) /*ON DELETE SET NULL*/,
+    FOREIGN KEY (Account_No) REFERENCES Account(Account_No) /*ON DELETE SET NULL*/,
     PRIMARY KEY(Account_No)
 );
 CREATE TABLE Child_Savings_Account(
@@ -145,7 +145,7 @@ CREATE TABLE Child_Savings_Account(
     Middle_Name VARCHAR(10),
     DOB DATE,
     Gender VARCHAR(6),
-    FOREIGN KEY (Account_No) REFERENCES Savings_Account(Account_No) ON DELETE SET NULL,
+    FOREIGN KEY (Account_No) REFERENCES Savings_Account(Account_No) /*ON DELETE SET NULL*/,
     PRIMARY KEY(Account_No)
 );
 CREATE TABLE Transaction_Details(
@@ -153,25 +153,25 @@ CREATE TABLE Transaction_Details(
     Account_No INT,
     Amount FLOAT,
     Date_Time DATETIME,
-    FOREIGN KEY (Account_No) REFERENCES Account(Account_No) ON DELETE SET NULL,
+    FOREIGN KEY (Account_No) REFERENCES Account(Account_No) /*ON DELETE SET NULL*/,
     PRIMARY KEY(Transaction_ID)
 );
 CREATE TABLE Bank_Transaction(
     Transaction_ID INT,
     Type VARCHAR(8),
-    FOREIGN KEY (Transaction_ID) REFERENCES Transaction_Details(Transaction_ID) ON DELETE SET NULL
+    FOREIGN KEY (Transaction_ID) REFERENCES Transaction_Details(Transaction_ID) /*ON DELETE SET NULL*/
 );
 CREATE TABLE ATM_Withdrawal(
     Transaction_ID INT,
     ATM_ID INT,
     Location VARCHAR(20),
-    FOREIGN KEY (Transaction_ID) REFERENCES Transaction_Details(Transaction_ID) ON DELETE SET NULL
+    FOREIGN KEY (Transaction_ID) REFERENCES Transaction_Details(Transaction_ID) /*ON DELETE SET NULL*/
 );
 CREATE TABLE Online_Transaction(
     Transaction_ID INT,
     Recepient_ACC_No INT,
-    FOREIGN KEY (Transaction_ID) REFERENCES Transaction_Details(Transaction_ID) ON DELETE SET NULL,
-    FOREIGN KEY (Recepient_ACC_No) REFERENCES Account(Account_No) ON DELETE SET NULL
+    FOREIGN KEY (Transaction_ID) REFERENCES Transaction_Details(Transaction_ID) /*ON DELETE SET NULL*/,
+    FOREIGN KEY (Recepient_ACC_No) REFERENCES Account(Account_No) /*ON DELETE SET NULL*/
 );
 CREATE TABLE Loan_Type(  /*--there are basically two loan types are given in the description but it has not mentioned in the ERD.*/
     Type_ID INT,         /*--Please have a look*/
@@ -190,10 +190,10 @@ CREATE TABLE Requested_Loan( /*--this is also not in the ERD. in my opinion this
     Requested_Date DATE,
     Requested_By INT,
     Request_Status VARCHAR(10),
-    FOREIGN KEY (Requested_By) REFERENCES Clerk(Employee_ID) ON DELETE SET NULL,
-    FOREIGN KEY (Account_No) REFERENCES Account(Account_No) ON DELETE SET NULL,
-    FOREIGN KEY (Branch_ID) REFERENCES Branch(Branch_ID) ON DELETE SET NULL,
-    FOREIGN KEY (Loan_Type) REFERENCES Loan_Type(Type_ID) ON DELETE SET NULL,
+    FOREIGN KEY (Requested_By) REFERENCES Clerk(Employee_ID) /*ON DELETE SET NULL*/,
+    FOREIGN KEY (Account_No) REFERENCES Account(Account_No) /*ON DELETE SET NULL*/,
+    FOREIGN KEY (Branch_ID) REFERENCES Branch(Branch_ID) /*ON DELETE SET NULL*/,
+    FOREIGN KEY (Loan_Type) REFERENCES Loan_Type(Type_ID) /*ON DELETE SET NULL*/,
     PRIMARY KEY (Request_ID)
 );
 CREATE TABLE Loan( /*--this is also not mentioned as a inheritence in the ERD. Please have a look (parent)*/
@@ -204,9 +204,9 @@ CREATE TABLE Loan( /*--this is also not mentioned as a inheritence in the ERD. P
     Branch_ID INT,
     Time_Period INT,
     Installment FLOAT,
-    FOREIGN KEY (Account_No) REFERENCES Account(Account_No) ON DELETE SET NULL,
-    FOREIGN KEY (Branch_ID) REFERENCES Branch(Branch_ID) ON DELETE SET NULL,
-    FOREIGN KEY (Loan_Type) REFERENCES Loan_Type(Type_ID) ON DELETE SET NULL,
+    FOREIGN KEY (Account_No) REFERENCES Account(Account_No) /*ON DELETE SET NULL*/,
+    FOREIGN KEY (Branch_ID) REFERENCES Branch(Branch_ID) /*ON DELETE SET NULL*/,
+    FOREIGN KEY (Loan_Type) REFERENCES Loan_Type(Type_ID) /*ON DELETE SET NULL*/,
     PRIMARY KEY (Loan_ID)
 );
 CREATE TABLE Bank_Visit_Loan(  /*--(child)*/
@@ -214,15 +214,15 @@ CREATE TABLE Bank_Visit_Loan(  /*--(child)*/
     Approved_Date DATE,
     Approved_By INT,
     Requested_By INT,
-    FOREIGN KEY (Loan_ID) REFERENCES Loan(Loan_ID) ON DELETE SET NULL,
-    FOREIGN KEY (Approved_By) REFERENCES Maneger(Employee_ID) ON DELETE SET NULL,
-    FOREIGN KEY (Requested_By) REFERENCES Clerk(Employee_ID) ON DELETE SET NULL
+    FOREIGN KEY (Loan_ID) REFERENCES Loan(Loan_ID) /*ON DELETE SET NULL*/,
+    FOREIGN KEY (Approved_By) REFERENCES Maneger(Employee_ID) /*ON DELETE SET NULL*/,
+    FOREIGN KEY (Requested_By) REFERENCES Clerk(Employee_ID) /*ON DELETE SET NULL*/
 );
 CREATE TABLE Online_Loan(  /*--(child)*/
     Loan_ID INT,
     FD_No INT NOT NULL,
-    FOREIGN KEY (Loan_ID) REFERENCES Loan(Loan_ID) ON DELETE SET NULL,
-    FOREIGN KEY (FD_No) REFERENCES Fixed_Deposit(FD_No) ON DELETE SET NULL
+    FOREIGN KEY (Loan_ID) REFERENCES Loan(Loan_ID) /*ON DELETE SET NULL*/,
+    FOREIGN KEY (FD_No) REFERENCES Fixed_Deposit(FD_No) /*ON DELETE SET NULL*/
 );
 CREATE TABLE Loan_Installment_Bank(
     Installment_ID INT,
@@ -230,7 +230,7 @@ CREATE TABLE Loan_Installment_Bank(
     Amount FLOAT,
     Due_Date DATE,
     Paid_Date DATE,
-    FOREIGN KEY (Loan_ID) REFERENCES Loan(Loan_ID) ON DELETE SET NULL,
+    FOREIGN KEY (Loan_ID) REFERENCES Loan(Loan_ID) /*ON DELETE SET NULL*/,
     PRIMARY KEY (Installment_ID)
 );
 CREATE TABLE Fixed_Deposit_Plan(
@@ -244,8 +244,8 @@ CREATE TABLE Fixed_Deposit(
     Amount FLOAT,
     Date DATE,
     Plan_ID INT,
-    FOREIGN KEY (Plan_ID) REFERENCES Fixed_Deposit_Plan(Plan_ID) ON DELETE SET NULL,
-    FOREIGN KEY (Account_No) REFERENCES Savings_Account(Account_No) ON DELETE SET NULL,
+    FOREIGN KEY (Plan_ID) REFERENCES Fixed_Deposit_Plan(Plan_ID) /*ON DELETE SET NULL*/,
+    FOREIGN KEY (Account_No) REFERENCES Savings_Account(Account_No) /*ON DELETE SET NULL*/,
     PRIMARY KEY (FD_No)
 );
 INSERT INTO Savings_Account_Plan(Plan_ID,Account_Plan,Minimum_Balance,Interest) VALUES (1,'Children',0,12),(2,'Teen',500,11),(3,'Adult(18+)',1000,10),(4,'Senior',1000,13);
