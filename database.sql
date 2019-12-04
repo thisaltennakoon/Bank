@@ -90,7 +90,7 @@ CREATE TABLE Clerk(
 );
 CREATE TABLE Account(
     Account_No INT,
-    Currency VARCHAR(3),
+    Currency VARCHAR(3) NOT NULL,
     Balance FLOAT,
     Primary_Customer_ID INT,     /*one account can have many customers.but in most cases it is one*/
     Primary_Branch_ID INT, /*account has a branch. but customer can add many branches.This attribute makes redundence data.*/
