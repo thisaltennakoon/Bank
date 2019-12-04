@@ -89,10 +89,12 @@ CREATE TABLE Account(
     Account_No INT,
     Currency VARCHAR(3),
     Balance FLOAT,
+    Primary_Customer_ID INT,     /*one account can have many customers.but in most cases it is one*/
     Primary_Branch_ID INT, /*account has a branch. but customer can add many branches.This attribute makes redundence data.*/
     Account_Status VARCHAR(10),         /*but in most cases customers tend to use the branch where the account is created*/
     Date_Created DATETIME,
     FOREIGN KEY (Primary_Branch_ID) REFERENCES Branch(Branch_ID) ON DELETE SET NULL,
+    FOREIGN KEY (Primary_Customer_ID) REFERENCES Customer(Customer_ID) ON DELETE SET NULL,
     PRIMARY KEY(Account_No)
 );
 CREATE TABLE Account_Branch(     /*--customer can add many branches to a single account(mentioned in the SRS)*/
@@ -111,6 +113,15 @@ CREATE TABLE Checking_Account(   /*--'Checking account' is the term given in the
     Account_No INT,
     FOREIGN KEY (Account_No) REFERENCES Account(Account_No) ON DELETE SET NULL,
     PRIMARY KEY(Account_No)
+);
+CREATE TABLE Checkbook(
+    Checkbook_Number INT UNSIGNED AUTO_INCREMENT,
+    Account_No INT,
+    Issued_Date DATE,
+    Number_of_Pages INT,
+    Starting_Check_Number INT,
+    FOREIGN KEY (Account_No) REFERENCES Checking_Account(Account_No) ON DELETE SET NULL,
+    PRIMARY KEY(Checkbook_Number)
 );
 CREATE TABLE Savings_Account_Plan(
     Plan_ID INT,
