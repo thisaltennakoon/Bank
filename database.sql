@@ -7,19 +7,19 @@ CREATE TABLE Customer(
     Primary_Contact_No VARCHAR(10), 
     PRIMARY KEY(Customer_ID)
 );
-CREATE TABLE Customer_Email(   
+CREATE TABLE Customer_Email(    /*{Email} multi valued attribute*/ /**/
     Customer_ID INT NOT NULL,
     Email VARCHAR(50) NOT NULL,
     FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID) /*ON DELETE SET NULL*/
-); /*{Email} multi valued attribute*/ /**/
-CREATE TABLE Customer_Contact_No(    
-    Customer_ID INT,
-    Contact_No VARCHAR(10),
+);
+CREATE TABLE Customer_Contact_No(   /*--{Contact_No} multi valued attribute*/ 
+    Customer_ID INT NOT NULL,
+    Contact_No VARCHAR(10) NOT NULL,
     FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID) /*ON DELETE SET NULL*/
-);/*--{Contact_No} multi valued attribute*/
+);
 CREATE TABLE Organization(
     Customer_ID INT,
-    Name VARCHAR(50),
+    Name VARCHAR(50) NOT NULL,
     Bussiness_Registration_Number VARCHAR(20),
     PRIMARY KEY(Customer_ID),
     FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID) /*ON DELETE SET NULL*/
@@ -29,7 +29,7 @@ CREATE TABLE Individual(
     First_Name VARCHAR(10),
     Last_Name VARCHAR(10),
     Middle_Name VARCHAR(10),
-    NIC VARCHAR(10),
+    NIC VARCHAR(10) NOT NULL,
     DOB DATE,
     Gender VARCHAR(6),
     PRIMARY KEY(Customer_ID),
@@ -38,9 +38,9 @@ CREATE TABLE Individual(
 CREATE TABLE Customer_Login(
     Customer_ID INT,
     Username VARCHAR(50),
-    Password VARCHAR(100),
-    Recovery_Contact_No VARCHAR(10),
-    Recovery_Email VARCHAR(50),
+    Password VARCHAR(100) NOT NULL,
+    Recovery_Contact_No VARCHAR(10) NOT NULL,
+    Recovery_Email VARCHAR(50) NOT NULL,
     PRIMARY KEY(Username),
     FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID) /*ON DELETE SET NULL*/
 );
@@ -56,17 +56,17 @@ CREATE TABLE Employee(
     Last_Name VARCHAR(10),
     Middle_Name VARCHAR(10),
     Address VARCHAR(80),
-    NIC VARCHAR(10),
+    NIC VARCHAR(10) NOT NULL,
     DOB DATE,
     Gender VARCHAR(6),
-    Primary_Contact_No VARCHAR(10),
+    Primary_Contact_No VARCHAR(10) NOT NULL,
     Branch_ID INT,
     PRIMARY KEY(Employee_ID),
     FOREIGN KEY (Branch_ID) REFERENCES Branch(Branch_ID) /*ON DELETE SET NULL*/
 );
 CREATE TABLE Employee_Contact_No(    /*--{Contact_No} multi valued attribute*/
-    Employee_ID INT,
-    Contact_No VARCHAR(10),
+    Employee_ID INT NOT NULL,
+    Contact_No VARCHAR(10) NOT NULL,
     FOREIGN KEY (Employee_ID) REFERENCES Employee(Employee_ID) /*ON DELETE SET NULL*/
 );
 CREATE TABLE Employee_Login(
@@ -75,14 +75,17 @@ CREATE TABLE Employee_Login(
     Password VARCHAR(100),
     Recovery_Contact_No VARCHAR(10),
     Recovery_Email VARCHAR(50),
+    PRIMARY KEY(Username),
     FOREIGN KEY (Employee_ID) REFERENCES Employee(Employee_ID) /*ON DELETE SET NULL*/
 );
 CREATE TABLE Maneger(
     Employee_ID INT,
+    PRIMARY KEY(Employee_ID),
     FOREIGN KEY (Employee_ID) REFERENCES Employee(Employee_ID) /*ON DELETE SET NULL*/
 );
 CREATE TABLE Clerk(
     Employee_ID INT,
+    PRIMARY KEY(Employee_ID),
     FOREIGN KEY (Employee_ID) REFERENCES Employee(Employee_ID) /*ON DELETE SET NULL*/
 );
 CREATE TABLE Account(
