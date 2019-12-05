@@ -80,7 +80,7 @@ CREATE TABLE Employee_Login(
     PRIMARY KEY(Username),
     FOREIGN KEY (Employee_ID) REFERENCES Employee(Employee_ID) /*ON DELETE SET NULL*/
 );
-CREATE TABLE Maneger(
+CREATE TABLE Manager(
     Employee_ID INT,
     PRIMARY KEY(Employee_ID),
     FOREIGN KEY (Employee_ID) REFERENCES Employee(Employee_ID) /*ON DELETE SET NULL*/
@@ -93,7 +93,7 @@ CREATE TABLE Clerk(
 CREATE TABLE Account(
     Account_No INT,
     Currency VARCHAR(3) NOT NULL,
-    Balancxe FLOAT,
+    Balance FLOAT,
     Primary_Customer_ID INT,     /*one account can have many customers.but in most cases it is one*/
     Primary_Branch_ID INT, /*account has a branch. but customer can add many branches.This attribute makes redundence data.*/
     Account_Status VARCHAR(10),         /*but in most cases customers tend to use the branch where the account is created*/
