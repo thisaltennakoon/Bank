@@ -95,7 +95,7 @@ CREATE TABLE Account(
     Primary_Customer_ID INT,     /*one account can have many customers.but in most cases it is one*/
     Primary_Branch_ID INT, /*account has a branch. but customer can add many branches.This attribute makes redundence data.*/
     Account_Status VARCHAR(10),         /*but in most cases customers tend to use the branch where the account is created*/
-    Date_Created DATETIME,
+    Date_Created TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (Primary_Branch_ID) REFERENCES Branch(Branch_ID) /*ON DELETE SET NULL*/,
     FOREIGN KEY (Primary_Customer_ID) REFERENCES Customer(Customer_ID) /*ON DELETE SET NULL*/,
     PRIMARY KEY(Account_No)
@@ -120,7 +120,7 @@ CREATE TABLE Checking_Account(   /*--'Checking account' is the term given in the
 CREATE TABLE Checkbook(
     Checkbook_Number INT UNSIGNED AUTO_INCREMENT,
     Account_No INT NOT NULL,
-    Issued_Date DATE NOT NULL,
+    Issued_Date DATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     Number_of_Pages INT NOT NULL,
     Starting_Check_Number INT NOT NULL,
     FOREIGN KEY (Account_No) REFERENCES Checking_Account(Account_No) /*ON DELETE SET NULL*/,
@@ -155,7 +155,7 @@ CREATE TABLE Transaction_Detail(
     Transaction_ID INT,
     Account_No INT NOT NULL,
     Amount FLOAT NOT NULL,
-    Date_Time DATETIME,
+    Date_Time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (Account_No) REFERENCES Account(Account_No) /*ON DELETE SET NULL*/,
     PRIMARY KEY(Transaction_ID)
 );
@@ -189,7 +189,7 @@ CREATE TABLE Requested_Loan( /*--this is also not in the ERD. in my opinion this
     Branch_ID INT,
     Time_Period INT NOT NULL,
     Installment FLOAT NOT NULL,
-    Requested_Date DATE NOT NULL,
+    Requested_Date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     Requested_By INT,
     Request_Status VARCHAR(10),
     FOREIGN KEY (Requested_By) REFERENCES Clerk(Employee_ID) /*ON DELETE SET NULL*/,
@@ -213,7 +213,7 @@ CREATE TABLE Loan( /*--this is also not mentioned as a inheritence in the ERD. P
 );
 CREATE TABLE Bank_Visit_Loan(  /*--(child)*/
     Loan_ID INT,
-    Approved_Date DATE,
+    Approved_Date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     Approved_By INT,
     Requested_By INT,
     FOREIGN KEY (Loan_ID) REFERENCES Loan(Loan_ID) /*ON DELETE SET NULL*/,
@@ -228,10 +228,10 @@ CREATE TABLE Online_Loan(  /*--(child)*/
 );
 CREATE TABLE Loan_Installment_Bank(
     Installment_ID INT UNSIGNED AUTO_INCREMENT,
-    Loan_ID INT,
-    Amount FLOAT,
+    Loan_ID INT NOT NULL,
+    Amount FLOAT NOT NULL,
     Due_Date DATE,
-    Paid_Date DATE,
+    Paid_Date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (Loan_ID) REFERENCES Loan(Loan_ID) /*ON DELETE SET NULL*/,
     PRIMARY KEY (Installment_ID)
 );
@@ -246,7 +246,7 @@ CREATE TABLE Fixed_Deposit(
     Customer_ID INT NOT NULL,
     Account_No INT, /*account number can be null here because there no need to have a savings account to open a fixed deposit.anyone can do */
     Amount FLOAT NOT NULL,
-    Date_Opened DATE NOT NULL,
+    Date_Opened DATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     Plan_ID INT NOT NULL,
     FOREIGN KEY (Plan_ID) REFERENCES Fixed_Deposit_Plan(Plan_ID) /*ON DELETE SET NULL*/,
     FOREIGN KEY (Account_No) REFERENCES Savings_Account(Account_No) /*ON DELETE SET NULL*/,
@@ -255,4 +255,3 @@ CREATE TABLE Fixed_Deposit(
 INSERT INTO Savings_Account_Plan(Plan_ID,Account_Plan,Minimum_Balance,Interest) VALUES (1,'Children',0,12),(2,'Teen',500,11),(3,'Adult(18+)',1000,10),(4,'Senior',1000,13);
 INSERT INTO Fixed_Deposit_Plan(Plan_ID,Time_Period,Interest) VALUES (1,'6 months',13),(2,'1 year',14),(3,'3 years',15);
 INSERT INTO Employee_Login(Employee_ID,Username,Password,Recovery_Contact_No,Recovery_Email) VALUES (973611178,'thisal','8cb2237d0679ca88db6464eac60da96345513964','0766220249','thisal@mail.com'); /*password=12345*/
-
