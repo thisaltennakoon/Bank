@@ -1,6 +1,6 @@
 <?php
 	session_start();
-	unset($_SESSION['email']);		
-	unset($_SESSION['name']);
+	unset($_SESSION['User']);		
+	unset($_SESSION['Employee_ID']);
 	header('location: login.php');
 ?>

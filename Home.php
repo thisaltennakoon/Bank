@@ -9,4 +9,4 @@ echo '<br>Employee_ID : '.$_SESSION['Employee_ID'];
 
 echo '<br><a href="CreateaAccount.php">Create a Account</a>';
 echo '<br><a href="LogOut.php">Log Out</a>';
-?>1
+?>

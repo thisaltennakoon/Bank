@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <body>
-<h2>Multi Banking System</h2>
+<h1>Bank A Seychelles</h1>
+<h2>Employee Log In</h2>
 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
   Username:
   <input type="text" name="User" require>
@@ -36,8 +37,8 @@ if(isset($_POST) & !empty($_POST)){
     while($row = $result->fetch_assoc()) {
       $_SESSION['User'] = $row["Username"];
       $_SESSION['Employee_ID'] = $row["Employee_ID"];
-      echo $user;
-      echo $pass;
+      //echo $user;
+      //echo $pass;
       header("location: home.php");
         //echo "<br> email: ". $row["email"]. " <br>Name: ". $row["name"]. " <br>password   " . $row["password"] . "<br>";
     }
