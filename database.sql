@@ -19,13 +19,6 @@ CREATE TABLE Customer_Contact_No(   /*--{Contact_No} multi valued attribute*/
     Contact_No VARCHAR(10) NOT NULL,
     FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID) /*ON DELETE SET NULL*/
 );
-CREATE TABLE Organization(
-    Customer_ID INT,
-    Name VARCHAR(50) NOT NULL,
-    Bussiness_Registration_Number VARCHAR(20),
-    PRIMARY KEY(Customer_ID),
-    FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID) /*ON DELETE SET NULL*/
-);
 CREATE TABLE Individual(
     Customer_ID INT,
     First_Name VARCHAR(10),
@@ -36,6 +29,19 @@ CREATE TABLE Individual(
     Gender VARCHAR(6),
     PRIMARY KEY(Customer_ID),
     FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID) /*ON DELETE SET NULL*/
+);
+CREATE TABLE Organization(
+    Customer_ID INT,
+    Name VARCHAR(50) NOT NULL,
+    Bussiness_Registration_Number VARCHAR(20),
+    PRIMARY KEY(Customer_ID),
+    FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID) /*ON DELETE SET NULL*/
+);
+CREATE TABLE Organization_Individual(
+    Organization_ID INT,
+    Individual_ID INT,
+    FOREIGN KEY (Organization_ID) REFERENCES Organization(Customer_ID),
+    FOREIGN KEY (Individual_ID) REFERENCES Individual(Customer_ID)
 );
 CREATE TABLE Customer_Login(
     Customer_ID INT,
