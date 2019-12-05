@@ -1,3 +1,4 @@
+DROP DATABASE Bank;
 CREATE DATABASE Bank;
 USE Bank;
 CREATE TABLE Customer(
@@ -120,7 +121,7 @@ CREATE TABLE Checking_Account(   /*--'Checking account' is the term given in the
 CREATE TABLE Checkbook(
     Checkbook_Number INT UNSIGNED AUTO_INCREMENT,
     Account_No INT NOT NULL,
-    Issued_Date DATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    Issued_Date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     Number_of_Pages INT NOT NULL,
     Starting_Check_Number INT NOT NULL,
     FOREIGN KEY (Account_No) REFERENCES Checking_Account(Account_No) /*ON DELETE SET NULL*/,
@@ -246,7 +247,7 @@ CREATE TABLE Fixed_Deposit(
     Customer_ID INT NOT NULL,
     Account_No INT, /*account number can be null here because there no need to have a savings account to open a fixed deposit.anyone can do */
     Amount FLOAT NOT NULL,
-    Date_Opened DATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    Date_Opened TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     Plan_ID INT NOT NULL,
     FOREIGN KEY (Plan_ID) REFERENCES Fixed_Deposit_Plan(Plan_ID) /*ON DELETE SET NULL*/,
     FOREIGN KEY (Account_No) REFERENCES Savings_Account(Account_No) /*ON DELETE SET NULL*/,
