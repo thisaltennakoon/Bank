@@ -169,7 +169,7 @@ CREATE TABLE Transaction_Detail(
 );
 CREATE TABLE Bank_Transaction(
     Transaction_ID INT,
-    Type VARCHAR(8),
+    Withdraw BOOLEAN,/*withdraw-True,deposit-False*/
     FOREIGN KEY (Transaction_ID) REFERENCES Transaction_Details(Transaction_ID) /*ON DELETE SET NULL*/
 );
 CREATE TABLE ATM_Withdrawal(
@@ -178,10 +178,13 @@ CREATE TABLE ATM_Withdrawal(
     FOREIGN KEY (Transaction_ID) REFERENCES Transaction_Details(Transaction_ID) /*ON DELETE SET NULL*/
 );
 CREATE TABLE Online_Transaction(
-    Transaction_ID INT,
+    Online_Transaction_ID INT,
+    Sender_ACC_No INT,
     Recepient_ACC_No INT,
-    FOREIGN KEY (Transaction_ID) REFERENCES Transaction_Details(Transaction_ID) /*ON DELETE SET NULL*/,
-    FOREIGN KEY (Recepient_ACC_No) REFERENCES Account(Account_No) /*ON DELETE SET NULL*/
+    Sender_Transaction_ID INT,
+    FOREIGN KEY (Recepient_ACC_No) REFERENCES Account(Account_No) /*ON DELETE SET NULL*/,
+    FOREIGN KEY (Sender_ACC_No) REFERENCES Account(Account_No) /*ON DELETE SET NULL*/,
+    PRIMARY KEY(Online_Transaction_ID)
 );
 CREATE TABLE Loan_Type(  /*--there are basically two loan types are given in the description but it has not mentioned in the ERD.*/
     Type_ID INT,         /*--Please have a look*/
@@ -256,8 +259,10 @@ CREATE TABLE Fixed_Deposit(
     Amount FLOAT NOT NULL,
     Date_Opened DATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     Plan_ID INT NOT NULL,
+    Transaction_ID INT,
     FOREIGN KEY (Plan_ID) REFERENCES Fixed_Deposit_Plan(Plan_ID) /*ON DELETE SET NULL*/,
     FOREIGN KEY (Account_No) REFERENCES Savings_Account(Account_No) /*ON DELETE SET NULL*/,
+    FOREIGN KEY (Transaction_ID) REFERENCES Online_Transaction(Transaction_ID) /*ON DELETE SET NULL*/,
     PRIMARY KEY (FD_No)
 );
 INSERT INTO Savings_Account_Plan(Plan_ID,Account_Plan,Minimum_Balance,Interest) VALUES (1,'Children',0,12),(2,'Teen',500,11),(3,'Adult(18+)',1000,10),(4,'Senior',1000,13);
