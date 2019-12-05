@@ -2,8 +2,10 @@ DROP DATABASE Bank;
 CREATE DATABASE Bank;
 USE Bank;
 CREATE TABLE Customer(
-    Customer_ID INT UNSIGNED AUTO_INCREMENT,
-    Address VARCHAR(80),
+    Customer_ID INT UNSIGNED AUTO_INCREMENT,    /*Statrt with CUS*/
+    Address_Line_1 VARCHAR(20),
+    Address_Line_2 VARCHAR(20),
+    Address_Line_3 VARCHAR(20),
     Primary_Email VARCHAR(50),
     Primary_Contact_No VARCHAR(10), 
     PRIMARY KEY(Customer_ID)
@@ -18,13 +20,6 @@ CREATE TABLE Customer_Contact_No(   /*--{Contact_No} multi valued attribute*/
     Contact_No VARCHAR(10) NOT NULL,
     FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID) /*ON DELETE SET NULL*/
 );
-CREATE TABLE Organization(
-    Customer_ID INT,
-    Name VARCHAR(50) NOT NULL,
-    Bussiness_Registration_Number VARCHAR(20),
-    PRIMARY KEY(Customer_ID),
-    FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID) /*ON DELETE SET NULL*/
-);
 CREATE TABLE Individual(
     Customer_ID INT,
     First_Name VARCHAR(10),
@@ -35,6 +30,19 @@ CREATE TABLE Individual(
     Gender VARCHAR(6),
     PRIMARY KEY(Customer_ID),
     FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID) /*ON DELETE SET NULL*/
+);
+CREATE TABLE Organization(
+    Customer_ID INT,
+    Name VARCHAR(50) NOT NULL,
+    Bussiness_Registration_Number VARCHAR(20),
+    PRIMARY KEY(Customer_ID),
+    FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID) /*ON DELETE SET NULL*/
+);
+CREATE TABLE Organization_Individual(
+    Organization_ID INT,
+    Individual_ID INT,
+    FOREIGN KEY (Organization_ID) REFERENCES Organization(Customer_ID),
+    FOREIGN KEY (Individual_ID) REFERENCES Individual(Customer_ID)
 );
 CREATE TABLE Customer_Login(
     Customer_ID INT,
@@ -79,7 +87,7 @@ CREATE TABLE Employee_Login(
     PRIMARY KEY(Username),
     FOREIGN KEY (Employee_ID) REFERENCES Employee(Employee_ID) /*ON DELETE SET NULL*/
 );
-CREATE TABLE Maneger(
+CREATE TABLE Manager(
     Employee_ID INT,
     PRIMARY KEY(Employee_ID),
     FOREIGN KEY (Employee_ID) REFERENCES Employee(Employee_ID) /*ON DELETE SET NULL*/
@@ -162,7 +170,7 @@ CREATE TABLE Transaction_Detail(
 );
 CREATE TABLE Bank_Transaction(
     Transaction_ID INT,
-    Type VARCHAR(8),
+    Withdraw BOOLEAN,/*withdraw-True,deposit-False*/
     FOREIGN KEY (Transaction_ID) REFERENCES Transaction_Details(Transaction_ID) /*ON DELETE SET NULL*/
 );
 CREATE TABLE ATM_Withdrawal(
@@ -171,10 +179,13 @@ CREATE TABLE ATM_Withdrawal(
     FOREIGN KEY (Transaction_ID) REFERENCES Transaction_Details(Transaction_ID) /*ON DELETE SET NULL*/
 );
 CREATE TABLE Online_Transaction(
-    Transaction_ID INT,
+    Online_Transaction_ID INT,
+    Sender_ACC_No INT,
     Recepient_ACC_No INT,
-    FOREIGN KEY (Transaction_ID) REFERENCES Transaction_Details(Transaction_ID) /*ON DELETE SET NULL*/,
-    FOREIGN KEY (Recepient_ACC_No) REFERENCES Account(Account_No) /*ON DELETE SET NULL*/
+    Sender_Transaction_ID INT,
+    FOREIGN KEY (Recepient_ACC_No) REFERENCES Account(Account_No) /*ON DELETE SET NULL*/,
+    FOREIGN KEY (Sender_ACC_No) REFERENCES Account(Account_No) /*ON DELETE SET NULL*/,
+    PRIMARY KEY(Online_Transaction_ID)
 );
 CREATE TABLE Loan_Type(  /*--there are basically two loan types are given in the description but it has not mentioned in the ERD.*/
     Type_ID INT,         /*--Please have a look*/
@@ -249,10 +260,13 @@ CREATE TABLE Fixed_Deposit(
     Amount FLOAT NOT NULL,
     Date_Opened TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     Plan_ID INT NOT NULL,
+    Transaction_ID INT,
     FOREIGN KEY (Plan_ID) REFERENCES Fixed_Deposit_Plan(Plan_ID) /*ON DELETE SET NULL*/,
     FOREIGN KEY (Account_No) REFERENCES Savings_Account(Account_No) /*ON DELETE SET NULL*/,
+    FOREIGN KEY (Transaction_ID) REFERENCES Online_Transaction(Transaction_ID) /*ON DELETE SET NULL*/,
     PRIMARY KEY (FD_No)
 );
 INSERT INTO Savings_Account_Plan(Plan_ID,Account_Plan,Minimum_Balance,Interest) VALUES (1,'Children',0,12),(2,'Teen',500,11),(3,'Adult(18+)',1000,10),(4,'Senior',1000,13);
 INSERT INTO Fixed_Deposit_Plan(Plan_ID,Time_Period,Interest) VALUES (1,'6 months',13),(2,'1 year',14),(3,'3 years',15);
 INSERT INTO Employee_Login(Employee_ID,Username,Password,Recovery_Contact_No,Recovery_Email) VALUES (973611178,'thisal','8cb2237d0679ca88db6464eac60da96345513964','0766220249','thisal@mail.com'); /*password=12345*/
+
