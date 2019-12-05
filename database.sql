@@ -184,12 +184,12 @@ CREATE TABLE Loan_Type(  /*--there are basically two loan types are given in the
 CREATE TABLE Requested_Loan( /*--this is also not in the ERD. in my opinion this should be there because there can be many*/
     Request_ID INT UNSIGNED AUTO_INCREMENT,          /*--loans which cannot approve at all and if we add all those things to the loan table,it would become a dustbin*/
     Account_No INT NOT NULL,
-    Loan_Type INT,
-    Amount FLOAT,
+    Loan_Type INT NOT NULL,
+    Amount FLOAT NOT NULL,
     Branch_ID INT,
-    Time_Period INT,
-    Installment FLOAT,
-    Requested_Date DATE,
+    Time_Period INT NOT NULL,
+    Installment FLOAT NOT NULL,
+    Requested_Date DATE NOT NULL,
     Requested_By INT,
     Request_Status VARCHAR(10),
     FOREIGN KEY (Requested_By) REFERENCES Clerk(Employee_ID) /*ON DELETE SET NULL*/,
@@ -227,7 +227,7 @@ CREATE TABLE Online_Loan(  /*--(child)*/
     FOREIGN KEY (FD_No) REFERENCES Fixed_Deposit(FD_No) /*ON DELETE SET NULL*/
 );
 CREATE TABLE Loan_Installment_Bank(
-    Installment_ID INT,
+    Installment_ID INT UNSIGNED AUTO_INCREMENT,
     Loan_ID INT,
     Amount FLOAT,
     Due_Date DATE,
@@ -237,15 +237,17 @@ CREATE TABLE Loan_Installment_Bank(
 );
 CREATE TABLE Fixed_Deposit_Plan(
     Plan_ID INT,
-    Time_Period VARCHAR(10),
-    Interest FLOAT
+    Time_Period VARCHAR(10) NOT NULL,
+    Interest FLOAT NOT NULL,
+    PRIMARY KEY (Plan_ID)
 );
 CREATE TABLE Fixed_Deposit(
     FD_No INT,
-    Account_No INT,
-    Amount FLOAT,
-    Date DATE,
-    Plan_ID INT,
+    Customer_ID INT NOT NULL,
+    Account_No INT, /*account number can be null here because there no need to have a savings account to open a fixed deposit.anyone can do */
+    Amount FLOAT NOT NULL,
+    Date_Opened DATE NOT NULL,
+    Plan_ID INT NOT NULL,
     FOREIGN KEY (Plan_ID) REFERENCES Fixed_Deposit_Plan(Plan_ID) /*ON DELETE SET NULL*/,
     FOREIGN KEY (Account_No) REFERENCES Savings_Account(Account_No) /*ON DELETE SET NULL*/,
     PRIMARY KEY (FD_No)
