@@ -1,8 +1,10 @@
 CREATE DATABASE Bank;
 USE Bank;
 CREATE TABLE Customer(
-    Customer_ID INT UNSIGNED AUTO_INCREMENT,
-    Address VARCHAR(80),
+    Customer_ID INT UNSIGNED AUTO_INCREMENT,    /*Statrt with CUS*/
+    Address_Line_1 VARCHAR(20),
+    Address_Line_2 VARCHAR(20),
+    Address_Line_3 VARCHAR(20),
     Primary_Email VARCHAR(50),
     Primary_Contact_No VARCHAR(10), 
     PRIMARY KEY(Customer_ID)
@@ -91,7 +93,7 @@ CREATE TABLE Clerk(
 CREATE TABLE Account(
     Account_No INT,
     Currency VARCHAR(3) NOT NULL,
-    Balance FLOAT,
+    Balancxe FLOAT,
     Primary_Customer_ID INT,     /*one account can have many customers.but in most cases it is one*/
     Primary_Branch_ID INT, /*account has a branch. but customer can add many branches.This attribute makes redundence data.*/
     Account_Status VARCHAR(10),         /*but in most cases customers tend to use the branch where the account is created*/
