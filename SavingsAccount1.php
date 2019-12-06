@@ -49,6 +49,8 @@ if(isset($_POST) & !empty($_POST)){
     }else{
         echo 'error';
     }
+    echo '<h2>Customer Already exist</h2>';
+    echo '<br><h3>Check the following details</h3><br>';
     echo'<form>';
     echo'First Name:<input type="text" name="firstname" value="'.$First_Name.'" readonly><br><br>';
     echo'Middle Name:<input type="text" name="middlename" value="'.$Last_Name.'" readonly><br><br>';
@@ -59,22 +61,24 @@ if(isset($_POST) & !empty($_POST)){
     echo'Address Line_3:<input type="text" name="adr3" value="'.$Address_Line_3.'" readonly><br><br>';
     echo'Email:<input type="email" name="email" value="'.$Primary_Email.'" readonly><br><br>';
     echo'Contact Number:<input type="text" name="contactnumber" value="'.$Primary_Contact_No.'" readonly><br><br>';
-    echo'<select name="Gender">';
-    echo'<option value="'.$First_Name.'">'.$First_Name.'</option>';
+    echo'Gender:<input type="text" name="Gender" value="'.$Gender.'" readonly><br><br>';
     echo'</form>';
-    <button type="button" onclick="window.location.href='SavingsAccount2.php'">Next</button>
+    echo '<button type="button" onclick="window.location.href='.'\'SavingsAccount2.php\''.'">Proceed</button>           ';
+    echo '<button type="button" onclick="window.location.href='.'\'SavingsAccount2_edit.php?NIC='.$NIC.'\''.'">Modify the Details</button>';
+   
 
   }else{
+    echo '<h1>Application for Register a New Customer</h1><br>';
     echo'<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>';
-    echo'First Name:<input type="text" name="firstname" require><br><br>';
+    echo'First Name:<input type="text" name="firstname" required><br><br>';
     echo'Middle Name:<input type="text" name="middlename"><br><br>';
     echo'Last Name:<input type="text" name="lastname"><br><br>';
-    echo'Date of Birth:<input type="text" name="DOB" require><br><br>';
+    echo'Date of Birth:<input type="text" name="DOB" required><br><br>';
     echo'Address Line 1:<input type="text" name="adr1"><br><br>';
     echo'Address Line 2:<input type="text" name="adr2"><br><br>';
     echo'Address Line_3:<input type="text" name="adr3"><br><br>';
-    echo'Email:<input type="email" name="email" require><br><br>';
-    echo'Contact Number:<input type="text" name="contactnumber" require><br><br>';
+    echo'Email:<input type="email" name="email" required><br><br>';
+    echo'Contact Number:<input type="text" name="contactnumber" required><br><br>';
     echo'<select name="Gender">';
     echo'<option value="Male">Male</option>';
     echo'<option value="Female">Female</option>';

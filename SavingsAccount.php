@@ -9,7 +9,7 @@ echo "<h1>Application for Creating Savings Account</h1><br>";
 <html>
 <body>
 <form method="post" action="SavingsAccount1.php">
-    Enter NIC:<input type="text" name="NIC" require>
+    Enter NIC:<input type="text" name="NIC" required>
     <input type="submit" value="Apply"><br><br>
 </form>
 
