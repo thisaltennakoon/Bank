@@ -10,6 +10,10 @@ CREATE TABLE Customer(
     Primary_Contact_No VARCHAR(10), 
     PRIMARY KEY(Customer_ID)
 );
+
+INSERT INTO Customer(Address_Line_1,Address_Line_2,Address_Line_3,Primary_Email,Primary_Contact_No) 
+VALUES ('suwasetha','old kesbewa road','delkanda','thisal@mail.com','0766220249');
+
 CREATE TABLE Customer_Email(    /*{Email} multi valued attribute*/ /**/
     Customer_ID INT NOT NULL,
     Email VARCHAR(50) NOT NULL,
@@ -31,6 +35,10 @@ CREATE TABLE Individual(
     PRIMARY KEY(Customer_ID),
     FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID) /*ON DELETE SET NULL*/
 );
+
+INSERT INTO Individual(Customer_ID,First_Name,Middle_Name,Last_Name,NIC,DOB,Gender) 
+VALUES (1,'Thisal','Manjitha','Tennakoon','973611178V','1997-12-26','Male');
+
 CREATE TABLE Organization(
     Customer_ID INT,
     Name VARCHAR(50) NOT NULL,
@@ -54,11 +62,13 @@ CREATE TABLE Customer_Login(
     FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID) /*ON DELETE SET NULL*/
 );
 CREATE TABLE Branch(
-    Branch_ID INT,
+    Branch_ID INT UNSIGNED AUTO_INCREMENT,
     Branch_Name VARCHAR(20),
     Location VARCHAR(20),
     PRIMARY KEY(Branch_ID)
 );
+
+
 CREATE TABLE Employee(
     Employee_ID INT,
     First_Name VARCHAR(10),
@@ -73,6 +83,10 @@ CREATE TABLE Employee(
     PRIMARY KEY(Employee_ID),
     FOREIGN KEY (Branch_ID) REFERENCES Branch(Branch_ID) /*ON DELETE SET NULL*/
 );
+
+INSERT INTO Employee(Employee_ID,First_Name,Middle_Name,Last_Name,NIC,DOB,Gender,Primary_Contact_No,Branch_ID) 
+VALUES (1,'Thisal','Manjitha','Tennakoon','973611178V','1997-12-26','Male','0766220249',2);
+
 CREATE TABLE Employee_Contact_No(    /*--{Contact_No} multi valued attribute*/
     Employee_ID INT NOT NULL,
     Contact_No VARCHAR(10) NOT NULL,
@@ -87,6 +101,9 @@ CREATE TABLE Employee_Login(
     PRIMARY KEY(Username),
     FOREIGN KEY (Employee_ID) REFERENCES Employee(Employee_ID) /*ON DELETE SET NULL*/
 );
+INSERT INTO Employee_Login(Employee_ID,Username,Password,Recovery_Contact_No,Recovery_Email) 
+VALUES (1,'thisal','8cb2237d0679ca88db6464eac60da96345513964','0766220249','thisal@mail.com'); /*password=12345*/
+
 CREATE TABLE Manager(
     Employee_ID INT,
     PRIMARY KEY(Employee_ID),
@@ -98,8 +115,7 @@ CREATE TABLE Clerk(
     FOREIGN KEY (Employee_ID) REFERENCES Employee(Employee_ID) /*ON DELETE SET NULL*/
 );
 CREATE TABLE Account(
-    Account_No INT,
-    Currency VARCHAR(3) NOT NULL,
+    Account_No INT UNSIGNED AUTO_INCREMENT,
     Balance FLOAT,
     Primary_Customer_ID INT,     /*one account can have many customers.but in most cases it is one*/
     Primary_Branch_ID INT, /*account has a branch. but customer can add many branches.This attribute makes redundence data.*/
@@ -142,6 +158,10 @@ CREATE TABLE Savings_Account_Plan(
     Interest FLOAT,
     PRIMARY KEY (Plan_ID)
 );
+
+INSERT INTO Savings_Account_Plan(Plan_ID,Account_Plan,Minimum_Balance,Interest) 
+VALUES (1,'Children',0,12),(2,'Teen',500,11),(3,'Adult(18+)',1000,10),(4,'Senior',1000,13);
+
 CREATE TABLE Savings_Account(
     Account_No INT,
     Number_of_Withdrawals INT CHECK (Number_of_Withdrawals <= 5),
@@ -253,6 +273,10 @@ CREATE TABLE Fixed_Deposit_Plan(
     Interest FLOAT NOT NULL,
     PRIMARY KEY (Plan_ID)
 );
+
+INSERT INTO Fixed_Deposit_Plan(Plan_ID,Time_Period,Interest) 
+VALUES (1,'6 months',13),(2,'1 year',14),(3,'3 years',15);
+
 CREATE TABLE Fixed_Deposit(
     FD_No INT,
     Customer_ID INT NOT NULL,
@@ -266,12 +290,9 @@ CREATE TABLE Fixed_Deposit(
     FOREIGN KEY (Transaction_ID) REFERENCES Online_Transaction(Transaction_ID) /*ON DELETE SET NULL*/,
     PRIMARY KEY (FD_No)
 );
-INSERT INTO Savings_Account_Plan(Plan_ID,Account_Plan,Minimum_Balance,Interest) VALUES (1,'Children',0,12),(2,'Teen',500,11),(3,'Adult(18+)',1000,10),(4,'Senior',1000,13);
-INSERT INTO Fixed_Deposit_Plan(Plan_ID,Time_Period,Interest) VALUES (1,'6 months',13),(2,'1 year',14),(3,'3 years',15);
-INSERT INTO Employee_Login(Employee_ID,Username,Password,Recovery_Contact_No,Recovery_Email) VALUES (973611178,'thisal','8cb2237d0679ca88db6464eac60da96345513964','0766220249','thisal@mail.com'); /*password=12345*/
-INSERT INTO Customer(Address_Line_1,Address_Line_2,Address_Line_3,Primary_Email,Primary_Contact_No) 
-VALUES ('suwasetha','old kesbewa road','delkanda','thisal@mail.com','0766220249');
 
-INSERT INTO Individual(Customer_ID,First_Name,Middle_Name,Last_Name,NIC,DOB,Gender) 
-VALUES (1,'Thisal','Manjitha','Tennakoon','973611178V','1997-12-26','Male');
+/*INSERT INTO Branch(Branch_Name,Location) OUTPUT Inserted.Branch_ID VALUES ('Head Office','Colombo 1');
+INSERT INTO Branch(Branch_Name,Location) OUTPUT Inserted.Branch_ID VALUES ('Moratuwa','Katubedda');*/
 
+INSERT INTO Branch(Branch_Name,Location)  VALUES ('Head Office','Colombo 1');
+INSERT INTO Branch(Branch_Name,Location)  VALUES ('Moratuwa','Katubedda');

@@ -63,7 +63,7 @@ if(isset($_POST) & !empty($_POST) & isset($_POST['NIC'])){
     echo'Contact Number:<input type="text" name="contactnumber" value="'.$Primary_Contact_No.'" readonly><br><br>';
     echo'Gender:<input type="text" name="Gender" value="'.$Gender.'" readonly><br><br>';
     echo'</form>';
-    echo '<button type="button" onclick="window.location.href='.'\'SavingsAccount2.php\''.'">Proceed</button>           ';
+    echo '<button type="button" onclick="window.location.href='.'\'SavingsAccount2.php?Customer_ID='.$Customer_ID.'\''.'">Proceed</button>           ';
     echo '<button type="button" onclick="window.location.href='.'\'SavingsAccount2_edit.php?NIC='.$NIC.'\''.'">Modify the Details</button>';
    
 
