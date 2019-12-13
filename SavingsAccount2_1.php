@@ -30,4 +30,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     $conn->close();
 }
+echo '<br><a href="home.php">Home</a>';
+echo '<br><a href="LogOut.php">Log Out</a>';
 ?>

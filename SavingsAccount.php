@@ -12,6 +12,6 @@ echo "<h1>Application for Creating Savings Account</h1><br>";
     Enter NIC:<input type="text" name="NIC" required>
     <input type="submit" value="Apply"><br><br>
 </form>
-
+<br><a href="LogOut.php">Log Out</a>
 </body>
 </html>

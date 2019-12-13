@@ -53,5 +53,5 @@ if(isset($_GET['Customer_ID'])){
     echo'</form>';
     $conn->close();
 }
-
+echo '<br><a href="LogOut.php">Log Out</a>';
 ?>

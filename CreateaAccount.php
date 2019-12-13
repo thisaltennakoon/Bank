@@ -7,4 +7,5 @@ if (!isset($_SESSION['User'])& empty($_SESSION['User'])) {
 <h2>Create a New Account</h2>
 <button type="button" onclick="window.location.href='SavingsAccount.php'">Savings Account</button>
 <button type="button" onclick="window.location.href='CheckingAccount.php'">Checking Account</button>
+<br><br><a href="LogOut.php">Log Out</a>
 

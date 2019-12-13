@@ -3,8 +3,8 @@ session_start();
 if (!isset($_SESSION['User'])& empty($_SESSION['User'])) {
     header('location: Login.php');
 }
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $Customer_ID= $_POST["Customer_ID"];
+if(isset($_POST) & !empty($_POST) & isset($_POST['firstname'])){
+    //$Customer_ID= $_POST["Customer_ID"];
     $firstname = $_POST["firstname"];
     $middlename = $_POST["middlename"];
     $lastname = $_POST["lastname"];
@@ -15,6 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST["email"];
     $contactnumber = $_POST["contactnumber"];
     $Gender = $_POST["Gender"];
+    $NIC = $_POST['NIC'];
     $servername = "localhost";
     $username = "root";
     $password = "";
@@ -23,21 +24,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
-
-    $sql = "UPDATE Customer SET Address_Line_1='$adr1',Address_Line_2='$adr2',Address_Line_3='$adr3',Primary_Email='$email',Primary_Contact_No='$contactnumber' WHERE Customer_ID='$Customer_ID'";
+  
+    $sql = "INSERT INTO Customer (Address_Line_1,Address_Line_2,Address_Line_3,Primary_Email,Primary_Contact_No) VALUES ('$adr1','$adr2','$adr3','$email','$contactnumber')";
     if ($conn->query($sql) === TRUE) {
-        $sql = "UPDATE Individual SET First_Name='$firstname',Middle_Name='$middlename',Last_Name='$lastname',DOB='$DOB',Gender='$Gender' WHERE Customer_ID='$Customer_ID'";
+        $Customer_ID = $conn->insert_id;
+        $sql = "INSERT INTO Individual (Customer_ID,First_Name,Middle_Name,Last_Name,NIC,DOB,Gender) VALUES ('$Customer_ID','$firstname','$middlename','$lastname','$NIC','$DOB','$Gender')";
         if ($conn->query($sql) === TRUE) {
+            //echo '<button type="button" onclick="window.location.href='.'\'SavingsAccount2.php?Customer_ID='.$Customer_ID.'\''.'">Proceed</button>';
             header('location: SavingsAccount2.php?Customer_ID='.$Customer_ID.'');
         } else {
-            echo "Error updating record: to Individual " . $conn->error;
+            echo "Error updating record: " . $conn->error;
         }
     } else {
-        echo "Error updating record: to Customer " . $conn->error;
+        echo "Error updating record: " . $conn->error;
     }
-
-
-
-
-}
-?>
+  
+  }
+  ?>

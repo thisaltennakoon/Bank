@@ -3,9 +3,9 @@ CREATE DATABASE Bank;
 USE Bank;
 CREATE TABLE Customer(
     Customer_ID INT UNSIGNED AUTO_INCREMENT,    /*Statrt with CUS*/
-    Address_Line_1 VARCHAR(20),
-    Address_Line_2 VARCHAR(20),
-    Address_Line_3 VARCHAR(20),
+    Address_Line_1 VARCHAR(30),
+    Address_Line_2 VARCHAR(30),
+    Address_Line_3 VARCHAR(30),
     Primary_Email VARCHAR(50),
     Primary_Contact_No VARCHAR(10), 
     PRIMARY KEY(Customer_ID)
@@ -26,9 +26,9 @@ CREATE TABLE Customer_Contact_No(   /*--{Contact_No} multi valued attribute*/
 );
 CREATE TABLE Individual(
     Customer_ID INT,
-    First_Name VARCHAR(10),
-    Last_Name VARCHAR(10),
-    Middle_Name VARCHAR(10),
+    First_Name VARCHAR(20),
+    Last_Name VARCHAR(20),
+    Middle_Name VARCHAR(20),
     NIC VARCHAR(10) NOT NULL,
     DOB DATE,
     Gender VARCHAR(6),
@@ -296,3 +296,4 @@ INSERT INTO Branch(Branch_Name,Location) OUTPUT Inserted.Branch_ID VALUES ('Mora
 
 INSERT INTO Branch(Branch_Name,Location)  VALUES ('Head Office','Colombo 1');
 INSERT INTO Branch(Branch_Name,Location)  VALUES ('Moratuwa','Katubedda');
+INSERT INTO Customer (Address_Line_1,Address_Line_2,Address_Line_3,Primary_Email,Primary_Contact_No) VALUES ('Thisal','Kanapothuhera','Nugegoda','thisaltennakoon@gmail.com','0717303126');
