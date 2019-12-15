@@ -30,15 +30,24 @@ if(isset($_POST) & !empty($_POST)){
   if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
   }
-  $sql = "SELECT * FROM Employee_Login WHERE Username='$user' AND Password='$pass'";
+
+    $sql = "SELECT * FROM Employee_Login WHERE Username='$user' AND Password='$pass'";
 
   $result = $conn->query($sql);
   if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
       $_SESSION['User'] = $row["Username"];
       $_SESSION['Employee_ID'] = $row["Employee_ID"];
-      //echo $user;
-      //echo $pass;
+      $Employee_ID=$row["Employee_ID"];
+      $sql ="SELECT Branch_ID FROM Employee WHERE Employee_ID='$Employee_ID'";
+      $result = $conn->query($sql);
+      if ($result->num_rows > 0){
+          while($row = $result->fetch_assoc()){ 
+              $_SESSION['Primary_Branch_ID']= $row["Branch_ID"];
+          }
+      }else{
+          echo 'error';
+      }
       header("location: home.php");
         //echo "<br> email: ". $row["email"]. " <br>Name: ". $row["name"]. " <br>password   " . $row["password"] . "<br>";
     }
