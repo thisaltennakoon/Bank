@@ -296,4 +296,14 @@ INSERT INTO Branch(Branch_Name,Location) OUTPUT Inserted.Branch_ID VALUES ('Mora
 
 INSERT INTO Branch(Branch_Name,Location)  VALUES ('Head Office','Colombo 1');
 INSERT INTO Branch(Branch_Name,Location)  VALUES ('Moratuwa','Katubedda');
+INSERT INTO Branch(Branch_Name,Location)  VALUES ('Kuliyapitiya','Kuliyapitiya');
+INSERT INTO Branch(Branch_Name,Location)  VALUES ('Kurunegala-North','Kurunegala');
+INSERT INTO Branch(Branch_Name,Location)  VALUES ('Kurunegala-South','Kurunegala');
 INSERT INTO Customer (Address_Line_1,Address_Line_2,Address_Line_3,Primary_Email,Primary_Contact_No) VALUES ('Thisal','Kanapothuhera','Nugegoda','thisaltennakoon@gmail.com','0717303126');
+
+DELIMITER //
+CREATE FUNCTION insert_into(id1 int,name1 varchar(10)) RETURNS null
+insert into test(id,name) values (id1,name1);
+END
+//
+Delimiter ;
