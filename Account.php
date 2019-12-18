@@ -29,7 +29,7 @@ if(isset($_POST) & !empty($_POST) & isset($_POST['Primary_Customer'])){
     }else{
         echo 'error';
     }
-    if ($AccountType="Savings"){   
+    if ($AccountType=="Savings"){   
         echo '<h1>Application-Savings Account</h1>';
         echo '<form method="post" action="SavingsAccount.php">';
         echo'<input type="hidden" name="Branch_Str" value="'.$Branch_Str.'">';
@@ -56,9 +56,18 @@ if(isset($_POST) & !empty($_POST) & isset($_POST['Primary_Customer'])){
         $conn->close();
         //echo '<a href="Branch.php" target="_blank">Visit W3Schools.com!</a> ';
     }
-    elseif($AccountType="Checking"){
-        echo'<input type="hidden" name="Branch_Str" value="'.$Branch_Str.'">'; //set inside the form here
-    }
+    elseif($AccountType=="Checking"){
+        echo '<form method="post" action="CheckingAccount.php">';
+        echo'<input type="hidden" name="Branch_Str" value="'.$Branch_Str.'">';
+        echo'<input type="hidden" name="NICs" value="'.$NICs.'">';
+        echo'<input type="hidden" name="Primary_Customer" value="'.$Primary_Customer.'">';
+        echo'<input type="hidden" name="Customer_String" value="'.$Customer_String.'">';
+        echo '<input type="radio" name="AccountType" value="Organizational" required>Organizational Checking Account<br>';
+        echo '<input type="radio" name="AccountType" value="Non-Organizational">Non-Organizational Checking Account<br>';
+        echo '<br><input type="submit" value="Next"><br><br>';
+        echo '</form>';
 
+    }
+   
 }
 ?>
