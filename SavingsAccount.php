@@ -3,14 +3,21 @@ session_start();
 if (!isset($_SESSION['User'])& empty($_SESSION['User'])) {
     header('location: Login.php');
 }
+?>
+<!DOCTYPE html>
+<html>
+<body>
+<?php
+if(isset($_POST) & !empty($_POST) ){
 
-if(isset($_POST) & !empty($_POST) & isset($_POST['Account_Type'])){
-    $Primary_Customer = $_POST['Primary_Customer'];
-    $Customer_String=$_POST['Other_Customers'];
-    $Customer_arr = explode (",", $Customer_String);
+    $Customer_Str=$_SESSION['Customer_Str'];
+    $Primary_Customer=$_SESSION['Primary_Customer'];
+    $NIC_arr=$_SESSION['NIC_arr'];
+    $Other_branches=$_SESSION['Other_branches'];
+
+    $Customer_arr = explode (",", $Customer_Str);
     $Primary_Branch_ID=$_SESSION['Primary_Branch_ID'];
-    $Branch_Str=$_POST['Branch_Str'];
-    $Branch_Str = explode (",", $Branch_Str);
+    $Branch_Str = $_SESSION['Other_branches'];
     $Account_Status = $_POST['Account_Status'];
     $Account_Type=$_POST['Account_Type'];
 
@@ -36,11 +43,46 @@ if(isset($_POST) & !empty($_POST) & isset($_POST['Account_Type'])){
                 $sql = "INSERT INTO Customer_Account(Customer_ID,Account_No) VALUES ($Customer,$Account_No)";
                 if ($conn->query($sql) === TRUE) {}
             }
-            echo "Savings account created successfully.Account number is :- ".$Account_No;
+            if ($Account_Type!="1"){
+                echo "<h1>Savings account created successfully</h1>";
+                include 'ViewAccountDetailsFunction.php';
+                ViewAccountDetails($Account_No,$conn);	
+                unset($_SESSION['NIC_arr']);
+                unset($_SESSION['Other_branches']);		
+                unset($_SESSION['Customer_Str']);
+                unset($_SESSION['Primary_Customer']);
+                echo '<br>';
+                echo '<button onclick="myFunction()">Print this page</button>';
+                echo '<br><br>';
+                echo '<button onclick="window.location.href = \'home.php\';">Home</button>';	
+            }
         }
     } else {
         echo "Error updating record: " . $conn->error;
     }
+    if ($Account_Type=="1"){
+        echo '<form method="post" action="ChildSavingsAccount.php">';
+        echo'<input type="hidden" name="AccountNumber" value="'.$Account_No.'">';
+        echo'First Name:<input type="text" name="firstname" required><br><br>';
+        echo'Middle Name:<input type="text" name="middlename"><br><br>';
+        echo'Last Name:<input type="text" name="lastname"><br><br>';
+        echo'Date of Birth:<input type="date" name="DOB" required><br><br>';
+        echo'<select name="Gender">';
+        echo'<option value="Male">Male</option>';
+        echo'<option value="Female">Female</option>';
+        echo'<option value="Other">Other</option></select>';
+        echo '<br><br><input type="submit" value="Next"><br><br>';
+        echo '</form>';
+    }
     $conn->close();
 
 }
+?>
+
+<script>
+function myFunction() {
+  window.print();
+}
+</script>
+</body>
+</html>

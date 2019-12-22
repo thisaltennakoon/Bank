@@ -4,12 +4,15 @@ if (!isset($_SESSION['User'])& empty($_SESSION['User'])) {
     header('location: Login.php');
 }
 
-if(isset($_POST) & !empty($_POST) & isset($_POST['Primary_Customer'])){
-    $Branch_Str = $_POST['Branch_Str'];
-    $NICs = $_POST['NICs'];
-    $Primary_Customer = $_POST['Primary_Customer'];
-    $Customer_String = $_POST['Customer_String'];
-    $Customer_arr = explode (",", $Customer_String);
+if(isset($_POST) & !empty($_POST) ){
+
+    $Customer_Str=$_SESSION['Customer_Str'];
+    $Primary_Customer=$_SESSION['Primary_Customer'];
+    $NIC_arr=$_SESSION['NIC_arr'];
+    $Other_branches=$_SESSION['Other_branches'];
+
+
+    $Customer_arr = explode (",", $Customer_Str);
     $AccountType = $_POST['AccountType'];
     //$Employee_ID=$_SESSION['Employee_ID'];
     $servername = "localhost";
@@ -29,12 +32,12 @@ if(isset($_POST) & !empty($_POST) & isset($_POST['Primary_Customer'])){
     }else{
         echo 'error';
     }
+    $_SESSION['Primary_Customer']=$Primary_Customer;
     if ($AccountType=="Savings"){   
         echo '<h1>Application-Savings Account</h1>';
         echo '<form method="post" action="SavingsAccount.php">';
-        echo'<input type="hidden" name="Branch_Str" value="'.$Branch_Str.'">';
         echo'Primary Customer<input type="text" name="Primary_Customer" value="'.$Primary_Customer.'" readonly><br><br>';
-        echo'Other Customers<input type="text" name="Other_Customers" value="'.$Customer_String.'" readonly><br><br>';
+        echo'Other Customers<input type="text" name="Other_Customers" value="'.$Customer_Str.'" readonly><br><br>';
         $sql = "SELECT * FROM Savings_Account_Plan"; //reading things from the table
         $result = $conn->query($sql);
         echo'<br>Account Type<select name="Account_Type">';
@@ -58,10 +61,6 @@ if(isset($_POST) & !empty($_POST) & isset($_POST['Primary_Customer'])){
     }
     elseif($AccountType=="Checking"){
         echo '<form method="post" action="CheckingAccount.php">';
-        echo'<input type="hidden" name="Branch_Str" value="'.$Branch_Str.'">';
-        echo'<input type="hidden" name="NICs" value="'.$NICs.'">';
-        echo'<input type="hidden" name="Primary_Customer" value="'.$Primary_Customer.'">';
-        echo'<input type="hidden" name="Customer_String" value="'.$Customer_String.'">';
         echo '<input type="radio" name="AccountType" value="Organizational" required>Organizational Checking Account<br>';
         echo '<input type="radio" name="AccountType" value="Non-Organizational">Non-Organizational Checking Account<br>';
         echo '<br><input type="submit" value="Next"><br><br>';
