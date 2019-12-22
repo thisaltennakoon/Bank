@@ -4,12 +4,14 @@ if (!isset($_SESSION['User'])& empty($_SESSION['User'])) {
     header('location: Login.php');
 }
 
-if(isset($_POST) & !empty($_POST) & isset($_POST['NICs'])){
-    $Branch_Str = $_POST['Branch_Str'];
-    $NICs = $_POST['NICs'];
+if(isset($_POST) & !empty($_POST) ){
+
     $Primary_Customer=$_POST['Primary_Customer'];
-    $NIC_arr = explode (",", $NICs);
+
     $Customer_String="";
+    $NIC_arr=$_SESSION['NIC_arr'];
+    $Other_branches=$_SESSION['Other_branches'];
+
     $servername = "localhost";
     $username = "root";
     $password = "";
@@ -19,7 +21,6 @@ if(isset($_POST) & !empty($_POST) & isset($_POST['NICs'])){
       die("Connection failed: " . $conn->connect_error);
     } 
     foreach($NIC_arr as $NIC){
-        $NIC=trim($NIC);
         $Customer_ID = $_POST[$NIC."-Customer_ID"];
         $InsertOrUpdate = $_POST[$NIC."-InsertOrUpdate"];
         $firstname = $_POST[$NIC."-firstname"];
@@ -63,13 +64,12 @@ if(isset($_POST) & !empty($_POST) & isset($_POST['NICs'])){
 
     }
     $Customer_Str=substr($Customer_String,0, -1);
+    $_SESSION['Customer_Str']=$Customer_Str;
+    $_SESSION['Primary_Customer']=$Primary_Customer;
     echo '<form method="post" action="Account.php">';
-    echo'<input type="hidden" name="Branch_Str" value="'.$Branch_Str.'">';
-    echo'<input type="hidden" name="NICs" value="'.$NICs.'">';
-    echo'<input type="hidden" name="Primary_Customer" value="'.$Primary_Customer.'">';
-    echo'<input type="hidden" name="Customer_String" value="'.$Customer_Str.'">';
     echo '<input type="radio" name="AccountType" value="Savings" required> Savings Account<br>';
     echo '<input type="radio" name="AccountType" value="Checking"> Checking Account<br>';
     echo '<br><input type="submit" value="Next"><br><br>';
     echo '</form>';
 }
+

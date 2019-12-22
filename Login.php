@@ -5,10 +5,10 @@
 <h2>Employee Log In</h2>
 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
   Username:
-  <input type="text" name="User" require>
+  <input type="text" name="User" required>
   <br><br>
   Password:
-  <input type="password" name="password" require>
+  <input type="password" name="password" required>
   <br><br>
   <input type="submit" value="Log In">
 </form> 

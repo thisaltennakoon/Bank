@@ -71,9 +71,9 @@ CREATE TABLE Branch(
 
 CREATE TABLE Employee(
     Employee_ID INT,
-    First_Name VARCHAR(10),
-    Last_Name VARCHAR(10),
-    Middle_Name VARCHAR(10),
+    First_Name VARCHAR(20),
+    Middle_Name VARCHAR(20),
+    Last_Name VARCHAR(20),
     Address VARCHAR(80),
     NIC VARCHAR(10) NOT NULL,
     DOB DATE,
@@ -115,7 +115,7 @@ CREATE TABLE Clerk(
     FOREIGN KEY (Employee_ID) REFERENCES Employee(Employee_ID) /*ON DELETE SET NULL*/
 );
 CREATE TABLE Account(
-    Account_No INT UNSIGNED AUTO_INCREMENT,
+    Account_No BIGINT UNSIGNED AUTO_INCREMENT,
     Balance FLOAT,
     Primary_Customer_ID INT,     /*one account can have many customers.but in most cases it is one*/
     Primary_Branch_ID INT, /*account has a branch. but customer can add many branches.This attribute makes redundence data.*/
@@ -125,26 +125,28 @@ CREATE TABLE Account(
     FOREIGN KEY (Primary_Customer_ID) REFERENCES Customer(Customer_ID) /*ON DELETE SET NULL*/,
     PRIMARY KEY(Account_No)
 );
+ALTER TABLE Account AUTO_INCREMENT=22601003929;
+
 CREATE TABLE Account_Branch(     /*--customer can add many branches to a single account(mentioned in the SRS)*/
-    Account_No INT NOT NULL,              /*--apart from the account creating branch*/
+    Account_No BIGINT NOT NULL,              /*--apart from the account creating branch*/
     Branch_ID INT NOT NULL,
     FOREIGN KEY (Account_No) REFERENCES Account(Account_No) /*ON DELETE SET NULL*/,
     FOREIGN KEY (Branch_ID) REFERENCES Branch(Branch_ID) /*ON DELETE SET NULL*/
 );
 CREATE TABLE Customer_Account(   /*--one customer can have many accounts and one account can belongs to many people(ex:joint accounts)*/
     Customer_ID INT NOT NULL,
-    Account_No INT NOT NULL,
+    Account_No BIGINT NOT NULL,
     FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID) /*ON DELETE SET NULL*/,
     FOREIGN KEY (Account_No) REFERENCES Account(Account_No) /*ON DELETE SET NULL*/
 );
 CREATE TABLE Checking_Account(   /*--'Checking account' is the term given in the discription not 'current account'*/
-    Account_No INT,
+    Account_No BIGINT,
     FOREIGN KEY (Account_No) REFERENCES Account(Account_No) /*ON DELETE SET NULL*/,
     PRIMARY KEY(Account_No)
 );
 CREATE TABLE Checkbook(
     Checkbook_Number INT UNSIGNED AUTO_INCREMENT,
-    Account_No INT NOT NULL,
+    Account_No BIGINT NOT NULL,
     Issued_Date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     Number_of_Pages INT NOT NULL,
     Starting_Check_Number INT NOT NULL,
@@ -163,7 +165,7 @@ INSERT INTO Savings_Account_Plan(Plan_ID,Account_Plan,Minimum_Balance,Interest)
 VALUES (1,'Children',0,12),(2,'Teen',500,11),(3,'Adult(18+)',1000,10),(4,'Senior',1000,13);
 
 CREATE TABLE Savings_Account(
-    Account_No INT,
+    Account_No BIGINT,
     Number_of_Withdrawals INT CHECK (Number_of_Withdrawals <= 5),
     Account_Plan_ID INT,
     FOREIGN KEY (Account_Plan_ID) REFERENCES Savings_Account_Plan(Plan_ID) /*ON DELETE SET NULL*/,
@@ -171,10 +173,10 @@ CREATE TABLE Savings_Account(
     PRIMARY KEY(Account_No)
 );
 CREATE TABLE Child_Savings_Account(
-    Account_No INT,
-    First_Name VARCHAR(10),
-    Last_Name VARCHAR(10),
-    Middle_Name VARCHAR(10),
+    Account_No BIGINT,
+    First_Name VARCHAR(20),
+    Middle_Name VARCHAR(20),
+    Last_Name VARCHAR(20),
     DOB DATE,
     Gender VARCHAR(6),
     FOREIGN KEY (Account_No) REFERENCES Savings_Account(Account_No) /*ON DELETE SET NULL*/,
@@ -182,7 +184,7 @@ CREATE TABLE Child_Savings_Account(
 );
 CREATE TABLE Transaction_Detail(
     Transaction_ID INT,
-    Account_No INT NOT NULL,
+    Account_No BIGINT NOT NULL,
     Amount FLOAT NOT NULL,
     Date_Time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (Account_No) REFERENCES Account(Account_No) /*ON DELETE SET NULL*/,
@@ -215,7 +217,7 @@ CREATE TABLE Loan_Type(  /*--there are basically two loan types are given in the
 );
 CREATE TABLE Requested_Loan( /*--this is also not in the ERD. in my opinion this should be there because there can be many*/
     Request_ID INT UNSIGNED AUTO_INCREMENT,          /*--loans which cannot approve at all and if we add all those things to the loan table,it would become a dustbin*/
-    Account_No INT NOT NULL,
+    Account_No BIGINT NOT NULL,
     Loan_Type INT NOT NULL,
     Amount FLOAT NOT NULL,
     Branch_ID INT,
@@ -232,7 +234,7 @@ CREATE TABLE Requested_Loan( /*--this is also not in the ERD. in my opinion this
 );
 CREATE TABLE Loan( /*--this is also not mentioned as a inheritence in the ERD. Please have a look (parent)*/
     Loan_ID INT,     /*--another problem. why have you made a has reletionship from 'Loan_BankVist' to 'Customer'?*/
-    Account_No INT,      /*--I have removed it. we have to discuss it*/
+    Account_No BIGINT,      /*--I have removed it. we have to discuss it*/
     Loan_Type INT,
     Amount FLOAT,
     Branch_ID INT,
@@ -280,7 +282,7 @@ VALUES (1,'6 months',13),(2,'1 year',14),(3,'3 years',15);
 CREATE TABLE Fixed_Deposit(
     FD_No INT,
     Customer_ID INT NOT NULL,
-    Account_No INT, /*account number can be null here because there no need to have a savings account to open a fixed deposit.anyone can do */
+    Account_No BIGINT, /*account number can be null here because there no need to have a savings account to open a fixed deposit.anyone can do */
     Amount FLOAT NOT NULL,
     Date_Opened TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     Plan_ID INT NOT NULL,
@@ -301,9 +303,3 @@ INSERT INTO Branch(Branch_Name,Location)  VALUES ('Kurunegala-North','Kurunegala
 INSERT INTO Branch(Branch_Name,Location)  VALUES ('Kurunegala-South','Kurunegala');
 INSERT INTO Customer (Address_Line_1,Address_Line_2,Address_Line_3,Primary_Email,Primary_Contact_No) VALUES ('Thisal','Kanapothuhera','Nugegoda','thisaltennakoon@gmail.com','0717303126');
 
-DELIMITER //
-CREATE FUNCTION insert_into(id1 int,name1 varchar(10)) RETURNS null
-insert into test(id,name) values (id1,name1);
-END
-//
-Delimiter ;
