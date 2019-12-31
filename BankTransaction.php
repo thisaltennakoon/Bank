@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (!isset($_SESSION['User'])& empty($_SESSION['User'])) {
+    header('location: Login.php');
+}
+?>
+
 <script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
 <script>
 function checkAvailability() {
