@@ -1,3 +1,11 @@
+<?php
+session_start();
+if (!isset($_SESSION['User'])& empty($_SESSION['User'])) {
+    header('location: Login.php');
+}
+?>
+
+
 <?php   
 $servername = "localhost";
 $username = "root";
@@ -12,22 +20,17 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 if(!empty($_POST["AccNo"])) {
-	echo "<br> Account Number - ".$_POST["AccNo"];
-  $sql = "UPDATE account SET Balance = Balance+'" . $_POST["amount"] . "'WHERE Account_No='".$_POST["AccNo"] ."';
+  $sql = "SET autocommit = OFF;
+  START TRANSACTION;
+  UPDATE account SET Balance = Balance+'" . $_POST["amount"] . "'WHERE Account_No='".$_POST["AccNo"] ."';
   INSERT INTO transaction_detail(Account_No,Amount,Withdraw) values ('" . $_POST["AccNo"] . "','" . $_POST["amount"] . "',False);
-  INSERT INTO bank_transaction (Transaction_ID) values ((SELECT LAST_INSERT_ID())); ";
+  INSERT INTO bank_transaction (Transaction_ID) values ((SELECT LAST_INSERT_ID())); 
+  COMMIT;";
+  echo "Deposit Successful";
   $conn->multi_query($sql);
  
-  $sql = "SELECT Balance FROM account WHERE Account_No='" . $_POST["AccNo"] . "'";
-  $result = $conn->query($sql);
-  unset($_POST);
-  $_POST=array();
-  if ($result->num_rows > 0){
-	  while($row = $result->fetch_assoc()) {
-		echo "<br>Balance = " .$row["Balance"]. "";
-	  }
-  }
+
 }
 $conn->close();	
-header( "refresh:3;url=BankTransaction.php" );
+header( "refresh:2;url=BankTransaction.php" );
 ?>
