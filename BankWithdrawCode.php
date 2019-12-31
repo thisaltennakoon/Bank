@@ -42,7 +42,7 @@ if(!empty($_POST["AccNo"])) {
 				INSERT INTO bank_transaction (Transaction_ID) values ((SELECT LAST_INSERT_ID()));
 				UPDATE savings_account SET Number_of_Withdrawals = Number_of_Withdrawals+1 WHERE Account_No='".$_POST["AccNo"] ."';
 				COMMIT;";
-				echo "Withdrwal Successful";
+				echo "Withdrawal Successful";
 				$conn->multi_query($sql);
 
 				unset($_POST);
