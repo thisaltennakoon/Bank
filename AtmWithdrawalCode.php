@@ -53,5 +53,5 @@ if(!empty($_POST["AccNo"])) {
   }
 }
 $conn->close();	
-header( "refresh:6;url=AtmWithdrawal.php" );
+header( "refresh:3;url=AtmWithdrawal.php" );
 ?>
