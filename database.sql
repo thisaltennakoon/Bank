@@ -41,7 +41,7 @@ VALUES (1,'Thisal','Manjitha','Tennakoon','973611178V','1997-12-26','Male');
 
 CREATE TABLE Organization(
     Customer_ID INT,
-    Name VARCHAR(50) NOT NULL,
+    Organization_Name VARCHAR(50) NOT NULL,
     Bussiness_Registration_Number VARCHAR(20),
     PRIMARY KEY(Customer_ID),
     FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID) /*ON DELETE SET NULL*/
