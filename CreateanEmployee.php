@@ -3,13 +3,7 @@ session_start();
 if (!isset($_SESSION['User'])& empty($_SESSION['User'])) {
     header('location: Login.php');
 }
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "Bank";
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-// Check connection
+$conn = new mysqli("localhost", "root", "","Bank");
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
@@ -80,9 +74,8 @@ if(isset($_POST) & !empty($_POST)){
     $RecoveryEmail = $_POST['RecoveryEmail'];
     $EmployeeType = $_POST['EmployeeType'];
 
-    // Create connection
+
     $conn = new mysqli("localhost", "root", "","Bank");
-    // Check connection
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
