@@ -72,7 +72,7 @@ if(isset($_POST) & !empty($_POST) ){
             }
             echo'<input type="hidden" name="'.$NIC.'-InsertOrUpdate" value="Update">';
             echo'<input type="hidden" name="'.$NIC.'-Customer_ID" value="'.$Customer_ID.'">';
-            echo'NIC:<input type="text" name="'.$NIC.'-NIC" value="'.$NIC.'" readonly>';  
+            echo'NIC:<input type="text" name="'.$NIC.'-NIC" value="'.$NIC.'" readonly><br>';  
             echo'<input type="radio" name="Primary_Customer" value="'.$NIC.'" required>Select As Primary Customer<br>';
             echo'First Name:<input type="text" name="'.$NIC.'-firstname" value="'.$First_Name.'" required><br><br>';
             echo'Middle Name:<input type="text" name="'.$NIC.'-middlename" value="'.$Last_Name.'" required><br><br>';
@@ -90,8 +90,8 @@ if(isset($_POST) & !empty($_POST) ){
         }else{
             echo'<input type="hidden" name="'.$NIC.'-InsertOrUpdate" value="Insert">';
             echo'<input type="hidden" name="'.$NIC.'-Customer_ID" value="notset">';
-            echo'NIC:<input type="text" name="'.$NIC.'-NIC" value="'.$NIC.'" readonly>';
-            echo'<input type="radio" name="Primary_Customer" value="'.$NIC.'">Select As Primary Customer<br>';
+            echo'NIC:<input type="text" name="'.$NIC.'-NIC" value="'.$NIC.'" readonly><br>';
+            echo'<input type="radio" name="Primary_Customer" value="'.$NIC.'" required>Select As Primary Customer<br>';
             echo'First Name:<input type="text" name="'.$NIC.'-firstname" required><br><br>';
             echo'Middle Name:<input type="text" name="'.$NIC.'-middlename"><br><br>';
             echo'Last Name:<input type="text" name="'.$NIC.'-lastname"><br><br>';

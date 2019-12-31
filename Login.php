@@ -20,18 +20,12 @@ if(isset($_POST) & !empty($_POST)){
   $pass =  $_POST['password'];
   $pass=sha1($pass);    //little password encryption
   //echo $pass;
-  $servername = "localhost";
-  $username = "root";
-  $password = "";
-  $dbname = "Bank";
-  // Create connection
-  $conn = new mysqli($servername, $username, $password, $dbname);
-  // Check connection
+  $conn = new mysqli("localhost", "root", "","Bank");
   if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+      die("Connection failed: " . $conn->connect_error);
   }
 
-    $sql = "SELECT * FROM Employee_Login WHERE Username='$user' AND Password='$pass'";
+  $sql = "SELECT * FROM Employee_Login WHERE Username='$user' AND Password='$pass'";
 
   $result = $conn->query($sql);
   if ($result->num_rows > 0) {
@@ -48,6 +42,25 @@ if(isset($_POST) & !empty($_POST)){
       }else{
           echo 'error';
       }
+      $sql ="SELECT Employee_ID FROM Manager WHERE Employee_ID='$Employee_ID'";
+      $result = $conn->query($sql);
+      if ($result->num_rows > 0){
+          while($row = $result->fetch_assoc()){ 
+              $_SESSION['EmployeeType']= "Manager";
+          }
+      }else{
+        $sql ="SELECT Employee_ID FROM Clerk WHERE Employee_ID='$Employee_ID'";
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0){
+            while($row = $result->fetch_assoc()){ 
+                $_SESSION['EmployeeType']= "Clerk";
+            }
+        }else{
+            echo 'error';
+        }
+      }
+      
+
       header("location: home.php");
         //echo "<br> email: ". $row["email"]. " <br>Name: ". $row["name"]. " <br>password   " . $row["password"] . "<br>";
     }
