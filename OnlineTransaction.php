@@ -59,11 +59,11 @@ $customer_ID = $_SESSION['Customer_ID'];
 		<br>
 		<br>
     <label for="RecipientAccNo">Enter Receiver Account Number</label>
-        <input type="text" id="RecipientAccNo" name="RecipientAccNo" placeholder="" onBlur="checkAvailability()"><span id="user-availability-status"></span>	
+        <input type="number" id="RecipientAccNo" name="RecipientAccNo" placeholder="" onBlur="checkAvailability()"><span id="user-availability-status"></span>	
         <br>
 		<br>
 	<label for="amount">Enter the amount</label>
-        <input type="text" id="amount" name="amount" placeholder="0">		
+        <input type="number" step="0.01" id="amount" name="amount" placeholder="0">		
 		<br>
 		<button type="submit">Transfer</button>
 </form>
