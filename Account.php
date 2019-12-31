@@ -57,7 +57,7 @@ if(isset($_POST) & !empty($_POST) ){
         echo'<br><br><input type="submit" value="Create the Savings Account">';
         echo'</form>';
         $conn->close();
-        //echo '<a href="Branch.php" target="_blank">Visit W3Schools.com!</a> ';
+
     }
     elseif($AccountType=="Checking"){
         echo '<form method="post" action="CheckingAccount.php">';
