@@ -11,8 +11,6 @@ CREATE TABLE Customer(
     PRIMARY KEY(Customer_ID)
 );
 
-INSERT INTO Customer(Address_Line_1,Address_Line_2,Address_Line_3,Primary_Email,Primary_Contact_No) 
-VALUES ('suwasetha','old kesbewa road','delkanda','thisal@mail.com','0766220249');
 
 CREATE TABLE Customer_Email(    /*{Email} multi valued attribute*/ /**/
     Customer_ID INT NOT NULL,
@@ -36,8 +34,6 @@ CREATE TABLE Individual(
     FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID) /*ON DELETE SET NULL*/
 );
 
-INSERT INTO Individual(Customer_ID,First_Name,Middle_Name,Last_Name,NIC,DOB,Gender) 
-VALUES (1,'Thisal','Manjitha','Tennakoon','973611178V','1997-12-26','Male');
 
 CREATE TABLE Organization(
     Customer_ID INT,
@@ -70,7 +66,7 @@ CREATE TABLE Branch(
 
 
 CREATE TABLE Employee(
-    Employee_ID INT,
+    Employee_ID INT UNSIGNED AUTO_INCREMENT,
     First_Name VARCHAR(20),
     Middle_Name VARCHAR(20),
     Last_Name VARCHAR(20),
@@ -84,8 +80,10 @@ CREATE TABLE Employee(
     FOREIGN KEY (Branch_ID) REFERENCES Branch(Branch_ID) /*ON DELETE SET NULL*/
 );
 
-INSERT INTO Employee(Employee_ID,First_Name,Middle_Name,Last_Name,NIC,DOB,Gender,Primary_Contact_No,Branch_ID) 
-VALUES (1,'Thisal','Manjitha','Tennakoon','973611178V','1997-12-26','Male','0766220249',2);
+INSERT INTO Employee(First_Name,Middle_Name,Last_Name,Address,NIC,DOB,Gender,Primary_Contact_No,Branch_ID) 
+VALUES ('John','Aniston','Smith','123,Albert St, Victoria, Seychelles','903611178V','1969-12-26','Male','0766220249',1);
+INSERT INTO Employee(First_Name,Middle_Name,Last_Name,Address,NIC,DOB,Gender,Primary_Contact_No,Branch_ID) 
+VALUES ('Emma','Ruthann','Marasco','21,Capital City, Independence Ave, Seychelles','933611178V','1997-11-26','Female','0716220249',1);
 
 CREATE TABLE Employee_Contact_No(    /*--{Contact_No} multi valued attribute*/
     Employee_ID INT NOT NULL,
@@ -102,18 +100,24 @@ CREATE TABLE Employee_Login(
     FOREIGN KEY (Employee_ID) REFERENCES Employee(Employee_ID) /*ON DELETE SET NULL*/
 );
 INSERT INTO Employee_Login(Employee_ID,Username,Password,Recovery_Contact_No,Recovery_Email) 
-VALUES (1,'thisal','8cb2237d0679ca88db6464eac60da96345513964','0766220249','thisal@mail.com'); /*password=12345*/
+VALUES (1,'john','8cb2237d0679ca88db6464eac60da96345513964','0766220249','johnsmith@gmail.com'); /*password=12345*/
+INSERT INTO Employee_Login(Employee_ID,Username,Password,Recovery_Contact_No,Recovery_Email) 
+VALUES (2,'emma','8cb2237d0679ca88db6464eac60da96345513964','0716220249','emma@gmail.com'); /*password=12345*/
 
 CREATE TABLE Manager(
     Employee_ID INT,
     PRIMARY KEY(Employee_ID),
     FOREIGN KEY (Employee_ID) REFERENCES Employee(Employee_ID) /*ON DELETE SET NULL*/
 );
+INSERT INTO Manager(Employee_ID) VALUES (1);
+
 CREATE TABLE Clerk(
     Employee_ID INT,
     PRIMARY KEY(Employee_ID),
     FOREIGN KEY (Employee_ID) REFERENCES Employee(Employee_ID) /*ON DELETE SET NULL*/
 );
+INSERT INTO Clerk(Employee_ID) VALUES (2);
+
 CREATE TABLE Account(
     Account_No BIGINT UNSIGNED AUTO_INCREMENT,
     Balance FLOAT,
@@ -153,6 +157,15 @@ CREATE TABLE Checkbook(
     FOREIGN KEY (Account_No) REFERENCES Checking_Account(Account_No) /*ON DELETE SET NULL*/,
     PRIMARY KEY(Checkbook_Number)
 );
+delimiter //
+CREATE TRIGGER ChargeForCheckBook BEFORE INSERT ON Checkbook
+ FOR EACH ROW
+ BEGIN 
+ UPDATE Account SET Balance=(Balance-((NEW.Number_of_Pages)*18)) WHERE Account_No=NEW.Account_No;
+ END; //
+ delimiter ;
+
+
 CREATE TABLE Savings_Account_Plan(
     Plan_ID INT,
     Account_Plan VARCHAR(10),
@@ -167,11 +180,14 @@ VALUES (1,'Children',0,12),(2,'Teen',500,11),(3,'Adult(18+)',1000,10),(4,'Senior
 CREATE TABLE Savings_Account(
     Account_No BIGINT,
     Number_of_Withdrawals INT CHECK (Number_of_Withdrawals <= 5),
+    Last_Reset_Date_Number_of_Withdrawals DATE,
     Account_Plan_ID INT,
     FOREIGN KEY (Account_Plan_ID) REFERENCES Savings_Account_Plan(Plan_ID) /*ON DELETE SET NULL*/,
     FOREIGN KEY (Account_No) REFERENCES Account(Account_No) /*ON DELETE SET NULL*/,
     PRIMARY KEY(Account_No)
 );
+
+
 CREATE TABLE Child_Savings_Account(
     Account_No BIGINT,
     First_Name VARCHAR(20),
@@ -180,7 +196,7 @@ CREATE TABLE Child_Savings_Account(
     DOB DATE,
     Gender VARCHAR(6),
     FOREIGN KEY (Account_No) REFERENCES Savings_Account(Account_No) /*ON DELETE SET NULL*/,
-    PRIMARY KEY(Account_No)
+    PRIMARY KEY(Account_No,First_Name,Middle_Name)
 );
 CREATE TABLE Transaction_Detail(
     Transaction_ID INT,
@@ -292,14 +308,45 @@ CREATE TABLE Fixed_Deposit(
     FOREIGN KEY (Transaction_ID) REFERENCES Online_Transaction(Transaction_ID) /*ON DELETE SET NULL*/,
     PRIMARY KEY (FD_No)
 );
-
-/*INSERT INTO Branch(Branch_Name,Location) OUTPUT Inserted.Branch_ID VALUES ('Head Office','Colombo 1');
-INSERT INTO Branch(Branch_Name,Location) OUTPUT Inserted.Branch_ID VALUES ('Moratuwa','Katubedda');*/
-
-INSERT INTO Branch(Branch_Name,Location)  VALUES ('Head Office','Colombo 1');
-INSERT INTO Branch(Branch_Name,Location)  VALUES ('Moratuwa','Katubedda');
-INSERT INTO Branch(Branch_Name,Location)  VALUES ('Kuliyapitiya','Kuliyapitiya');
-INSERT INTO Branch(Branch_Name,Location)  VALUES ('Kurunegala-North','Kurunegala');
-INSERT INTO Branch(Branch_Name,Location)  VALUES ('Kurunegala-South','Kurunegala');
-INSERT INTO Customer (Address_Line_1,Address_Line_2,Address_Line_3,Primary_Email,Primary_Contact_No) VALUES ('Thisal','Kanapothuhera','Nugegoda','thisaltennakoon@gmail.com','0717303126');
+INSERT INTO Branch(Branch_Name,Location)  VALUES
+('Head Office Victoria','Victoria'),
+('Anse A La Mouche','Anse A La Mouche'),
+('Anse Aux Pins','Anse Aux Pins'),
+('Anse Boileau','Anse Boileau'),
+('Anse Etoile','Anse Etoile'),
+('Anse Kerlan','Anse Kerlan'),
+('Anse Possession','Anse Possession'),
+('Anse Royale','Anse Royale'),
+('Anse Volbert Village','Anse Volbert Village'),
+('Au Cap','Au Cap'),
+('Baie Lazare Mahe','Baie Lazare Mahe'),
+('Baie Sainte Anne','Baie Sainte Anne'),
+('Baie St Anne','Baie St Anne'),
+('Beau Vallon','Beau Vallon'),
+('Bel Ombre','Bel Ombre'),
+('Bird Island','Bird Island'),
+('Cerf Island','Cerf Island'),
+('Cousine','Cousine'),
+('De Quincey Village','De Quincey Village'),
+('Denis Island','Denis Island'),
+('Desroches','Desroches'),
+('Eden Island','Eden Island'),
+('Felicite','Felicite'),
+('Fregate Island','Fregate Island'),
+('Glacis','Glacis'),
+('Grand Anse','Grand Anse'),
+('Grandanse','Grandanse'),
+('Grandanse Praslin','Grandanse Praslin'),
+('La Digue','La Digue'),
+('La Reunion','La Reunion'),
+('Machabee','Machabee'),
+('Mahe','Mahe'),
+('North Island','North Island'),
+('Pinte Au Sel','Pinte Au Sel'),
+('Pointe Au Sel','Pointe Au Sel'),
+('Pointe Larue','Pointe Larue'),
+('Port Glaud','Port Glaud'),
+('Praslin','Praslin'),
+('Silhouette Island','Silhouette Island'),
+('Takamaka','Takamaka');
 

@@ -21,7 +21,7 @@ if (!isset($_SESSION['User'])& empty($_SESSION['User'])) {
         }
         $Primary_Branch_ID=$_SESSION['Primary_Branch_ID'];
         echo'<br><br>Select More Branches<br>';
-        echo '<select name="Other_branches[]" multiple required>';
+        echo '<select name="Other_branches[]" multiple size = 20 required>';
         $sql = "SELECT * FROM Branch "; //reading things from the table //WHERE NOT Branch_ID='$Primary_Branch_ID'
         $result = $conn->query($sql);
         if ($result->num_rows > 0){
@@ -41,6 +41,7 @@ if (!isset($_SESSION['User'])& empty($_SESSION['User'])) {
     ?>
     <br><input type="submit" value="Apply"><br><br>
 </form>
-<br><a href="LogOut.php">Log Out</a>
+<br><br>
+<button onclick="window.location.href = 'home.php'">Home</button>
 </body>
 </html>
