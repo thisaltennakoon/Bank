@@ -30,7 +30,9 @@ echo '<table border="0" cellspacing="2" cellpadding="2">
           <td> <font face="Arial">Account Number</font> </td> 
           <td> <font face="Arial">Amount</font> </td> 
           <td> <font face="Arial">Withdraw</font> </td> 
+          <td> <font face="Arial">Detail</font> </td>
           <td> <font face="Arial">Date and Time</font> </td> 
+          <td> <font face="Arial">Teller</font> </td>
       </tr>';
  
 if ($result = $conn->query($query)) {
@@ -39,7 +41,9 @@ if ($result = $conn->query($query)) {
         $field2name = $row["Account_No"];
         $field3name = $row["Amount"];
         $field4name = $row["Withdraw"];
-        $field5name = $row["Date_Time"]; 
+        $field5name = $row["Detail"];
+        $field6name = $row["Date_Time"];
+        $field7name = $row["Teller"]; 
  
         echo '<tr> 
                   <td>'.$field1name.'</td> 
@@ -47,6 +51,8 @@ if ($result = $conn->query($query)) {
                   <td>'.$field3name.'</td> 
                   <td>'.$field4name.'</td> 
                   <td>'.$field5name.'</td> 
+                  <td>'.$field6name.'</td>
+                  <td>'.$field7name.'</td>
               </tr>';
     }
     $result->free();

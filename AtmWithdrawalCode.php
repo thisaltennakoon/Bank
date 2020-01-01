@@ -38,7 +38,7 @@ if(!empty($_POST["AccNo"])) {
 			  $sql = "SET autocommit = OFF;
                 START TRANSACTION;
                 UPDATE account SET Balance = Balance-'" . $_POST["amount"] . "'WHERE Account_No='".$_POST["AccNo"] ."';
-				INSERT INTO transaction_detail(Account_No,Amount,Withdraw) values ('" . $_POST["AccNo"] . "','" . $_POST["amount"] . "',True);
+				INSERT INTO transaction_detail(Account_No,Amount,Withdraw,Detail,Teller) values ('" . $_POST["AccNo"] . "','" . $_POST["amount"] . "',True,'ATM','".$_POST["ATM_No"]."');
 				INSERT INTO atm_withdrawal (Transaction_ID,ATM_ID) values ((SELECT LAST_INSERT_ID()),'".$_POST["ATM_No"]."');
                 UPDATE savings_account SET Number_of_Withdrawals = Number_of_Withdrawals+1 WHERE Account_No='".$_POST["AccNo"] ."';
                 COMMIT;";
