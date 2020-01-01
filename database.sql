@@ -321,6 +321,8 @@ CREATE TABLE Fixed_Deposit(
     PRIMARY KEY (FD_No)
 );
 
+
+
 /*CREATE TRIGGER after_Transaction_Detail_update
     BEFORE UPDATE ON Transaction_Detail
     REFERENCING NEW ROW AS nrow
