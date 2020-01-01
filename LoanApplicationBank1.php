@@ -15,7 +15,7 @@ if(!isset($_SESSION["User"]) & empty($_SESSION["User"])){
 
 <h1>Step 2 : Enter Details</h1><br>
 
-<form method="post" action="ViewLoanDetails.php">
+<form method="post" action="ViewBankVisitLoanDetails.php">
     Enter Loan Amount:<input type="text" name="Amount" size="50" required>
     <br><br>
     Enter Time Period:<input type="text" name="Time" size="50" required>
