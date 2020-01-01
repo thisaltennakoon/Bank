@@ -43,9 +43,17 @@ if(!isset($_SESSION["User"]) & empty($_SESSION["User"])){
             throw new Exception($conn->error);
         }
     
-        $group_id = $conn->insert_id; // last auto_inc id from *this* connection
+        $Loan_ID = $conn->insert_id; // last auto_inc id from *this* connection
     
-        $query = "INSERT INTO bank_visit_loan(Loan_ID,Approved_By,Requested_By) VALUES($group_id,$User,$RequestBy)";
+        $query = "INSERT INTO bank_visit_loan(Loan_ID,Approved_By,Requested_BY) VALUES($Loan_ID,$User,$RequestBy) ";
+        $result = $conn->query($query);
+        if ( !$result ) {
+            $result->free();
+            throw new Exception($conn->error);
+        }
+
+        
+        $query = "INSERT INTO transaction_detail(Account_No,Amount,Withdraw) VALUES($AccNo,$Amount,False)";
         $result = $conn->query($query);
         if ( !$result ) {
             $result->free();
@@ -58,6 +66,13 @@ if(!isset($_SESSION["User"]) & empty($_SESSION["User"])){
             $result->free();
             throw new Exception($conn->error);
         }
+
+        $query = "UPDATE account SET Balance=Balance+".$Amount." WHERE Account_No=$AccNo";
+        $result = $conn->query($query);
+        if ( !$result ) {
+            $result->free();
+            throw new Exception($conn->error);
+        }
     
         // our SQL queries have been successful. commit them
         // and go back to non-transaction mode.
@@ -65,9 +80,22 @@ if(!isset($_SESSION["User"]) & empty($_SESSION["User"])){
         $conn->commit();
         $conn->autocommit(TRUE); // i.e., end transaction
 
-        echo '<h3>Loan Approved</h3>';
-        echo '<br><br>';
-        echo '<button onclick="window.location.href = \'home.php\';">Home</button>';
+        echo "<h1>Loan Approved</h1>";
+                
+                echo '<br><b>Loan Details</b>';
+                echo '<br>Loan ID : '.$Loan_ID;
+                echo '<br>Account No : '.$AccNo;
+                echo '<br>Amount: '.$Amount;  
+                echo '<br>Branch ID : '.$Branch; 
+                echo '<br>Time Period : '.$Time_Period;
+                echo '<br>Installment : '.$Installment;
+                echo '<br>Date Created : '.date("Y-m-d"); 
+
+                unset($_SESSION['AccNo']);
+                echo '<br>';
+                echo '<button onclick="myFunction()">Print this page</button>';
+                echo '<br><br>';
+                echo '<button onclick="window.location.href = \'home.php\';">Home</button>';
     }
     catch ( Exception $e ) {
     
