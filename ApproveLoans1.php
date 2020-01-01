@@ -41,7 +41,7 @@ if(!isset($_SESSION["User"]) & empty($_SESSION["User"])){
         $query = "INSERT INTO loan(Account_No,Loan_Type,Amount,Branch_ID,Time_Period,Installment) VALUES($AccNo,1,$Amount,$Branch,$Time_Period,$Installment)";
         $result = $conn->query($query);
         if ( !$result ) {
-            //$result->free();
+            $result->free();
             throw new Exception($conn->error);
         }
     
@@ -50,7 +50,7 @@ if(!isset($_SESSION["User"]) & empty($_SESSION["User"])){
         $query = "INSERT INTO bank_visit_loan(Loan_ID,Approved_By,Requested_BY) VALUES($Loan_ID,$User,$RequestBy) ";
         $result = $conn->query($query);
         if ( !$result ) {
-            //$result->free();
+            $result->free();
             throw new Exception($conn->error);
         }
 
@@ -58,25 +58,26 @@ if(!isset($_SESSION["User"]) & empty($_SESSION["User"])){
         $query = "INSERT INTO transaction_detail(Account_No,Amount,Withdraw,Balance,Detail,Teller) VALUES($AccNo,$Amount,False,1000,'Loan Granted','self')";
         $result = $conn->query($query);
         if ( !$result ) {
-           // $result->free();
+           $result->free();
             throw new Exception($conn->error);
         }
 
         $query = "UPDATE requested_loan SET Request_Status='Approved' WHERE Request_ID=$RequestID";
         $result = $conn->query($query);
         if ( !$result ) {
-            //$result->free();
+            $result->free();
             throw new Exception($conn->error);
         }
 
         $query = "UPDATE account SET Balance=Balance+".$Amount." WHERE Account_No=$AccNo";
         $result = $conn->query($query);
         if ( !$result ) {
-            //$result->free();
+            $result->free();
             throw new Exception($conn->error);
         }
-
-        $query = "CREATE EVENT settleInstallment1 ON SCHEDULE EVERY 1 MINUTE STARTS '2020-01-02 00:00:00' DO INSERT INTO transaction_detail(Account_No,Amount,Withdraw,Balance,Detail,Teller) VALUES($AccNo,$Installment,True,100,'Installment','Self')";
+        
+        
+        $query = "CREATE EVENT settleInstallment".$Loan_ID." ON SCHEDULE EVERY 1 MINUTE STARTS '2020-01-02 00:00:00' DO INSERT INTO transaction_detail(Account_No,Amount,Withdraw,Balance,Detail,Teller) VALUES($AccNo,$Installment,True,Balance=Balance-".$Installment.",'Installment','Bank')";
         $result = $conn->query($query);
         if ( !$result ) {
             $result->free();
