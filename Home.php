@@ -155,15 +155,18 @@ if ($result->num_rows > 0){
 ?>
 <button onclick="window.location.href = 'BankTransaction.php'">Bank Transaction</button> 
 <button onclick="window.location.href = 'CreateOnlineBankingAccount.php'">Create Online Banking Account</button> 
-<button onclick="window.location.href = 'MakeaLoanRequest.php'">Make a Loan Request</button> 
+<button onclick="window.location.href = 'LoanApplicationBank.php'">Make a Loan Request</button> 
 <?php
 if ($EmployeeType=="Manager"){
-echo '<button onclick="window.location.href = \'ApproveRequestedLoan.php\'">Approve Requested Loan</button>'; 
+  echo '<button onclick="window.location.href = \'ApproveLoans.php\'">Approve Requested Loan</button>';
+  echo '<button onclick="window.location.href = \'ViewTransactionDetail.php\'">View Transaction Details</button>';
 }
 ?>
+<button onclick="window.location.href = 'CreateFD.php'">Make a FD</button> 
 <button onclick="window.location.href = 'Customer.php'">Create a Bank Account</button> 
 <button onclick="window.location.href = 'ViewAccountDetails.php'">View Account Details</button> 
 <button onclick="window.location.href = 'IssueCheckBooks.php'">Issue Check Books</button> 
+
 <?php
 if ($EmployeeType=="Manager"){
 echo '<button onclick="window.location.href = \'CreateanEmployee.php\'">Create an Employee</button>';
