@@ -41,7 +41,7 @@ VALUES (1,'Thisal','Manjitha','Tennakoon','973611178V','1997-12-26','Male');
 
 CREATE TABLE Organization(
     Customer_ID INT,
-    Organization_Name VARCHAR(50) NOT NULL,
+    Name VARCHAR(50) NOT NULL,
     Bussiness_Registration_Number VARCHAR(20),
     PRIMARY KEY(Customer_ID),
     FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID) /*ON DELETE SET NULL*/
@@ -120,7 +120,7 @@ CREATE TABLE Account(
     Primary_Customer_ID INT,     /*one account can have many customers.but in most cases it is one*/
     Primary_Branch_ID INT, /*account has a branch. but customer can add many branches.This attribute makes redundence data.*/
     Account_Status VARCHAR(10),         /*but in most cases customers tend to use the branch where the account is created*/
-    Date_Created TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    Date_Created DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (Primary_Branch_ID) REFERENCES Branch(Branch_ID) /*ON DELETE SET NULL*/,
     FOREIGN KEY (Primary_Customer_ID) REFERENCES Customer(Customer_ID) /*ON DELETE SET NULL*/,
     PRIMARY KEY(Account_No)
@@ -196,12 +196,14 @@ CREATE TABLE Bank_Transaction(
     FOREIGN KEY (Transaction_ID) REFERENCES Transaction_Details(Transaction_ID) /*ON DELETE SET NULL*/
 );
 CREATE TABLE ATM_Withdrawal(
-    Transaction_ID INT,
+    ATM_Transaction_ID INT AUTO_INCREMENT,
+	Transaction_ID INT,
     ATM_ID INT,
+	PRIMARY KEY(ATM_Transaction_ID),
     FOREIGN KEY (Transaction_ID) REFERENCES Transaction_Details(Transaction_ID) /*ON DELETE SET NULL*/
 );
 CREATE TABLE Online_Transaction(
-    Online_Transaction_ID INT,
+    Online_Transaction_ID INT AUTO_INCREMENT,
 	Withdrawal_ID INT,
 	Deposit_ID INT,
     FOREIGN KEY (Withdrawal_ID) REFERENCES Transaction_Details(Transaction_ID), /*ON DELETE SET NULL*/
