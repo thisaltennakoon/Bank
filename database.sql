@@ -180,7 +180,6 @@ VALUES (1,'Children',0,12),(2,'Teen',500,11),(3,'Adult(18+)',1000,10),(4,'Senior
 CREATE TABLE Savings_Account(
     Account_No BIGINT,
     Number_of_Withdrawals INT CHECK (Number_of_Withdrawals <= 5),
-    Last_Reset_Date_Number_of_Withdrawals DATE,
     Account_Plan_ID INT,
     FOREIGN KEY (Account_Plan_ID) REFERENCES Savings_Account_Plan(Plan_ID) /*ON DELETE SET NULL*/,
     FOREIGN KEY (Account_No) REFERENCES Account(Account_No) /*ON DELETE SET NULL*/,
@@ -234,7 +233,6 @@ CREATE TABLE Loan_Type(  /*--there are basically two loan types are given in the
 CREATE TABLE Requested_Loan( /*--this is also not in the ERD. in my opinion this should be there because there can be many*/
     Request_ID INT UNSIGNED AUTO_INCREMENT,          /*--loans which cannot approve at all and if we add all those things to the loan table,it would become a dustbin*/
     Account_No BIGINT NOT NULL,
-    Loan_Type INT NOT NULL,
     Amount FLOAT NOT NULL,
     Branch_ID INT,
     Time_Period INT NOT NULL,
@@ -254,6 +252,7 @@ CREATE TABLE Loan( /*--this is also not mentioned as a inheritence in the ERD. P
     Loan_Type INT,
     Amount FLOAT,
     Branch_ID INT,
+    Date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     Time_Period INT,
     Installment FLOAT,
     FOREIGN KEY (Account_No) REFERENCES Account(Account_No) /*ON DELETE SET NULL*/,
@@ -297,7 +296,6 @@ VALUES (1,'6 months',13),(2,'1 year',14),(3,'3 years',15);
 
 CREATE TABLE Fixed_Deposit(
     FD_No INT,
-    Customer_ID INT NOT NULL,
     Account_No BIGINT, /*account number can be null here because there no need to have a savings account to open a fixed deposit.anyone can do */
     Amount FLOAT NOT NULL,
     Date_Opened TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
