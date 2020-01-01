@@ -44,7 +44,7 @@
 	  background-color: #FF7F50;
 
       }
-      input[type=text], input[type=password] {
+      input[type=text], input[type=password],input[type=number] {
       width: 100%;
       padding: 16px 8px;
       margin: 8px 0;
@@ -132,11 +132,11 @@ function checkAvailability() {
 	<div class="formcontainer">
       <hr/>
   <div class="container"></div>
-    <label for="AccNo"><strong>Enter Account Number:</strong></label>
+    <label for="AccNo"><strong>Enter Account Number</strong></label>
         <input type="number" id="AccNo" name="AccNo" placeholder="" onBlur="checkAvailability()"><span id="user-availability-status"></span>	
         <br>
 		<br>
-	<label for="amount"><strong>Enter the amount    :</strong></label>
+	<label for="amount"><strong>Enter the amount</strong></label>
         <input type="number" step="0.01" id="amount" name="amount" placeholder="0">		
 		<br>
 		</div>

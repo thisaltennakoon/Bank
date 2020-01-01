@@ -46,7 +46,7 @@ if (!isset($_SESSION['User'])& empty($_SESSION['User'])) {
   	  top: 120px;
 	  background-color: #FF7F50;
       }
-      input[type=text], input[type=password] {
+      input[type=text], input[type=password], input[type=number] {
       width: 100%;
       padding: 16px 8px;
       margin: 8px 0;
@@ -107,19 +107,19 @@ if (!isset($_SESSION['User'])& empty($_SESSION['User'])) {
       <hr/>
 <div class="container"></div>
 <label for="Customer_ID"><strong>Customer ID</strong></label><input type="number" name="Customer_ID" required><br><br>
-<br><br>
+
 <label for="username"><strong>Username</strong></label><input type="text" name="username" required><br><br>
-<br><br>
+
 <label for="password"><strong>Password</strong></label><input type="password" name="password" required><br><br>
-<br><br>
+
 <label for="cpassword"><strong>Confirm Password</strong></label><input type="password" name="cpassword" required>  <p id="demo"></p>  
-<br><br>
+
 <label for="RecoveryContactNumber"><strong>Recovery Contact Number</strong></label><input type="text" name="RecoveryContactNumber" required><br><br>
-<br><br>
+
 <label for="RecoveryEmail"><strong>Recovery Email</strong></label><input type="text" name="RecoveryEmail" required><br><br>
  </div> 
-<button type="submit"></button> Submit </button>
-</form> 
+<button type="submit"> Submit </button>
+
 <?php
 if(isset($_POST) & !empty($_POST)){
     function test_input($data) {
@@ -150,12 +150,9 @@ if(isset($_POST) & !empty($_POST)){
     mysqli_close($conn);    
 }
 ?>
-</form> 
-<br>
-<br>
+
+
 <button onclick="myFunction()">Print this page</button>
-<br>
-<br>
 <button onclick="window.location.href = 'home.php';">Home</button>
 <script>
 function myFunction() {
@@ -174,5 +171,6 @@ function checkPassword(form) {
     } 
 } 
 </script>
+</form> 
 </body>
 </html>
