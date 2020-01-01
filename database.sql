@@ -202,6 +202,7 @@ CREATE TABLE Transaction_Detail(
     Account_No BIGINT NOT NULL,
     Amount FLOAT NOT NULL,
 	Withdraw BOOLEAN,/*withdraw-True,deposit-False*/
+    Balance FLOAT NOT NULL,
     Detail VARCHAR(20),
     Date_Time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     Teller VARCHAR(20),
@@ -289,6 +290,14 @@ CREATE TABLE Loan_Installment_Bank(
     FOREIGN KEY (Loan_ID) REFERENCES Loan(Loan_ID) /*ON DELETE SET NULL*/,
     PRIMARY KEY (Installment_ID)
 );
+
+CREATE TABLE Loan_Arrears(
+    Loan_ID INT NOT NULL,
+    Due_Date DATE,
+    FOREIGN KEY (Loan_ID) REFERENCES Loan(Loan_ID) /*ON DELETE SET NULL*/,
+    PRIMARY KEY (Loan_ID,Due_Date)
+);
+
 CREATE TABLE Fixed_Deposit_Plan(
     Plan_ID INT,
     Time_Period VARCHAR(10) NOT NULL,
@@ -311,6 +320,17 @@ CREATE TABLE Fixed_Deposit(
     FOREIGN KEY (Transaction_ID) REFERENCES Online_Transaction(Transaction_ID) /*ON DELETE SET NULL*/,
     PRIMARY KEY (FD_No)
 );
+
+/*CREATE TRIGGER after_Transaction_Detail_update
+    BEFORE UPDATE ON Transaction_Detail
+    REFERENCING NEW ROW AS nrow
+    FOR EACH ROW
+    IF(nrow.Withdraw=True)
+    THEN UPDATE Account SET Balance=Balance-nrow.Amount WHERE Account_No=nrow.Account_No
+    ELSE
+        UPDATE Account SET Balance=Balance+nrow.Amount WHERE Account_No=nrow.Account_No;*/
+
+
 ALTER TABLE Fixed_Deposit AUTO_INCREMENT=11201003969;
 INSERT INTO Branch(Branch_Name,Location)  VALUES
 ('Head Office Victoria','Victoria'),
