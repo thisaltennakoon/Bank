@@ -10,7 +10,7 @@ if (!isset($_SESSION['User'])& empty($_SESSION['User'])) {
 <h1>Bank A Seychelles</h1>
 <h2>Create Online Banking Account</h2>
 <form method="post" onSubmit = "return checkPassword(this)" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-Customer ID:<input type="number" name="Customer_ID" required><br><br>
+Customer NIC:<input type="text" name="NIC" required><br><br>
 Username:<input type="text" name="username" required><br><br>
 Password:<input type="password" name="password" required><br><br>
 Confirm Password:<input type="password" name="cpassword" required>  <p id="demo"></p>  
@@ -21,7 +21,7 @@ Recovery Email:<input type="text" name="RecoveryEmail" required><br><br>
 </form> 
 <?php
 if(isset($_POST) & !empty($_POST)){
-    $Customer_ID = $_POST['Customer_ID'];
+    $NIC = $_POST['NIC'];
     $username = $_POST['username'];
     $password = $_POST['password'];
     $password=sha1($password);
@@ -32,13 +32,19 @@ if(isset($_POST) & !empty($_POST)){
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
-    $sql = "INSERT INTO Customer_Login(Customer_ID,Username,Password,Recovery_Contact_No,Recovery_Email) VALUES ($Customer_ID,'$username','$password','$RecoveryContactNumber','$RecoveryEmail')";
-    if ($conn->query($sql) === TRUE) {
-        echo 'Customer Login Created Successful.';
+    $sql ="SELECT * FROM Individual WHERE NIC='$NIC'";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0){
+        $Customer_ID=$row["Customer_ID"];
+        $sql = "INSERT INTO Customer_Login(Customer_ID,Username,Password,Recovery_Contact_No,Recovery_Email) VALUES ($Customer_ID,'$username','$password','$RecoveryContactNumber','$RecoveryEmail')";
+        if ($conn->query($sql) === TRUE) {
+            echo 'Customer Login Created Successful.';
+        }else{
+            echo "Error updating record: " . $conn->error;
+        }
     }else{
-        echo "Error updating record: " . $conn->error;
+        echo 'There isn\'t any customer registered in the system.Please recheck the NIC'; 
     }
-
     $conn->close();    
 }
 ?>

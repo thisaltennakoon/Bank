@@ -10,8 +10,6 @@ CREATE TABLE Customer(
     Primary_Contact_No VARCHAR(10), 
     PRIMARY KEY(Customer_ID)
 );
-
-
 CREATE TABLE Customer_Email(    /*{Email} multi valued attribute*/ /**/
     Customer_ID INT NOT NULL,
     Email VARCHAR(50) NOT NULL,
@@ -27,10 +25,11 @@ CREATE TABLE Individual(
     First_Name VARCHAR(20),
     Last_Name VARCHAR(20),
     Middle_Name VARCHAR(20),
-    NIC VARCHAR(10) NOT NULL,
+    NIC VARCHAR(10) NOT NULL ,
     DOB DATE,
     Gender VARCHAR(6),
     PRIMARY KEY(Customer_ID),
+    UNIQUE (NIC),
     FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID) /*ON DELETE SET NULL*/
 );
 
@@ -349,4 +348,3 @@ INSERT INTO Branch(Branch_Name,Location)  VALUES
 ('Praslin','Praslin'),
 ('Silhouette Island','Silhouette Island'),
 ('Takamaka','Takamaka');
-
