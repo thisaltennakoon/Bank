@@ -104,74 +104,22 @@
 </div>
 <body>
 
-<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-  <h1>Customer Log In</h1>
- <div class="formcontainer">
+
+<form>
+  <h1>Customer Home</h1>
+   <div class="formcontainer">
       <hr/>
   <div class="container"></div>
-  <label for="User"><strong>Username</strong></label>
-  <input type="text" name="User" required>
-  <br><br>
-  <label for="password"><strong>Password</strong></label>
-  <input type="password" name="password" required>
+  <button onclick="window.location.href = 'BankTransaction.php'">Bank Transaction</button> 
+  <button onclick="window.location.href = 'CreateOnlineBankingAccount.php'">Create Online Banking Account</button> 
+  <button onclick="window.location.href = 'LoanApplicationBank.php'">Make a Loan Request</button> 
   <br><br>
   </div>
-  <button type="submit">Login</button>
+  
+   
+ 
 
 
-<?php
-session_start();
-if(isset($_POST) & !empty($_POST)){
-  function test_input($data) {
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
-  }
-
-  $user = test_input($_POST['User']);
-  $pass =  test_input($_POST['password']);
-  $pass=sha1($pass);    //little password encryption
-  //echo $pass;
-  $servername = "localhost";
-  $username = "root";
-  $password = "";
-  $dbname = "Bank";
-  // Create connection
-  $conn = new mysqli($servername, $username, $password, $dbname);
-  // Check connection
-  if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-  }
-
-    $sql = "SELECT * FROM customer_login WHERE Username='$user' AND Password='$pass'";
-
-  $result = $conn->query($sql);
-  if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
-      $_SESSION['User'] = $row["Username"];
-      $_SESSION['Customer_ID'] = $row["Customer_ID"];
-      
-      $result = $conn->query($sql);
-      if ($result->num_rows > 0){
-          while($row = $result->fetch_assoc()){ 
-              $_SESSION['Primary_Branch_ID']= $row["Branch_ID"];
-          }
-      }else{
-          echo  '<p><font color=ff0000>error</font></p>';
-      }
-      header("location: OnlineTransaction.php");
-        //echo "<br> email: ". $row["email"]. " <br>Name: ". $row["name"]. " <br>password   " . $row["password"] . "<br>";
-    }
-  }else{
-    echo "<p><font color=ff0000>The email address or password that you've entered doesn't match any account.</font></p>";
-  }
-//}else{
-  //echo "The email address or password that you've entered doesn't match any account.";
-//}
-$conn->close();
-}
-?>
 </form> 
 </body>
 </html>
