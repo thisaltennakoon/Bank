@@ -35,12 +35,13 @@ if ($result->num_rows > 0){
 ?>
 <br><br><button onclick="window.location.href = 'BankTransaction.php'">Bank Transaction</button> 
 <br><br><button onclick="window.location.href = 'CreateOnlineBankingAccount.php'">Create Online Banking Account</button> 
-<br><br><button onclick="window.location.href = 'MakeaLoanRequest.php'">Make a Loan Request</button> 
+<br><br><button onclick="window.location.href = 'LoanApplicationBank.php'">Make a Loan Request</button> 
 <?php
 if ($EmployeeType=="Manager"){
-echo '<br><br><button onclick="window.location.href = \'ApproveRequestedLoan.php\'">Approve Requested Loan</button>'; 
+echo '<br><br><button onclick="window.location.href = \'ApproveLoans.php\'">Approve Requested Loan</button>'; 
 }
 ?>
+<br><br><button onclick="window.location.href = 'CreateFD.php'">Make a FD</button> 
 <br><br><button onclick="window.location.href = 'Customer.php'">Create a Bank Account</button> 
 <br><br><button onclick="window.location.href = 'ViewAccountDetails.php'">View Account Details</button> 
 <br><br><button onclick="window.location.href = 'IssueCheckBooks.php'">Issue Check Books</button> 
