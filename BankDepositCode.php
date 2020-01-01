@@ -23,7 +23,7 @@ if(!empty($_POST["AccNo"])) {
   $sql = "SET autocommit = OFF;
   START TRANSACTION;
   UPDATE account SET Balance = Balance+'" . $_POST["amount"] . "'WHERE Account_No='".$_POST["AccNo"] ."';
-  INSERT INTO transaction_detail(Account_No,Amount,Withdraw,Detail,Teller) values ('" . $_POST["AccNo"] . "','" . $_POST["amount"] . "',False,'BNK','".$_SESSION['User']."');
+  INSERT INTO transaction_detail(Account_No,Amount,Withdraw,Balance,Detail,Teller) values ('" . $_POST["AccNo"] . "','" . $_POST["amount"] . "',False,(SELECT balance from account WHERE Account_No='".$_POST["AccNo"] ."'),'BNK','".$_SESSION['User']."');
   INSERT INTO bank_transaction (Transaction_ID) values ((SELECT LAST_INSERT_ID())); 
   COMMIT;";
   echo "Deposit Successful";
