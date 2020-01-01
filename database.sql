@@ -187,6 +187,7 @@ CREATE TABLE Transaction_Detail(
     Account_No BIGINT NOT NULL,
     Amount FLOAT NOT NULL,
 	Withdraw BOOLEAN,/*withdraw-True,deposit-False*/
+    Balance FLOAT NOT NULL,
     Detail VARCHAR(20),
     Date_Time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     Teller VARCHAR(20),
