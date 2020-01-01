@@ -242,7 +242,6 @@ CREATE TABLE Requested_Loan( /*--this is also not in the ERD. in my opinion this
     FOREIGN KEY (Requested_By) REFERENCES Clerk(Employee_ID) /*ON DELETE SET NULL*/,
     FOREIGN KEY (Account_No) REFERENCES Account(Account_No) /*ON DELETE SET NULL*/,
     FOREIGN KEY (Branch_ID) REFERENCES Branch(Branch_ID) /*ON DELETE SET NULL*/,
-    FOREIGN KEY (Loan_Type) REFERENCES Loan_Type(Type_ID) /*ON DELETE SET NULL*/,
     PRIMARY KEY (Request_ID)
 );
 CREATE TABLE Loan( /*--this is also not mentioned as a inheritence in the ERD. Please have a look (parent)*/
@@ -259,7 +258,7 @@ CREATE TABLE Loan( /*--this is also not mentioned as a inheritence in the ERD. P
     FOREIGN KEY (Loan_Type) REFERENCES Loan_Type(Type_ID) /*ON DELETE SET NULL*/,
     PRIMARY KEY (Loan_ID)
 );
-ALTER TABLE Account AUTO_INCREMENT=11301003989;
+ALTER TABLE Loan AUTO_INCREMENT=11301003989;
 
 CREATE TABLE Bank_Visit_Loan(  /*--(child)*/
     Loan_ID INT,
@@ -307,7 +306,7 @@ CREATE TABLE Fixed_Deposit(
     FOREIGN KEY (Transaction_ID) REFERENCES Online_Transaction(Transaction_ID) /*ON DELETE SET NULL*/,
     PRIMARY KEY (FD_No)
 );
-ALTER TABLE Account AUTO_INCREMENT=11201003969;
+ALTER TABLE Fixed_Deposit AUTO_INCREMENT=11201003969;
 INSERT INTO Branch(Branch_Name,Location)  VALUES
 ('Head Office Victoria','Victoria'),
 ('Anse A La Mouche','Anse A La Mouche'),
