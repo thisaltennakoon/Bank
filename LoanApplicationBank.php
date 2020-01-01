@@ -12,7 +12,7 @@ if(!isset($_SESSION["User"]) & empty($_SESSION["User"])){
 <h1>Step 1 : Select Account</h1><br>
 
 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-    Enter Account No:<input type="text" name="AccNo" size="50" required>
+    Enter Account No:<input type="number" name="AccNo" size="50" required>
     
     <br><input type="submit" value="Next"><br><br>
 </form>
