@@ -37,7 +37,7 @@ CREATE TABLE Individual(
 
 CREATE TABLE Organization(
     Customer_ID INT,
-    Name VARCHAR(50) NOT NULL,
+    Organization_Name VARCHAR(50) NOT NULL,
     Bussiness_Registration_Number VARCHAR(20),
     PRIMARY KEY(Customer_ID),
     FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID) /*ON DELETE SET NULL*/
@@ -198,16 +198,16 @@ CREATE TABLE Child_Savings_Account(
     PRIMARY KEY(Account_No,First_Name,Middle_Name)
 );
 CREATE TABLE Transaction_Detail(
-    Transaction_ID INT,
+    Transaction_ID INT AUTO_INCREMENT,
     Account_No BIGINT NOT NULL,
     Amount FLOAT NOT NULL,
+	Withdraw BOOLEAN,/*withdraw-True,deposit-False*/
     Date_Time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (Account_No) REFERENCES Account(Account_No) /*ON DELETE SET NULL*/,
     PRIMARY KEY(Transaction_ID)
 );
 CREATE TABLE Bank_Transaction(
-    Transaction_ID INT,
-    Withdraw BOOLEAN,/*withdraw-True,deposit-False*/
+    Transaction_ID INT PRIMARY KEY,
     FOREIGN KEY (Transaction_ID) REFERENCES Transaction_Details(Transaction_ID) /*ON DELETE SET NULL*/
 );
 CREATE TABLE ATM_Withdrawal(
@@ -217,11 +217,10 @@ CREATE TABLE ATM_Withdrawal(
 );
 CREATE TABLE Online_Transaction(
     Online_Transaction_ID INT,
-    Sender_ACC_No INT,
-    Recepient_ACC_No INT,
-    Sender_Transaction_ID INT,
-    FOREIGN KEY (Recepient_ACC_No) REFERENCES Account(Account_No) /*ON DELETE SET NULL*/,
-    FOREIGN KEY (Sender_ACC_No) REFERENCES Account(Account_No) /*ON DELETE SET NULL*/,
+	Withdrawal_ID INT,
+	Deposit_ID INT,
+    FOREIGN KEY (Withdrawal_ID) REFERENCES Transaction_Details(Transaction_ID), /*ON DELETE SET NULL*/
+	FOREIGN KEY (Deposit_ID) REFERENCES Transaction_Details(Transaction_ID), /*ON DELETE SET NULL*/
     PRIMARY KEY(Online_Transaction_ID)
 );
 CREATE TABLE Loan_Type(  /*--there are basically two loan types are given in the description but it has not mentioned in the ERD.*/
