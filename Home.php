@@ -129,6 +129,7 @@ $Employee_ID=$_SESSION['Employee_ID'];
 $Branch_ID =$_SESSION['Primary_Branch_ID'];
 $EmployeeType=$_SESSION['EmployeeType'];
 
+
 $conn = new mysqli("localhost", "root", "","Bank");
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -140,7 +141,7 @@ if ($result->num_rows > 0){
         echo '<br><label><strong>Branch : </strong></label>'.$row["Branch_Name"];
     }
 }else{
-    echo 'error';
+    echo 'error1';
 }
 $sql ="SELECT * FROM Employee WHERE Employee_ID='$Employee_ID'";
 $result = $conn->query($sql);
@@ -149,7 +150,7 @@ if ($result->num_rows > 0){
         echo '<br><label><strong>Employee Name : </strong></label>'.$row["First_Name"].' '. $row["Middle_Name"].' '. $row["Last_Name"];
     }
 }else{
-    echo 'error';
+    echo 'error2';
 }
 
 ?>

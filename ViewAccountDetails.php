@@ -9,7 +9,7 @@ if (!isset($_SESSION['User'])& empty($_SESSION['User'])) {
 <h1>Bank A Seychelles</h1>
 <h2>View Account Details</h2>
 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-Account Number:<input type="text" name="accnumber" required>
+Account Number:<input type="number" name="accnumber" required>
 <br><br>
 <input type="submit" value="Check">
 </form> 

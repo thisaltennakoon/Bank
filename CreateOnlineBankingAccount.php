@@ -118,7 +118,7 @@ if (!isset($_SESSION['User'])& empty($_SESSION['User'])) {
 <br><br>
 <label for="RecoveryEmail"><strong>Recovery Email</strong></label><input type="text" name="RecoveryEmail" required><br><br>
  </div> 
-<button type="submit">></button> Submit </button>
+<button type="submit"></button> Submit </button>
 </form> 
 <?php
 if(isset($_POST) & !empty($_POST)){
@@ -129,18 +129,18 @@ if(isset($_POST) & !empty($_POST)){
     $RecoveryContactNumber = $_POST['RecoveryContactNumber'];
     $RecoveryEmail = $_POST['RecoveryEmail'];
 
-    $conn = new mysqli("localhost", "root", "","Bank");
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-    $sql = "INSERT INTO Customer_Login(Customer_ID,Username,Password,Recovery_Contact_No,Recovery_Email) VALUES ($Customer_ID,'$username','$password','$RecoveryContactNumber','$RecoveryEmail')";
-    if ($conn->query($sql) === TRUE) {
+    $conn = mysqli_connect("localhost", "root", "","Bank");
+    $stmt = $conn->prepare("INSERT INTO Customer_Login(Customer_ID,Username,Password,Recovery_Contact_No,Recovery_Email) VALUES (?,?,?,?,?)");   
+    $stmt->bind_param("issss",$Customer_ID,$username,$password,$RecoveryContactNumber,$RecoveryEmail);
+
+    if ($stmt->execute() === TRUE) {
         echo '<p><font color=#006400>Customer Login Created Successful.</font></p>';
     }else{
         echo "<p><font color=#ff0000>Error updating record. </font></p>" . $conn->error;
     }
 
-    $conn->close();    
+    $stmt->close();
+    mysqli_close($conn);    
 }
 ?>
 </form> 
