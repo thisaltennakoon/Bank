@@ -6,18 +6,124 @@ if (!isset($_SESSION['User'])& empty($_SESSION['User'])) {
 ?>
 <!DOCTYPE html>
 <html>
+<head>
+    <title>Simple login form</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <style>
+	.header {
+  	background-color: #ff4500;
+
+	width: 100%;
+	
+    background-size: 100%;
+	background-repeat: no-repeat;
+    background-size: cover;
+    margin-left: auto;
+    margin-right: auto;
+  	padding: 20px;
+  	text-align: center;
+	position: absolute;
+  	left: 0px;
+  	top: 0px;
+	}
+      html {
+
+      display: flex;
+      justify-content: center;
+      font-family: Roboto, Arial, sans-serif;
+      font-size: 15px;
+
+      } 
+	  body {
+      display: flex;
+      justify-content: center;
+      font-family: Roboto, Arial, sans-serif;
+      font-size: 15px;
+	  background-color: #FF8C00;
+	  
+      }
+      form {
+      border: 6px solid #FF7F50;
+	  padding: 25px 50px;
+	  position: absolute;
+  	  top: 120px;
+	  background-color: #FF7F50;
+
+      }
+      input[type=text], input[type=password], input[type=number]{
+      width: 100%;
+      padding: 16px 8px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      }
+      button {
+      background-color: #006400;
+
+      color: white;
+      padding: 14px 0;
+      margin: 10px 0;
+      border: none;
+      cursor: grabbing;
+      width: 100%;
+      }
+      h1 {
+      text-align:center;
+      fone-size:18;
+      }
+      button:hover {
+
+        background-color: #00FF00;
+
+      }
+      .formcontainer {
+      text-align: left;
+      margin: 24px 50px 12px;
+	  
+      }
+      .container {
+      padding: 16px 0;
+      text-align:left;
+      }
+      span.psw {
+      float: right;
+      padding-bottom: 0;
+      padding-right: 15px;
+      }
+	  span.aaa {
+      float: left;
+      padding-bottom: 0;
+      padding-left: 15px;
+      }
+      /* Change styles for span on extra small screens */
+      @media screen and (max-width: 300px) {
+      span.psw {
+      display: block;
+      float: none;
+      }
+    </style>
+  </head>
+
+  <div class="header">
+  <h1>BANK A SEYCHELLES</h1>
+</div>
 <body>
-<h1>Bank A Seychelles</h1>
-<h2>Issue a Checkbook</h2>
+
 <form method="post" onSubmit = "return checkPassword(this)" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-Account Number:<input type="number" name="Account_No" required><br><br>
-Starting Check Number:<input type="number" name="Starting_Check_Number" required><br><br>
-Number of Pages<select name="Number_of_Pages">
+<h1>Issue a Checkbook</h1>
+<div class="formcontainer">
+      <hr/>
+  <div class="container"></div>
+<label for="Account_No"><strong>Account Number:</strong></label><input type="number" name="Account_No" required><br><br>
+<label for="Starting_Check_Number"><strong>Starting Check Number:</strong></label><input type="number" name="Starting_Check_Number" required><br><br>
+<label for="Number_of_Pages"><strong>Number of Pages</strong></label><select name="Number_of_Pages">
 <option value="25">25 Leaves</option>
 <option value="50">50 Leaves</option>
-<option value="100">100 Leaves</option></select><br><br>    
-<input type="submit" value="Submit" >
-</form> 
+<option value="100">100 Leaves</option></select><br><br> 
+</div>   
+<button type="submit">Submit</button> 
+
 <?php
 if(isset($_POST) & !empty($_POST)){
     function test_input($data) {
@@ -53,21 +159,17 @@ if(isset($_POST) & !empty($_POST)){
                     }
                 }
             }else{
-                echo 'Account Number is belongs to a savings account.Checkbooks cannot be issued fro savings account.';
+                echo '<font color=#ff0000><strong>Account Number is belongs to a savings account.Checkbooks cannot be issued for savings account.</strong></font>';
             }
         }
     }else{
-        echo 'Account Number is not valid';
+        echo '<font color=#ff0000><strong>Account Number is not valid</strong></font>';
     }
 
     $conn->close();    
 }
 ?>
-<br>
-<br>
 <button onclick="myFunction()">Print this page</button>
-<br>
-<br>
 <button onclick="window.location.href = 'home.php';">Home</button>
 <script>
 function myFunction() {
@@ -86,5 +188,6 @@ function checkPassword(form) {
     } 
 } 
 </script>
+</form> 
 </body>
 </html>

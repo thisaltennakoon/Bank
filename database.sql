@@ -80,10 +80,6 @@ CREATE TABLE Employee(
     FOREIGN KEY (Branch_ID) REFERENCES Branch(Branch_ID) /*ON DELETE SET NULL*/
 );
 
-INSERT INTO Employee(First_Name,Middle_Name,Last_Name,Address,NIC,DOB,Gender,Primary_Contact_No,Branch_ID) 
-VALUES ('John','Aniston','Smith','123,Albert St, Victoria, Seychelles','903611178V','1969-12-26','Male','0766220249',1);
-INSERT INTO Employee(First_Name,Middle_Name,Last_Name,Address,NIC,DOB,Gender,Primary_Contact_No,Branch_ID) 
-VALUES ('Emma','Ruthann','Marasco','21,Capital City, Independence Ave, Seychelles','933611178V','1997-11-26','Female','0716220249',1);
 
 CREATE TABLE Employee_Contact_No(    /*--{Contact_No} multi valued attribute*/
     Employee_ID INT NOT NULL,
@@ -99,24 +95,21 @@ CREATE TABLE Employee_Login(
     PRIMARY KEY(Username),
     FOREIGN KEY (Employee_ID) REFERENCES Employee(Employee_ID) /*ON DELETE SET NULL*/
 );
-INSERT INTO Employee_Login(Employee_ID,Username,Password,Recovery_Contact_No,Recovery_Email) 
-VALUES (1,'john','8cb2237d0679ca88db6464eac60da96345513964','0766220249','johnsmith@gmail.com'); /*password=12345*/
-INSERT INTO Employee_Login(Employee_ID,Username,Password,Recovery_Contact_No,Recovery_Email) 
-VALUES (2,'emma','8cb2237d0679ca88db6464eac60da96345513964','0716220249','emma@gmail.com'); /*password=12345*/
+
 
 CREATE TABLE Manager(
     Employee_ID INT,
     PRIMARY KEY(Employee_ID),
     FOREIGN KEY (Employee_ID) REFERENCES Employee(Employee_ID) /*ON DELETE SET NULL*/
 );
-INSERT INTO Manager(Employee_ID) VALUES (1);
+
 
 CREATE TABLE Clerk(
     Employee_ID INT,
     PRIMARY KEY(Employee_ID),
     FOREIGN KEY (Employee_ID) REFERENCES Employee(Employee_ID) /*ON DELETE SET NULL*/
 );
-INSERT INTO Clerk(Employee_ID) VALUES (2);
+
 
 CREATE TABLE Account(
     Account_No BIGINT UNSIGNED AUTO_INCREMENT,
@@ -174,8 +167,6 @@ CREATE TABLE Savings_Account_Plan(
     PRIMARY KEY (Plan_ID)
 );
 
-INSERT INTO Savings_Account_Plan(Plan_ID,Account_Plan,Minimum_Balance,Interest) 
-VALUES (1,'Children',0,12),(2,'Teen',500,11),(3,'Adult(18+)',1000,10),(4,'Senior',1000,13);
 
 CREATE TABLE Savings_Account(
     Account_No BIGINT,
@@ -305,8 +296,6 @@ CREATE TABLE Fixed_Deposit_Plan(
     PRIMARY KEY (Plan_ID)
 );
 
-INSERT INTO Fixed_Deposit_Plan(Plan_ID,Time_Period,Interest) 
-VALUES (1,'6 months',13),(2,'1 year',14),(3,'3 years',15);
 
 CREATE TABLE Fixed_Deposit(
     FD_No BIGINT UNSIGNED AUTO_INCREMENT,
@@ -375,4 +364,132 @@ INSERT INTO Branch(Branch_Name,Location)  VALUES
 ('Praslin','Praslin'),
 ('Silhouette Island','Silhouette Island'),
 ('Takamaka','Takamaka');
+
+
+INSERT INTO `account` (`Account_No`, `Balance`, `Primary_Customer_ID`, `Primary_Branch_ID`, `Account_Status`, `Date_Created`) VALUES
+(22601003929, -1800, 5, 1, 'Active', '2020-01-02 00:17:47'),
+(22601003930, 0, 1, 1, 'Active', '2020-01-02 00:19:56'),
+(22601003931, 0, 2, 1, 'Active', '2020-01-02 00:20:38'),
+(22601003932, 0, 3, 1, 'Active', '2020-01-02 00:21:56'),
+(22601003933, 0, 4, 1, 'Active', '2020-01-02 00:22:50'),
+(22601003934, 0, 3, 1, 'Active', '2020-01-02 00:23:27'),
+(22601003935, -900, 4, 1, 'Active', '2020-01-02 00:26:49');
+
+INSERT INTO `account_branch` (`Account_No`, `Branch_ID`) VALUES
+(22601003929, 1),
+(22601003929, 3),
+(22601003929, 5),
+(22601003929, 7),
+(22601003930, 1),
+(22601003930, 3),
+(22601003930, 7),
+(22601003931, 1),
+(22601003931, 5),
+(22601003931, 7),
+(22601003931, 12),
+(22601003932, 1),
+(22601003932, 9),
+(22601003932, 13),
+(22601003932, 15),
+(22601003933, 3),
+(22601003933, 6),
+(22601003933, 9),
+(22601003934, 1),
+(22601003934, 2),
+(22601003934, 3),
+(22601003934, 4),
+(22601003935, 1),
+(22601003935, 8),
+(22601003935, 12);
+
+INSERT INTO `checkbook` (`Checkbook_Number`, `Account_No`, `Issued_Date`, `Number_of_Pages`, `Starting_Check_Number`) VALUES
+(1, 22601003929, '2020-01-01 19:06:05', 100, 20200102),
+(2, 22601003935, '2020-01-01 19:07:24', 50, 20200202);
+
+INSERT INTO `checking_account` (`Account_No`) VALUES
+(22601003929),
+(22601003935);
+
+INSERT INTO `child_savings_account` (`Account_No`, `First_Name`, `Middle_Name`, `Last_Name`, `DOB`, `Gender`) VALUES
+(22601003934, 'Anabella', 'Nicole', 'Rose', '2013-01-23', 'Female');
+
+INSERT INTO `clerk` (`Employee_ID`) VALUES
+(2),
+(4);
+
+INSERT INTO `customer` (`Customer_ID`, `Address_Line_1`, `Address_Line_2`, `Address_Line_3`, `Primary_Email`, `Primary_Contact_No`) VALUES
+(1, '1st cross street', 'Germantown', 'Victoria', 'OliverJake@gmail.com', '1234567891'),
+(2, 'Park Avenue', 'Florida', 'Marktown', 'AmeliaMargaret@gmail.com', '9876543211'),
+(3, 'Queens Street', 'Parktown', 'Queensland', 'DamianWilliam@ymail.com', '5432167891'),
+(4, 'Griffith Road', 'Brisbaner', 'Geogiana', 'IslaBethany@outlook.com', '1233214569'),
+(5, 'Nathan Circular', 'Briginton', 'Griffith', 'info@uog.sh', '1234543211');
+
+
+INSERT INTO `customer_account` (`Customer_ID`, `Account_No`) VALUES
+(1, 22601003929),
+(2, 22601003929),
+(3, 22601003929),
+(4, 22601003929),
+(1, 22601003930),
+(2, 22601003931),
+(3, 22601003932),
+(4, 22601003933),
+(3, 22601003934),
+(4, 22601003935);
+
+
+INSERT INTO `customer_login` (`Customer_ID`, `Username`, `Password`, `Recovery_Contact_No`, `Recovery_Email`) VALUES
+(1, 'oliverjake', '8cb2237d0679ca88db6464eac60da96345513964', '1234567891', 'OliverJake@gmail.com'),
+(2, 'ameliaemma', '8cb2237d0679ca88db6464eac60da96345513964', '9876543211', 'AmeliaMargaret@gmail.com'),
+(3, 'williamdamian', '8cb2237d0679ca88db6464eac60da96345513964', '5432167891', 'DamianWilliam@ymail.com'),
+(4, 'bethanysophia', '348162101fc6f7e624681b7400b085eeac6df7bd', '1233214569', 'IslaBethany@outlook.com');
+
+INSERT INTO `employee` (`Employee_ID`, `First_Name`, `Middle_Name`, `Last_Name`, `Address`, `NIC`, `DOB`, `Gender`, `Primary_Contact_No`, `Branch_ID`) VALUES
+(1, 'John', 'Aniston', 'Smith', '123,Albert St, Victoria, Seychelles', '903611178V', '1969-12-26', 'Male', '0766220249', 1),
+(2, 'Emma', 'Ruthann', 'Marasco', '21,Capital City, Independence Ave, Seychelles', '933611178V', '1997-11-26', 'Female', '0716220249', 1),
+(3, 'Theresa', 'Amelia', 'May', '26,Park Road,Virginia', '697911178V', '1969-02-23', 'Female', '0766220249', 2),
+(4, 'Albert', 'William', 'Brethan', '12,German Town,New South Wales', '983672354V', '1998-01-08', 'Male', '0717303215', 2);
+
+INSERT INTO `employee_login` (`Employee_ID`, `Username`, `Password`, `Recovery_Contact_No`, `Recovery_Email`) VALUES
+(1, 'john', '8cb2237d0679ca88db6464eac60da96345513964', '0766220249', 'johnsmith@gmail.com'),
+(2, 'emma', '8cb2237d0679ca88db6464eac60da96345513964', '0716220249', 'emma@gmail.com'),
+(3, 'theresa', 'f2515b5363f697393a46f4641e5c6b5ffc7a1d27', '0717303215', 'theresamay@banka.com'),
+(4, 'albert', '198a52ae72c2d5c6f41914d337dc325238f6a53e', '0112816336', 'albertbrethan@yahoo.com');
+
+INSERT INTO `fixed_deposit_plan` (`Plan_ID`, `Time_Period`, `Interest`) VALUES
+(1, '6 months', 13),
+(2, '1 year', 14),
+(3, '3 years', 15);
+
+INSERT INTO `individual` (`Customer_ID`, `First_Name`, `Last_Name`, `Middle_Name`, `NIC`, `DOB`, `Gender`) VALUES
+(1, 'Oliver', 'Jake', 'Noah', '123456789V', '1992-01-02', 'Male'),
+(2, 'Amelia', 'Emma', 'Margaret', '987654321V', '2000-01-15', 'Female'),
+(3, 'William', 'Damian', 'Daniel', '123454321V', '1969-01-12', 'Male'),
+(4, 'Isla', 'Bethany', 'Sophia', '973611178V', '1989-08-15', 'Female');
+
+INSERT INTO `manager` (`Employee_ID`) VALUES
+(1),
+(3);
+
+INSERT INTO `organization` (`Customer_ID`, `Name`, `Bussiness_Registration_Number`) VALUES
+(5, 'University of Griffith', '22601929');
+
+INSERT INTO `organization_individual` (`Organization_ID`, `Individual_ID`) VALUES
+(5, 1),
+(5, 2),
+(5, 3),
+(5, 4);
+
+INSERT INTO `savings_account` (`Account_No`, `Number_of_Withdrawals`, `Account_Plan_ID`) VALUES
+(22601003930, 0, 3),
+(22601003931, 0, 2),
+(22601003932, 0, 4),
+(22601003933, 0, 3),
+(22601003934, 0, 1);
+
+INSERT INTO `savings_account_plan` (`Plan_ID`, `Account_Plan`, `Minimum_Balance`, `Interest`) VALUES
+(1, 'Children', 0, 12),
+(2, 'Teen', 500, 11),
+(3, 'Adult(18+)', 1000, 10),
+(4, 'Senior', 1000, 13);
 
