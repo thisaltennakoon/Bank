@@ -15,17 +15,10 @@ if(isset($_POST) & !empty($_POST) ){
     $DOB=$_POST['DOB'];
     $Gender=$_POST['Gender'];
 
-    
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "Bank"; // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname); // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-    $sql = "INSERT INTO Child_Savings_Account(Account_No,First_Name,Middle_Name,Last_Name,DOB,Gender) VALUES ($AccountNumber,'$firstname','$middlename','$lastname','$DOB','$Gender')";
-    if ($conn->query($sql) === TRUE) {
+    $conn = mysqli_connect("localhost", "root", "","Bank");
+    $stmt = $conn->prepare("INSERT INTO Child_Savings_Account(Account_No,First_Name,Middle_Name,Last_Name,DOB,Gender) VALUES (?,?,?,?,?,?)");   
+    $stmt->bind_param("isssss",$AccountNumber,$firstname,$middlename,$lastname,$DOB,$Gender);
+    if ($stmt->execute() === TRUE) {
         echo "<h1>Child Savings account created successfully</h1>";
         include 'ViewAccountDetailsFunction.php';
         ViewAccountDetails($AccountNumber,$conn);
@@ -34,7 +27,8 @@ if(isset($_POST) & !empty($_POST) ){
     }
 
 }
-$conn->close();	
+$stmt->close();
+mysqli_close($conn);	
 unset($_SESSION['NIC_arr']);
 unset($_SESSION['Other_branches']);		
 unset($_SESSION['Customer_Str']);

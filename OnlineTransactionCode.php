@@ -37,11 +37,11 @@ if(!empty($_POST["SenderAccNo"])) {
               $sql = "SET autocommit = OFF;
                 START TRANSACTION;
                 UPDATE account SET Balance = Balance-'" . $_POST["amount"] . "'WHERE Account_No='".$_POST["SenderAccNo"] ."';
-				INSERT INTO transaction_detail(Account_No,Amount,Withdraw) values ('" . $_POST["SenderAccNo"] . "','" . $_POST["amount"] . "',True);
+				INSERT INTO transaction_detail(Account_No,Amount,Withdraw,Balance,Detail,Teller) values ('" . $_POST["SenderAccNo"] . "','" . $_POST["amount"] . "',True,(SELECT balance from account WHERE Account_No='".$_POST["SenderAccNo"] ."'),'Online','self');
 				INSERT INTO online_transaction (Withdrawal_ID) values ((SELECT LAST_INSERT_ID()));
 				UPDATE savings_account SET Number_of_Withdrawals = Number_of_Withdrawals+1 WHERE Account_No='".$_POST["SenderAccNo"] ."';
                 UPDATE account SET Balance = Balance+'" . $_POST["amount"] . "'WHERE Account_No='".$_POST["RecipientAccNo"] ."';
-                INSERT INTO transaction_detail(Account_No,Amount,Withdraw) values ('" . $_POST["RecipientAccNo"] . "','" . $_POST["amount"] . "',False);
+                INSERT INTO transaction_detail(Account_No,Amount,Withdraw,Balance,Detail,Teller) values ('" . $_POST["RecipientAccNo"] . "','" . $_POST["amount"] . "',False,(SELECT balance from account WHERE Account_No='".$_POST["RecipientAccNo"] ."'),'Online','" . $_POST["SenderAccNo"] . "');
                 Update online_transaction SET Deposit_ID = ((SELECT LAST_INSERT_ID())); 
                 COMMIT;";
                 echo "Transaction Successful";

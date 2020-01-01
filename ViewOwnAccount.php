@@ -4,11 +4,46 @@
 <?php
 session_start();
 if (!isset($_SESSION['User'])& empty($_SESSION['User'])) {
-    header('location: Login.php');
+    header('location: CustomerLogin.php');
 }
 ?>
+<?php
+$customer_ID = $_SESSION['Customer_ID'];
 
+?>
+<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"  enctype="multipart/form-data">
 
+	<label for="Account_No">Choose the account</label><br>
+
+	<?php
+		$servername = "localhost";
+		$username = "root";
+		$password = "";
+		$dbname = "Bank";
+		// Create connection
+		$conn = new mysqli($servername, $username, $password, $dbname);
+		// Check connection
+		if ($conn->connect_error) {
+		die("Connection failed: " . $conn->connect_error);
+		}
+
+		$sql = "SELECT Account_No from account where Primary_Customer_ID=$customer_ID";
+		$results = $conn->query($sql);
+		if ($results->num_rows > 0){
+		echo'<select name="Account_No" style="width: 400px; height: 40px">';
+		
+		while($rows = $results->fetch_assoc()){       //while loop
+			echo '<option value="'.$rows['Account_No'].'">'.$rows['Account_No'].'</option>
+			';
+			
+		}
+		echo'</select>';	
+		}else{
+		echo "No Valid Accounts available";
+		}
+		?>
+		<br>
+		<br>
 <?php 
 $servername = "localhost";
 $username = "root";
@@ -21,7 +56,8 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
 	die("Connection failed: " . $conn->connect_error);
 }
-$query = "SELECT * FROM transaction_detail";
+$Account_No=$_POST['Account_No'];
+$query = "SELECT * FROM transaction_detail WHERE Account_No='$Account_No'";
  
  
 echo '<table border="0" cellspacing="2" cellpadding="2"> 

@@ -74,40 +74,36 @@ if(isset($_POST) & !empty($_POST)){
     $RecoveryEmail = $_POST['RecoveryEmail'];
     $EmployeeType = $_POST['EmployeeType'];
 
-
-    $conn = new mysqli("localhost", "root", "","Bank");
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
+    $conn = mysqli_connect("localhost", "root", "","Bank");
+    $stmt = $conn->prepare("INSERT INTO Employee(First_Name,Middle_Name,Last_Name,Address,NIC,DOB,Gender,Primary_Contact_No,Branch_ID) VALUES (?,?,?,?,?,?,?,?,?)");   
+    $stmt->bind_param("ssssssssi",$firstname,$middlename,$lastname,$address,$NIC,$DOB,$Gender,$Contact_No,$Branch);
+    $stmt->execute();
+    $Employee_ID = $conn->insert_id;
+    $stmt = $conn->prepare("INSERT INTO Employee_Login(Employee_ID,Username,Password,Recovery_Contact_No,Recovery_Email) VALUES (?,?,?,?,?)");         
+    $stmt->bind_param("issss",$Employee_ID,$username,$password,$RecoveryContactNumber,$RecoveryEmail);
+    $stmt->execute();
+    $stmt->close();
+    mysqli_close($conn);
+    $conn1 = new mysqli("localhost", "root", "","Bank");
+    if ($conn1->connect_error) {
+        die("Connection failed: " . $conn1->connect_error);
     }
-    $sql = "INSERT INTO Employee(First_Name,Middle_Name,Last_Name,Address,NIC,DOB,Gender,Primary_Contact_No,Branch_ID) VALUES ('$firstname','$middlename','$lastname','$address','$NIC','$DOB','$Gender','$Contact_No',$Branch)";
-    if ($conn->query($sql) === TRUE) {
-        $Employee_ID = $conn->insert_id;
-        $sql = "INSERT INTO Employee_Login(Employee_ID,Username,Password,Recovery_Contact_No,Recovery_Email) VALUES ($Employee_ID,'$username','$password','$RecoveryContactNumber','$RecoveryEmail')";
-        if ($conn->query($sql) === TRUE) {
-            if($EmployeeType=='Maneger'){
-                $sql = "INSERT INTO Manager(Employee_ID) VALUES ($Employee_ID)";
-                if ($conn->query($sql) === TRUE) {
-                    echo 'Employee is Sucessfully Created.';
-                }else{
-                    echo "Error updating record: " . $conn->error;
-                }
-            }elseif($EmployeeType=='Clerk'){
-                $sql = "INSERT INTO Clerk(Employee_ID) VALUES ($Employee_ID)";
-                if ($conn->query($sql) === TRUE) {
-                    echo 'Employee is Sucessfully Created.';
-                }else{
-                    echo "Error updating record: " . $conn->error;
-                }
-            }
-    
+    if($EmployeeType=='Maneger'){
+        $sql = "INSERT INTO Manager(Employee_ID) VALUES ($Employee_ID)";
+        if ($conn1->query($sql) === TRUE) {
+            echo 'Employee is Sucessfully Created.';
         }else{
-            echo "Error updating record: " . $conn->error;
+            echo "Error updating record: " . $conn1->error;
         }
-    }else{
-        echo "Error updating record: " . $conn->error;
-    }
-
-    $conn->close();    
+    }elseif($EmployeeType=='Clerk'){
+        $sql = "INSERT INTO Clerk(Employee_ID) VALUES ($Employee_ID)";
+        if ($conn1->query($sql) === TRUE){
+            echo 'Employee is Sucessfully Created.';
+        }else{
+            echo "Error updating record: " . $conn1->error;
+        }
+    }  
+    $conn1->close();    
 }
 ?>
 <br>
