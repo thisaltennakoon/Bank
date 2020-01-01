@@ -76,9 +76,8 @@ if(!isset($_SESSION["User"]) & empty($_SESSION["User"])){
             throw new Exception($conn->error);
         }
 
-        $query = "CREATE EVENT settleInstallment5 ON SCHEDULE EVERY 1 MINUTE STARTS '2020-01-02 00:00:00' DO INSERT INTO transaction_details(Account_No,Amount,Withdraw,Balance,Detail,Teller) VALUES($AccNo,$Amount,True,1000,'Installment','Self');
-                    SET GLOBAL event_scheduler='ON';";
-        $result = $conn->multi_query($query);
+        $query = "CREATE EVENT settleInstallment1 ON SCHEDULE EVERY 1 MINUTE STARTS '2020-01-02 00:00:00' DO INSERT INTO transaction_detail(Account_No,Amount,Withdraw,Balance,Detail,Teller) VALUES($AccNo,$Installment,True,100,'Installment','Self')";
+        $result = $conn->query($query);
         if ( !$result ) {
             $result->free();
             throw new Exception($conn->error);
