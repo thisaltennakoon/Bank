@@ -247,7 +247,7 @@ CREATE TABLE Requested_Loan( /*--this is also not in the ERD. in my opinion this
     PRIMARY KEY (Request_ID)
 );
 CREATE TABLE Loan( /*--this is also not mentioned as a inheritence in the ERD. Please have a look (parent)*/
-    Loan_ID INT,     /*--another problem. why have you made a has reletionship from 'Loan_BankVist' to 'Customer'?*/
+    Loan_ID BIGINT UNSIGNED AUTO_INCREMENT,/*--another problem. why have you made a has reletionship from 'Loan_BankVist' to 'Customer'?*/
     Account_No BIGINT,      /*--I have removed it. we have to discuss it*/
     Loan_Type INT,
     Amount FLOAT,
@@ -260,6 +260,8 @@ CREATE TABLE Loan( /*--this is also not mentioned as a inheritence in the ERD. P
     FOREIGN KEY (Loan_Type) REFERENCES Loan_Type(Type_ID) /*ON DELETE SET NULL*/,
     PRIMARY KEY (Loan_ID)
 );
+ALTER TABLE Account AUTO_INCREMENT=11301003989;
+
 CREATE TABLE Bank_Visit_Loan(  /*--(child)*/
     Loan_ID INT,
     Approved_Date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -295,7 +297,7 @@ INSERT INTO Fixed_Deposit_Plan(Plan_ID,Time_Period,Interest)
 VALUES (1,'6 months',13),(2,'1 year',14),(3,'3 years',15);
 
 CREATE TABLE Fixed_Deposit(
-    FD_No INT,
+    FD_No BIGINT UNSIGNED AUTO_INCREMENT,
     Account_No BIGINT, /*account number can be null here because there no need to have a savings account to open a fixed deposit.anyone can do */
     Amount FLOAT NOT NULL,
     Date_Opened TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -306,6 +308,7 @@ CREATE TABLE Fixed_Deposit(
     FOREIGN KEY (Transaction_ID) REFERENCES Online_Transaction(Transaction_ID) /*ON DELETE SET NULL*/,
     PRIMARY KEY (FD_No)
 );
+ALTER TABLE Account AUTO_INCREMENT=11201003969;
 INSERT INTO Branch(Branch_Name,Location)  VALUES
 ('Head Office Victoria','Victoria'),
 ('Anse A La Mouche','Anse A La Mouche'),

@@ -39,6 +39,7 @@ if ($result->num_rows > 0){
 <?php
 if ($EmployeeType=="Manager"){
 echo '<br><br><button onclick="window.location.href = \'ApproveLoans.php\'">Approve Requested Loan</button>'; 
+echo '<br><br><button onclick="window.location.href = \'ViewTransactionDetail.php\'">View Transaction Details</button>'; 
 }
 ?>
 <br><br><button onclick="window.location.href = 'CreateFD.php'">Make a FD</button> 
