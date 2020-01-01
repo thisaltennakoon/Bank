@@ -10,11 +10,116 @@ if ($conn->connect_error) {
 ?>
 <!DOCTYPE html>
 <html>
-<body>
-<h1>Bank A Seychelles</h1>
-<h2>Create an Employee</h2>
-<form method="post" onSubmit = "return checkPassword(this)" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+<head>
+    <title>Simple login form</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <style>
+	.header {
+  	background-color: #ff4500;
 
+	width: 100%;
+	
+    background-size: 100%;
+	background-repeat: no-repeat;
+    background-size: cover;
+    margin-left: auto;
+    margin-right: auto;
+  	padding: 20px;
+  	text-align: center;
+	position: absolute;
+  	left: 0px;
+  	top: 0px;
+	}
+      html {
+
+      display: flex;
+      justify-content: center;
+      font-family: Roboto, Arial, sans-serif;
+      font-size: 15px;
+
+      } 
+	  body {
+      display: flex;
+      justify-content: center;
+      font-family: Roboto, Arial, sans-serif;
+      font-size: 15px;
+	  background-color: #FF8C00;
+	  
+      }
+      form {
+      border: 6px solid #FF7F50;
+	  padding: 25px 50px;
+	  position: absolute;
+  	  top: 120px;
+	  background-color: #FF7F50;
+
+      }
+      input[type=text], input[type=password], input[type=number]{
+      width: 100%;
+      padding: 16px 8px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      }
+      button {
+      background-color: #006400;
+
+      color: white;
+      padding: 14px 0;
+      margin: 10px 0;
+      border: none;
+      cursor: grabbing;
+      width: 100%;
+      }
+      h1 {
+      text-align:center;
+      fone-size:18;
+      }
+      button:hover {
+
+        background-color: #00FF00;
+
+      }
+      .formcontainer {
+      text-align: left;
+      margin: 24px 50px 12px;
+	  
+      }
+      .container {
+      padding: 16px 0;
+      text-align:left;
+      }
+      span.psw {
+      float: right;
+      padding-bottom: 0;
+      padding-right: 15px;
+      }
+	  span.aaa {
+      float: left;
+      padding-bottom: 0;
+      padding-left: 15px;
+      }
+      /* Change styles for span on extra small screens */
+      @media screen and (max-width: 300px) {
+      span.psw {
+      display: block;
+      float: none;
+      }
+    </style>
+  </head>
+
+  <div class="header">
+  <h1>BANK A SEYCHELLES</h1>
+</div>
+<body>
+
+
+<form method="post" onSubmit = "return checkPassword(this)" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+<h1>Create an Employee</h1>
+<div class="formcontainer">
+      <hr/>
+  <div class="container"></div>
 First Name:<input type="text" name="firstname" required><br><br>
 Middle Name:<input type="text" name="middlename"><br><br>
 Last Name:<input type="text" name="lastname"><br><br>
@@ -50,12 +155,12 @@ Confirm Password:<input type="password" name="cpassword" required>  <p id="demo"
 Recovery Contact Number:<input type="text" name="RecoveryContactNumber" required><br><br>
 Recovery Email:<input type="text" name="RecoveryEmail" required><br><br>
 <select name="EmployeeType">
-<option value="Maneger">Maneger</option>
+<option value="Maneger">Manager</option>
 <option value="Clerk">Clerk</option>
 </select>
-<br><br>
-<input type="submit" value="Create" >
-</form> 
+</div>
+<button type="submit">Create</button>
+
 <?php
 if(isset($_POST) & !empty($_POST)){
     function test_input($data) {
@@ -113,11 +218,9 @@ if(isset($_POST) & !empty($_POST)){
     $conn1->close();    
 }
 ?>
-<br>
-<br>
+
 <button onclick="myFunction()">Print this page</button>
-<br>
-<br>
+
 <button onclick="window.location.href = 'home.php';">Home</button>
 <script>
 function myFunction() {
@@ -136,5 +239,6 @@ function checkPassword(form) {
     } 
 } 
 </script>
+</form> 
 </body>
 </html>
