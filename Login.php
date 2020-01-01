@@ -6,7 +6,7 @@
     <style>
 	.header {
   	background-color: #ff4500;
-<<<<<<< Updated upstream
+
 	width: 100%;
 	
     background-size: 100%;
@@ -21,17 +21,12 @@
   	top: 0px;
 	}
       html {
-=======
-  	padding: 20px;
-  	text-align: center;
-	}
-      html, body {
->>>>>>> Stashed changes
+
       display: flex;
       justify-content: center;
       font-family: Roboto, Arial, sans-serif;
       font-size: 15px;
-<<<<<<< Updated upstream
+
       } 
 	  body {
       display: flex;
@@ -47,12 +42,7 @@
 	  position: absolute;
   	  top: 120px;
 	  background-color: #FF7F50;
-=======
-      }
-      form {
-      border: 6px solid #f1f1f1;
-	  padding: 25px 50px;
->>>>>>> Stashed changes
+
       }
       input[type=text], input[type=password] {
       width: 100%;
@@ -63,11 +53,8 @@
       box-sizing: border-box;
       }
       button {
-<<<<<<< Updated upstream
       background-color: #006400;
-=======
-      background-color: #8ebf42;
->>>>>>> Stashed changes
+
       color: white;
       padding: 14px 0;
       margin: 10px 0;
@@ -80,11 +67,9 @@
       fone-size:18;
       }
       button:hover {
-<<<<<<< Updated upstream
+
         background-color: #00FF00;
-=======
-      opacity: 0.8;
->>>>>>> Stashed changes
+
       }
       .formcontainer {
       text-align: left;
@@ -113,18 +98,13 @@
       }
     </style>
   </head>
-<<<<<<< Updated upstream
+
   <div class="header">
   <h1>BANK A SEYCHELLES</h1>
 </div>
 <body>
 
-=======
-<body>
-<div class="header">
-  <h1>Bank A Seychelles</h1>
-</div>
->>>>>>> Stashed changes
+
 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
   <h1>Employee Log In</h1>
    <div class="formcontainer">
@@ -138,11 +118,8 @@
   <br><br>
   </div>
   <button type="submit">Login</button>
-<<<<<<< Updated upstream
    <div class="container" style="background-color: #FF7F50">
-=======
-   <div class="container" style="background-color: #eee">
->>>>>>> Stashed changes
+
         <label style="padding-left: 15px">
 		<span class="aaa"><p>Don't you have an account? </p> </span>
 		</label>
