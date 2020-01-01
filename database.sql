@@ -37,7 +37,7 @@ CREATE TABLE Individual(
 
 CREATE TABLE Organization(
     Customer_ID INT,
-    Organization_Name VARCHAR(50) NOT NULL,
+    Name VARCHAR(50) NOT NULL,
     Bussiness_Registration_Number VARCHAR(20),
     PRIMARY KEY(Customer_ID),
     FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID) /*ON DELETE SET NULL*/
