@@ -6,18 +6,119 @@ if (!isset($_SESSION['User'])& empty($_SESSION['User'])) {
 ?>
 <!DOCTYPE html>
 <html>
+	<head>
+    <title>Simple login form</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <style>
+	.header {
+  	background-color: #ff4500;
+	width: 100%;
+	
+    background-size: 100%;
+	background-repeat: no-repeat;
+    background-size: cover;
+    margin-left: auto;
+    margin-right: auto;
+  	padding: 20px;
+  	text-align: center;
+	position: absolute;
+  	left: 0px;
+  	top: 0px;
+	}
+      html {
+      display: flex;
+      justify-content: center;
+      font-family: Roboto, Arial, sans-serif;
+      font-size: 15px;
+      } 
+	  body {
+      display: flex;
+      justify-content: center;
+      font-family: Roboto, Arial, sans-serif;
+      font-size: 15px;
+	  background-color: #FF8C00;
+	  
+      }
+      form {
+      border: 6px solid #FF7F50;
+	  padding: 25px 50px;
+	  position: absolute;
+  	  top: 120px;
+	  background-color: #FF7F50;
+      }
+      input[type=text], input[type=password] {
+      width: 100%;
+      padding: 16px 8px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      }
+      button {
+      background-color: #006400;
+      color: white;
+      padding: 14px 0;
+      margin: 10px 0;
+      border: none;
+      cursor: grabbing;
+      width: 100%;
+      }
+      h1 {
+      text-align:center;
+      fone-size:18;
+      }
+      button:hover {
+        background-color: #00FF00;
+      }
+      .formcontainer {
+      text-align: left;
+      margin: 24px 50px 12px;
+	  
+      }
+      .container {
+      padding: 16px 0;
+      text-align:left;
+      }
+      span.psw {
+      float: right;
+      padding-bottom: 0;
+      padding-right: 15px;
+      }
+	  span.aaa {
+      float: left;
+      padding-bottom: 0;
+      padding-left: 15px;
+      }
+      /* Change styles for span on extra small screens */
+      @media screen and (max-width: 300px) {
+      span.psw {
+      display: block;
+      float: none;
+      }
+    </style>
+  </head>
+   <div class="header">
+  <h1>BANK A SEYCHELLES</h1>
+</div>
 <body>
-<h1>Bank A Seychelles</h1>
-<h2>Create Online Banking Account</h2>
 <form method="post" onSubmit = "return checkPassword(this)" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-Customer ID:<input type="number" name="Customer_ID" required><br><br>
-Username:<input type="text" name="username" required><br><br>
-Password:<input type="password" name="password" required><br><br>
-Confirm Password:<input type="password" name="cpassword" required>  <p id="demo"></p>  
-Recovery Contact Number:<input type="text" name="RecoveryContactNumber" required><br><br>
-Recovery Email:<input type="text" name="RecoveryEmail" required><br><br>
-  
-<input type="submit" value="Submit" >
+<h1>Create Online Banking Account</h1>
+<div class="formcontainer">
+      <hr/>
+<div class="container"></div>
+<label for="Customer_ID"><strong>Customer ID</strong></label><input type="number" name="Customer_ID" required><br><br>
+<br><br>
+<label for="username"><strong>Username</strong></label><input type="text" name="username" required><br><br>
+<br><br>
+<label for="password"><strong>Password</strong></label><input type="password" name="password" required><br><br>
+<br><br>
+<label for="cpassword"><strong>Confirm Password</strong></label><input type="password" name="cpassword" required>  <p id="demo"></p>  
+<br><br>
+<label for="RecoveryContactNumber"><strong>Recovery Contact Number</strong></label><input type="text" name="RecoveryContactNumber" required><br><br>
+<br><br>
+<label for="RecoveryEmail"><strong>Recovery Email</strong></label><input type="text" name="RecoveryEmail" required><br><br>
+ </div> 
+<button type="submit">></button> Submit </button>
 </form> 
 <?php
 if(isset($_POST) & !empty($_POST)){
@@ -34,14 +135,15 @@ if(isset($_POST) & !empty($_POST)){
     }
     $sql = "INSERT INTO Customer_Login(Customer_ID,Username,Password,Recovery_Contact_No,Recovery_Email) VALUES ($Customer_ID,'$username','$password','$RecoveryContactNumber','$RecoveryEmail')";
     if ($conn->query($sql) === TRUE) {
-        echo 'Customer Login Created Successful.';
+        echo '<p><font color=#006400>Customer Login Created Successful.</font></p>';
     }else{
-        echo "Error updating record: " . $conn->error;
+        echo "<p><font color=#ff0000>Error updating record. </font></p>" . $conn->error;
     }
 
     $conn->close();    
 }
 ?>
+</form> 
 <br>
 <br>
 <button onclick="myFunction()">Print this page</button>
