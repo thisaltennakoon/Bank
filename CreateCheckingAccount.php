@@ -8,13 +8,21 @@ if (!isset($_SESSION['User'])& empty($_SESSION['User'])) {
 <body>
 <?php
 if(isset($_POST) & !empty($_POST) & isset($_POST['Primary_Customer'])){
+    function test_input($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+      }
+
+
     $Customer_Str=$_SESSION['Customer_Str'];
     $Primary_Customer=$_SESSION['Primary_Customer'];
     $NIC_arr=$_SESSION['NIC_arr'];
     $Branch_arr = $_SESSION['Other_branches'];
     $Customer_arr = explode (",", $Customer_Str);
-    $Account_Type = $_POST['AccountType'];
-    $Account_Status = $_POST["Account_Status"];
+    $Account_Type = test_input($_POST['AccountType']);
+    $Account_Status = test_input($_POST["Account_Status"]);
     $Primary_Branch_ID=$_SESSION['Primary_Branch_ID'];
 
 
@@ -102,7 +110,7 @@ if(isset($_POST) & !empty($_POST) & isset($_POST['Primary_Customer'])){
                 $stmt = $conn->prepare("INSERT INTO Customer_Account(Customer_ID,Account_No) VALUES (?,?)");   
                 $stmt->bind_param("ii",$Customer,$Account_No);
                 if ($stmt->execute() === TRUE) {
-                    
+
                 }
             } 
         }else {

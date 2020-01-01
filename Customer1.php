@@ -5,6 +5,7 @@ if (!isset($_SESSION['User'])& empty($_SESSION['User'])) {
 }
 
 if(isset($_POST) & !empty($_POST) ){
+
     $NICs = $_POST['NICs'];
     $Other_branches = $_POST['Other_branches'];
     $Branch_string="";

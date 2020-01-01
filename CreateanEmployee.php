@@ -58,21 +58,28 @@ Recovery Email:<input type="text" name="RecoveryEmail" required><br><br>
 </form> 
 <?php
 if(isset($_POST) & !empty($_POST)){
-    $firstname = $_POST['firstname'];
-    $middlename = $_POST['middlename'];
-    $lastname = $_POST['lastname'];
-    $address = $_POST['address'];
-    $NIC = $_POST['NIC'];
-    $DOB = $_POST['DOB'];
-    $Gender = $_POST['Gender'];
-    $Contact_No = $_POST['Contact_No'];
-    $Branch = $_POST['Branch'];
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    function test_input($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+      }
+
+    $firstname = test_input($_POST['firstname']);
+    $middlename = test_input($_POST['middlename']);
+    $lastname = test_input($_POST['lastname']);
+    $address = test_input($_POST['address']);
+    $NIC = test_input($_POST['NIC']);
+    $DOB = test_input($_POST['DOB']);
+    $Gender = test_input($_POST['Gender']);
+    $Contact_No = test_input($_POST['Contact_No']);
+    $Branch = test_input($_POST['Branch']);
+    $username = test_input($_POST['username']);
+    $password = test_input($_POST['password']);
     $password=sha1($password);
-    $RecoveryContactNumber = $_POST['RecoveryContactNumber'];
-    $RecoveryEmail = $_POST['RecoveryEmail'];
-    $EmployeeType = $_POST['EmployeeType'];
+    $RecoveryContactNumber = test_input($_POST['RecoveryContactNumber']);
+    $RecoveryEmail = test_input($_POST['RecoveryEmail']);
+    $EmployeeType = test_input($_POST['EmployeeType']);
 
     $conn = mysqli_connect("localhost", "root", "","Bank");
     $stmt = $conn->prepare("INSERT INTO Employee(First_Name,Middle_Name,Last_Name,Address,NIC,DOB,Gender,Primary_Contact_No,Branch_ID) VALUES (?,?,?,?,?,?,?,?,?)");   

@@ -129,11 +129,16 @@
   <?php
 session_start();
 if(isset($_POST) & !empty($_POST)){
-  $user = $_POST['User'];
-  $pass =  $_POST['password'];
+  function test_input($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+  }
+  $user = test_input($_POST['User']);
+  $pass =  test_input($_POST['password']);
   $pass=sha1($pass);    
   //echo $pass;
-
   $conn = mysqli_connect("localhost", "root", "","Bank");
   $stmt = $conn->prepare("SELECT Employee_ID,Username FROM Employee_Login WHERE Username=? AND Password=?");
   $stmt->bind_param("ss",$user,$pass);
@@ -145,43 +150,51 @@ if ($stmt->num_rows >0) {
     $_SESSION['User'] = $Username;
     $_SESSION['Employee_ID'] = $Employee_ID;
 
+    $stmt = $conn->prepare("SELECT Branch_ID FROM Employee WHERE Employee_ID=?");
+    $stmt->bind_param("i",$Employee_ID);
+    $stmt->execute();
+    $stmt->store_result();
+    $stmt->bind_result($Branch_ID);
+    if ($stmt->num_rows >0) {
+      while ($row = $stmt->fetch()) {
+        $_SESSION['Primary_Branch_ID']= $Branch_ID;
+      }
+    }
+
+    $stmt = $conn->prepare("SELECT Employee_ID FROM Manager WHERE Employee_ID=?");
+    $stmt->bind_param("i",$Employee_ID);
+    $stmt->execute();
+    $stmt->store_result();
+    $stmt->bind_result($Branch_ID);
+    if ($stmt->num_rows >0) {
+      while ($row = $stmt->fetch()) {
+        $_SESSION['EmployeeType']= "Manager";
+      }
+    }else{
+
+      $stmt = $conn->prepare("SELECT Employee_ID FROM Clerk WHERE Employee_ID=?");
+      $stmt->bind_param("i",$Employee_ID);
+      $stmt->execute();
+      $stmt->store_result();
+      $stmt->bind_result($Branch_ID);
+      if ($stmt->num_rows >0) {
+        while ($row = $stmt->fetch()) {
+          $_SESSION['EmployeeType']= "Clerk";
+        }
+      }else{
+      echo '<p><font color=ff0000>error</font></p>';
+    }
+  }
+    header("location: home.php");
+
   }
   }else{
     echo "<p><font color=ff0000>The email address or password that you've entered doesn't match any account.</font></p>";
   }  
   $stmt->close();
   mysqli_close($conn);
-  $conn = new mysqli("localhost", "root", "","Bank");
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-  $sql ="SELECT Branch_ID FROM Employee WHERE Employee_ID='$Employee_ID'";
-  $result = $conn->query($sql);
-  if ($result->num_rows > 0){
-    while($row = $result->fetch_assoc()){ 
-      $_SESSION['Primary_Branch_ID']= $row["Branch_ID"];
-    }
-  }else{
-    echo '<p><font color=ff0000>error</font></p>';
-  }
-  $sql ="SELECT Employee_ID FROM Manager WHERE Employee_ID='$Employee_ID'";
-  $result = $conn->query($sql);
-  if ($result->num_rows > 0){
-    while($row = $result->fetch_assoc()){ 
-      $_SESSION['EmployeeType']= "Manager";
-    }
-  }else{
-    $sql ="SELECT Employee_ID FROM Clerk WHERE Employee_ID='$Employee_ID'";
-    $result = $conn->query($sql);
-    if ($result->num_rows > 0){
-      while($row = $result->fetch_assoc()){ 
-        $_SESSION['EmployeeType']= "Clerk";
-      }
-    }else{
-      echo '<p><font color=ff0000>error</font></p>';
-    }
-  }
-    header("location: home.php");
+
+  
 }
 
 

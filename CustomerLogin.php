@@ -16,8 +16,15 @@
 <?php
 session_start();
 if(isset($_POST) & !empty($_POST)){
-  $user = $_POST['User'];
-  $pass =  $_POST['password'];
+  function test_input($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+  }
+
+  $user = test_input($_POST['User']);
+  $pass =  test_input($_POST['password']);
   $pass=sha1($pass);    //little password encryption
   //echo $pass;
   $servername = "localhost";

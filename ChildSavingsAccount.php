@@ -8,12 +8,19 @@ if (!isset($_SESSION['User'])& empty($_SESSION['User'])) {
 <body>
 <?php
 if(isset($_POST) & !empty($_POST) ){
-    $AccountNumber=$_POST['AccountNumber'];
-    $firstname=$_POST['firstname'];
-    $middlename=$_POST['middlename'];
-    $lastname=$_POST['lastname'];
-    $DOB=$_POST['DOB'];
-    $Gender=$_POST['Gender'];
+    function test_input($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+      }
+
+    $AccountNumber=test_input($_POST['AccountNumber']);
+    $firstname=test_input($_POST['firstname']);
+    $middlename=test_input($_POST['middlename']);
+    $lastname=test_input($_POST['lastname']);
+    $DOB=test_input($_POST['DOB']);
+    $Gender=test_input($_POST['Gender']);
 
     $conn = mysqli_connect("localhost", "root", "","Bank");
     $stmt = $conn->prepare("INSERT INTO Child_Savings_Account(Account_No,First_Name,Middle_Name,Last_Name,DOB,Gender) VALUES (?,?,?,?,?,?)");   

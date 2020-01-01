@@ -122,12 +122,19 @@ if (!isset($_SESSION['User'])& empty($_SESSION['User'])) {
 </form> 
 <?php
 if(isset($_POST) & !empty($_POST)){
-    $Customer_ID = $_POST['Customer_ID'];
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    function test_input($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+      }
+
+    $Customer_ID = test_input($_POST['Customer_ID']);
+    $username = test_input($_POST['username']);
+    $password = test_input($_POST['password']);
     $password=sha1($password);
-    $RecoveryContactNumber = $_POST['RecoveryContactNumber'];
-    $RecoveryEmail = $_POST['RecoveryEmail'];
+    $RecoveryContactNumber = test_input($_POST['RecoveryContactNumber']);
+    $RecoveryEmail = test_input($_POST['RecoveryEmail']);
 
     $conn = mysqli_connect("localhost", "root", "","Bank");
     $stmt = $conn->prepare("INSERT INTO Customer_Login(Customer_ID,Username,Password,Recovery_Contact_No,Recovery_Email) VALUES (?,?,?,?,?)");   

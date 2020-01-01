@@ -11,6 +11,8 @@ if(isset($_POST) & !empty($_POST) ){
     $NIC_arr=$_SESSION['NIC_arr'];
     $Other_branches=$_SESSION['Other_branches'];
 
+    
+
 
     $Customer_arr = explode (",", $Customer_Str);
     $AccountType = $_POST['AccountType'];

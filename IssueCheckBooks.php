@@ -20,9 +20,15 @@ Number of Pages<select name="Number_of_Pages">
 </form> 
 <?php
 if(isset($_POST) & !empty($_POST)){
-    $Account_No = $_POST['Account_No'];
-    $Starting_Check_Number = $_POST['Starting_Check_Number'];
-    $Number_of_Pages = $_POST['Number_of_Pages'];
+    function test_input($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+      }
+    $Account_No = test_input($_POST['Account_No']);
+    $Starting_Check_Number = test_input($_POST['Starting_Check_Number']);
+    $Number_of_Pages = test_input($_POST['Number_of_Pages']);
 
     $conn = new mysqli("localhost", "root", "","Bank");
     if ($conn->connect_error) {

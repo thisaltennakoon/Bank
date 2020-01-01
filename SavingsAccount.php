@@ -9,6 +9,12 @@ if (!isset($_SESSION['User'])& empty($_SESSION['User'])) {
 <body>
 <?php
 if(isset($_POST) & !empty($_POST) ){
+    function test_input($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+      }
 
     $Customer_Str=$_SESSION['Customer_Str'];
     $Primary_Customer=$_SESSION['Primary_Customer'];
@@ -18,8 +24,8 @@ if(isset($_POST) & !empty($_POST) ){
     $Customer_arr = explode (",", $Customer_Str);
     $Primary_Branch_ID=$_SESSION['Primary_Branch_ID'];
     $Branch_Str = $_SESSION['Other_branches'];
-    $Account_Status = $_POST['Account_Status'];
-    $Account_Type=$_POST['Account_Type'];
+    $Account_Status = test_input($_POST['Account_Status']);
+    $Account_Type=test_input($_POST['Account_Type']);
 
     $servername = "localhost";
     $username = "root";

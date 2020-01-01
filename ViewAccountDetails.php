@@ -15,7 +15,14 @@ Account Number:<input type="number" name="accnumber" required>
 </form> 
 <?php
 if(isset($_POST) & !empty($_POST)){
-    $accnumber = $_POST['accnumber'];
+    function test_input($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+      }
+
+    $accnumber = test_input($_POST['accnumber']);
     $servername = "localhost";
     $username = "root";
     $password = "";

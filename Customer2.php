@@ -5,8 +5,15 @@ if (!isset($_SESSION['User'])& empty($_SESSION['User'])) {
 }
 
 if(isset($_POST) & !empty($_POST) ){
+    function test_input($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+      }
 
-    $Primary_Customer=$_POST['Primary_Customer'];
+
+    $Primary_Customer=test_input($_POST['Primary_Customer']);
 
     $Customer_String="";
     $NIC_arr=$_SESSION['NIC_arr'];
@@ -14,19 +21,19 @@ if(isset($_POST) & !empty($_POST) ){
 
     $conn = mysqli_connect("localhost", "root", "","Bank");
     foreach($NIC_arr as $NIC){
-        $Customer_ID = $_POST[$NIC."-Customer_ID"];
-        $InsertOrUpdate = $_POST[$NIC."-InsertOrUpdate"];
-        $firstname = $_POST[$NIC."-firstname"];
-        $middlename = $_POST[$NIC."-middlename"];
-        $lastname = $_POST[$NIC."-lastname"];
-        $DOB = $_POST[$NIC."-DOB"];
-        $adr1 = $_POST[$NIC."-adr1"];
-        $adr2 = $_POST[$NIC."-adr2"];
-        $adr3 = $_POST[$NIC."-adr3"];
-        $email = $_POST[$NIC."-email"];
-        $contactnumber = $_POST[$NIC."-contactnumber"];
-        $Gender = $_POST[$NIC."-Gender"];
-        $NIC = $_POST[$NIC."-NIC"];        
+        $Customer_ID = test_input($_POST[$NIC."-Customer_ID"]);
+        $InsertOrUpdate = test_input($_POST[$NIC."-InsertOrUpdate"]);
+        $firstname = test_input($_POST[$NIC."-firstname"]);
+        $middlename = test_input($_POST[$NIC."-middlename"]);
+        $lastname = test_input($_POST[$NIC."-lastname"]);
+        $DOB = test_input($_POST[$NIC."-DOB"]);
+        $adr1 = test_input($_POST[$NIC."-adr1"]);
+        $adr2 = test_input($_POST[$NIC."-adr2"]);
+        $adr3 = test_input($_POST[$NIC."-adr3"]);
+        $email = test_input($_POST[$NIC."-email"]);
+        $contactnumber = test_input($_POST[$NIC."-contactnumber"]);
+        $Gender = test_input($_POST[$NIC."-Gender"]);
+        $NIC = test_input($_POST[$NIC."-NIC"]);        
         if ($InsertOrUpdate=="Insert"){
             $stmt = $conn->prepare("INSERT INTO Customer (Address_Line_1,Address_Line_2,Address_Line_3,Primary_Email,Primary_Contact_No) VALUES (?,?,?,?,?)");   
             $stmt->bind_param("sssss",$adr1,$adr2,$adr3,$email,$contactnumber);
