@@ -110,9 +110,10 @@
    <div class="formcontainer">
       <hr/>
   <div class="container"></div>
-  <button onclick="window.location.href = 'BankTransaction.php'">Bank Transaction</button> 
-  <button onclick="window.location.href = 'CreateOnlineBankingAccount.php'">Create Online Banking Account</button> 
-  <button onclick="window.location.href = 'LoanApplicationBank.php'">Make a Loan Request</button> 
+  <button type = "submit" formaction="OnlineTransaction.php">Online Transaction</button> 
+  <button type = "submit" formaction="ViewOwnAccount.php">View Account details</button> 
+  <button type = "submit" formaction="LoanApplicationBank.php">Make a Loan Request</button> 
+  <button class='logout' type="submit" formaction="LogOutCustomer.php">Log Out</button>
   <br><br>
   </div>
   
