@@ -90,14 +90,11 @@ if(!isset($_SESSION["User"]) & empty($_SESSION["User"])){
         
         
         $query = "CREATE EVENT settleInstallment".$Loan_ID." ON SCHEDULE EVERY 1 MINUTE STARTS '2020-01-02 00:00:00' DO INSERT INTO transaction_detail(Account_No,Amount,Withdraw,Balance,Detail,Teller) VALUES($AccNo,$Installment,True,Balance=Balance-".$Installment.",'Installment','Bank')";
-        
         $result = $conn->query($query);
-        
         if ( !$result ) {
             $result->free();
             throw new Exception($conn->error);
         }
-        
         // our SQL queries have been successful. commit them
         // and go back to non-transaction mode.
     
