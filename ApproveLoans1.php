@@ -10,7 +10,7 @@ if(!isset($_SESSION["User"]) & empty($_SESSION["User"])){
 <body>
 
 <?php
-    echo 'Done';
+
     $AccNo=$_GET['AccNo'];
     $Branch=$_GET['Branch'];
     $Amount=$_GET['Amount'];
@@ -54,20 +54,8 @@ if(!isset($_SESSION["User"]) & empty($_SESSION["User"])){
             throw new Exception($conn->error);
         }
 
-
-        $sql = "SELECT * FROM Account WHERE Account_No=$AccNo";
-        $result = $conn->query($sql);
-        if ($result->num_rows > 0) {
-             while($row = $result->fetch_assoc()) {
-                 $AccNo=$row['Account_No'];
-                 $Balance=$row['Balance'];
-            }
-        }else{
-            
-        }
-
         
-        $query = "INSERT INTO transaction_detail(Account_No,Amount,Withdraw,Balance,Detail,Teller) VALUES($AccNo,$Amount,False,$Amount+$Balance,'Loan Granted','self')";
+        $query = "INSERT INTO transaction_detail(Account_No,Amount,Withdraw,Balance,Detail,Teller) VALUES($AccNo,$Amount,False,1000,'Loan Granted','self')";
         $result = $conn->query($query);
         if ( !$result ) {
            $result->free();
