@@ -160,7 +160,7 @@ if(isset($_POST) & !empty($_POST)){
       }else{
           echo  '<p><font color=ff0000>error</font></p>';
       }
-      header("location: OnlineTransaction.php");
+      header("location:CustomerHome.php");
         //echo "<br> email: ". $row["email"]. " <br>Name: ". $row["name"]. " <br>password   " . $row["password"] . "<br>";
     }
   }else{
