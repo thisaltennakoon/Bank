@@ -155,9 +155,10 @@ if(!isset($_SESSION["User"]) & empty($_SESSION["User"])){
 ?>
 
 <script>
-    function approve(AccNo,Branch,Amount,Time,Installment,RequestBy,RequestID){
-        window.location.href="ApproveLoans1.php?AccNo="+AccNo+"& Branch="+Branch+"& Amount="+Amount+"& Time="+Time+"& Installment="+Installment+"& RequestBy="+RequestBy+"& RequestID="+RequestID;
-        //window.location.href = 'home.php';
+    function approve(AccNo,Branch,Amount,Time1,Installment,RequestBy,RequestID){
+        window.alert("sometext");
+        window.location.href="ApproveLoans1.php?AccNo="+AccNo+"& Branch="+Branch+"& Amount="+Amount+"& Time="+Time1+"& Installment="+Installment+"& RequestBy="+RequestBy+"& RequestID="+RequestID;
+        
 
     }
 
