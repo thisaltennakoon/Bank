@@ -170,7 +170,9 @@ $customer_ID = $_SESSION['Customer_ID'];
 	<label for="amount"><strong>Enter the amount</strong></label>
         <input type="number" step="0.01" id="amount" name="amount" placeholder="0">		
 		</div>
-		<button type="submit">Transfer</button>
+		<button type="submit" formaction="OnlineTransactionCode.php">Transfer</button>
+    <br>
+    <button class='logout' type="submit" formaction="LogOutCustomer.php">Log Out</button>
 </form>
 </body>
 </html>
