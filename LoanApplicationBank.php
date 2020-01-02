@@ -139,7 +139,7 @@ if(isset($_POST) & !empty($_POST)){
     die("Connection failed: " . $conn->connect_error);
   }
 
-    $sql = "SELECT * FROM Account WHERE Account_No='$AccNo'";
+  $sql = "SELECT * FROM Account WHERE Account_No='$AccNo'";
 
   $result = $conn->query($sql);
   if ($result->num_rows > 0) {
