@@ -142,6 +142,8 @@ function checkAvailability() {
 		</div>
 		<button type="submit" formaction="BankWithdrawCode.php">Withdraw</button>
 		<button type="submit" formaction="BankDepositCode.php">Deposit</button>
+    <br>
+    <button class='logout' onclick="window.location.href = 'LogOut.php'">Log Out</button>
 </form>
 </body>
 </html>
